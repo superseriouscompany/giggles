@@ -10,28 +10,8 @@ import {
   Dimensions,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View
 } from 'react-native';
-
-class AwesomeProject extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          Dis sucks
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -67,57 +47,14 @@ const styles = StyleSheet.create({
   }
 });
 
-import Camera from 'react-native-camera';
-
-class BadInstagramCloneApp extends Component {
-  render() {
+class RootNav extends Component {
+  render = () => {
     return (
-      <View style={styles.container}>
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-        </Camera>
-      </View>
-    );
-  }
-
-  takePicture() {
-    this.camera.capture()
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-  }
-}
-
-class HttpTestApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { nice: '' }
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome} onPress={this.pressed}>
-          Sup son {this.state.nice}
-        </Text>
+      <View>
+        <Text style={styles.welcome}>Hey</Text>
       </View>
     )
   }
-
-  pressed = () => {
-    fetch("https://superseriouscompany.com/dias", {
-      method: 'POST'
-    }).then((response) => {
-      debugger;
-      this.setState({nice: response.json().good});
-    }, (error) => {
-      debugger;
-    })
-  }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => HttpTestApp);
+AppRegistry.registerComponent('AwesomeProject', () => RootNav);
