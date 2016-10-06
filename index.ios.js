@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width
   },
+  padded: { padding: 100 },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -73,12 +74,19 @@ class RootNav extends Component {
         initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
-        style={{padding: 100}}
+        style={[styles.fullScreen, styles.padded]}
       />
     )
   }
 
   renderScene = (route, navigator) => {
+    // TODO: don't attach this to navigator multiple times
+    navigator.navigate = function(slug) {
+      let route = routes.find(function(r) { return r.slug === slug });
+      if( !route ) return console.error("No route found matching", slug, "available routes: ", routes.map(function(r) { return r.slug}));
+      navigator.push(route);
+    }
+
     switch(route.slug) {
       case 'source':
         return <SourceScene navigator={navigator} onPress={this.nextPage}/>;
@@ -89,12 +97,6 @@ class RootNav extends Component {
       case 'cool':
         return <CoolScene navigator={navigator} onPress={this.nextPage}/ >;
     }
-  }
-
-  nextPage = (route, navigator) => {
-    console.log("Navigating son", route, navigator);
-    // navigator.pop();
-    // navigator.push(routes[route.index+1]);
   }
 }
 

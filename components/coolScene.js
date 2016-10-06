@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import {
+  View,
   Text
 } from 'react-native'
 
 class Cool extends Component  {
+  constructor(props) {
+    super(props);
+    this.navigator = props.navigator;
+  }
+
   render = () => {
     return (
-      <Text>Cool Scene</Text>
+      <View>
+        <Text onPress={() => this.navigator.popN(2)}>Cool</Text>
+      </View>
     )
   }
 }
