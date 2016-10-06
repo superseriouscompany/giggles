@@ -21,15 +21,20 @@ class Source extends Component  {
 
     return (
       <View style={[styles.container, styles.blackBg]}>
-        <TouchableHighlight style={[styles.topLeft]} onPress={this.tapOriginalsList}>
-          <Image source={require('../images/SeeAllOriginals.png')}/>
-        </TouchableHighlight>
+        <View style={styles.topRow}>
+          <TouchableHighlight style={[styles.topLeft]} onPress={this.tapOriginalsList}>
+            <Image source={require('../images/SeeAllOriginals.png')}/>
+          </TouchableHighlight>
 
-        <Image style={{width: imageWidth, height: imageHeight}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+          <TouchableHighlight style={[styles.topRight]} onPress={this.tapRemixesList}>
+            <Image source={require('../images/SeeRemixes.png')}/>
+          </TouchableHighlight>
+        </View>
 
-        <TouchableHighlight style={[styles.topRight]} onPress={this.tapRemixesList}>
-          <Image source={require('../images/SeeRemixes.png')}/>
-        </TouchableHighlight>
+        <View style={[{height: imageHeight}, styles.mainImage]}>
+          <Image style={{width: imageWidth, height: imageHeight}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+        </View>
+
 
         <View style={styles.bottomMiddle}>
           <TouchableHighlight onPress={this.tapMicrophone}>
@@ -76,29 +81,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink'
   },
   container: {
-    flex: 1,
+    justifyContent: 'space-between',
     height: Dimensions.get('window').height,
-    paddingTop: 30
+    paddingTop: 30,
+    paddingBottom: 30
   },
   blackBg: {
     backgroundColor: 'black'
   },
-  topLeft: {
-    position: 'absolute',
-    top: 30,
-    left: 20
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20
   },
-  topRight: {
-    position: 'absolute',
-    top: 30,
-    right: 20
+  mainImage: {
+    alignItems: 'center'
   },
   bottomMiddle: {
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
     alignItems: 'center',
   }
 })
