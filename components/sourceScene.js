@@ -27,9 +27,11 @@ class Source extends Component  {
         {
           this.state.isRecording ?
             this.state.isDone ?
-              <TouchableHighlight onPress={this.cancel}>
-                <Image source={require('../images/Cancel.png')}/>
-              </TouchableHighlight>
+              <View style={styles.topRow}>
+                <TouchableHighlight onPress={this.cancel}>
+                  <Image source={require('../images/Cancel.png')}/>
+                </TouchableHighlight>
+              </View>
             :
               <Text style={styles.debug}>Recording</Text>
           :
@@ -57,7 +59,7 @@ class Source extends Component  {
               </TouchableHighlight>
             </View>
           :
-            <View style={styles.bottomMiddle}>
+            <View style={styles.bottomTwoButton}>
               <TouchableHighlight onPress={this.replay}>
                 <Image source={require('../images/Play.png')}/>
               </TouchableHighlight>
@@ -135,6 +137,11 @@ const styles = StyleSheet.create({
   },
   bottomMiddle: {
     alignItems: 'center',
+  },
+  bottomTwoButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
