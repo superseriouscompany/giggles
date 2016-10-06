@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MemeScene from './components/memeScene';
 import {
   AppRegistry,
   Dimensions,
@@ -9,6 +10,10 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
+  fullScreen: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -43,10 +48,10 @@ const styles = StyleSheet.create({
 });
 
 const routes = [
-  { title: 'Home', index: 0 },
-  { title: 'Record Audio', index: 1 },
-  { title: 'Camera', index: 2 },
-  { title: 'Cool', index: 3 }
+  { title: 'Home', slug: 'home', index: 0 },
+  { title: 'Record Audio', slug: 'recordAudio', index: 1 },
+  { title: 'Camera', slug: 'camera', index: 2 },
+  { title: 'Cool', slug: 'cool', index: 3 }
 ]
 
 let flipped;
@@ -54,6 +59,31 @@ let flipped;
 class RootNav extends Component {
   constructor(props) {
     super(props);
+  }
+
+  render = () => {
+    return (
+      <Navigator
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={this.renderScene}
+        style={{padding: 100}}
+      />
+    )
+  }
+
+  renderScene = (route, navigator) => {
+    return (
+      <MemeScene></MemeScene>
+    )
+
+    return (
+      <Text onPress={() => {
+        this.nextPage(route, navigator);
+      }}>
+        Sup {route.title}
+      </Text>
+    )
   }
 
   nextPage = (route, navigator) => {
@@ -67,26 +97,6 @@ class RootNav extends Component {
     } else {
       navigator.push(routes[route.index+1]);
     }
-  }
-
-  render = () => {
-    return (
-      <Navigator
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
-        renderScene={(route, navigator) => {
-          console.log("Rendering scene", route.index);
-          return (
-            <Text onPress={() => {
-              this.nextPage(route, navigator);
-            }}>
-              Sup {route.title}
-            </Text>
-          )
-        }}
-        style={{padding: 100}}
-      />
-    )
   }
 }
 
