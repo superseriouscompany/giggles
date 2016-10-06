@@ -3,12 +3,12 @@ import {
   Text
 } from 'react-native'
 
-class Submission extends Component  {
+class Cool extends Component  {
   render = () => {
     return (
-      <Text>Submission Scene</Text>
+      <Text>Cool Scene</Text>
     )
   }
 }
 
-module.exports = Submission;
+module.exports = Cool;

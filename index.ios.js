@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MemeScene from './components/memeScene';
 import {
   AppRegistry,
   Dimensions,
@@ -8,6 +7,13 @@ import {
   View,
   Navigator
 } from 'react-native';
+
+import {
+  MemeScene,
+  SourceScene,
+  CameraScene,
+  CoolScene
+} from './components/scenes';
 
 const styles = StyleSheet.create({
   fullScreen: {
@@ -48,10 +54,10 @@ const styles = StyleSheet.create({
 });
 
 const routes = [
-  { title: 'Home', slug: 'home', index: 0 },
-  { title: 'Record Audio', slug: 'recordAudio', index: 1 },
-  { title: 'Camera', slug: 'camera', index: 2 },
-  { title: 'Cool', slug: 'cool', index: 3 }
+  { slug: 'source', index: 0 },
+  { slug: 'meme', index: 1 },
+  { slug: 'camera', index: 2 },
+  { slug: 'cool', index: 3 }
 ]
 
 let flipped;
@@ -73,30 +79,22 @@ class RootNav extends Component {
   }
 
   renderScene = (route, navigator) => {
-    return (
-      <MemeScene></MemeScene>
-    )
-
-    return (
-      <Text onPress={() => {
-        this.nextPage(route, navigator);
-      }}>
-        Sup {route.title}
-      </Text>
-    )
+    switch(route.slug) {
+      case 'source':
+        return <SourceScene navigator={navigator} onPress={this.nextPage}/>;
+      case 'meme':
+        return <MemeScene navigator={navigator} onPress={this.nextPage}/>;
+      case 'camera':
+        return <CameraScene navigator={navigator} onPress={this.nextPage}/>;
+      case 'cool':
+        return <CoolScene navigator={navigator} onPress={this.nextPage}/ >;
+    }
   }
 
   nextPage = (route, navigator) => {
-    if( route.index === 0 ) {
-      flipped = false;
-    } else if( route.index === 3 ) {
-      flipped = true;
-    }
-    if( flipped ) {
-      navigator.pop();
-    } else {
-      navigator.push(routes[route.index+1]);
-    }
+    console.log("Navigating son", route, navigator);
+    // navigator.pop();
+    // navigator.push(routes[route.index+1]);
   }
 }
 

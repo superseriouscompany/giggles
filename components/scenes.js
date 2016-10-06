@@ -1,6 +1,6 @@
 module.exports = {
-  Source:     require('./sourceScene'),
-  Meme:       require('./memeScene'),
-  Cool:       require('./coolScene'),
-  Submission: require('./submissionScene')
+  SourceScene: require('./sourceScene'),
+  MemeScene:   require('./memeScene'),
+  CoolScene:   require('./coolScene'),
+  CameraScene: require('./cameraScene')
 }
