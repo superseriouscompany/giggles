@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Navigator,
   Dimensions,
   StyleSheet,
-  Text,
-  View,
-  Navigator
 } from 'react-native';
 
 import {
@@ -20,7 +18,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width
   },
-  padded: { padding: 100 },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -74,7 +71,7 @@ class RootNav extends Component {
         initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
-        style={[styles.fullScreen, styles.padded]}
+        style={[styles.fullScreen]}
       />
     )
   }
