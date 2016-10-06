@@ -4,6 +4,8 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  TouchableHighlight,
+  Image,
   Alert
 } from 'react-native'
 
@@ -11,15 +13,28 @@ class Source extends Component  {
   constructor(props) {
     super(props);
     this.navigator = props.navigator;
+    this.state = {};
   }
 
   render = () => {
+    const imageWidth = 200, imageHeight = 200;
+
     return (
       <View style={[styles.container, styles.blackBg]}>
-        <Text style={[styles.topLeft, styles.white]}>Meme</Text>
-        <Text style={[styles.topRight, styles.white]}>Camera</Text>
+        <TouchableHighlight style={[styles.topLeft]} onPress={this.tapOriginalsList}>
+          <Image source={require('../images/SeeAllOriginals.png')}/>
+        </TouchableHighlight>
+
+        <Image style={{width: imageWidth, height: imageHeight}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+
+        <TouchableHighlight style={[styles.topRight]} onPress={this.tapRemixesList}>
+          <Image source={require('../images/SeeRemixes.png')}/>
+        </TouchableHighlight>
+
         <View style={styles.bottomMiddle}>
-          <Text style={styles.white} onPress={this.tapMicrophone}>Microphone</Text>
+          <TouchableHighlight onPress={this.tapMicrophone}>
+            <Image source={require('../images/Record.png')}/>
+          </TouchableHighlight>
         </View>
       </View>
     )
@@ -27,8 +42,28 @@ class Source extends Component  {
 
   tapMicrophone = () => {
     Alert.alert(
-      'Title',
-      'Msg',
+      'Start recording',
+      "jk you can't",
+      [
+        { text: 'OK', onPress: () => console.log('Cool')}
+      ]
+    )
+  }
+
+  tapOriginalsList = () => {
+    Alert.alert(
+      'Check out all the originals',
+      "jk you can't",
+      [
+        { text: 'OK', onPress: () => console.log('Cool')}
+      ]
+    )
+  }
+
+  tapRemixesList = () => {
+    Alert.alert(
+      'Check out all the remixes',
+      "jk you can't",
       [
         { text: 'OK', onPress: () => console.log('Cool')}
       ]
@@ -47,9 +82,6 @@ const styles = StyleSheet.create({
   },
   blackBg: {
     backgroundColor: 'black'
-  },
-  white: {
-    color: 'white'
   },
   topLeft: {
     position: 'absolute',
