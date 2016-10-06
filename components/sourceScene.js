@@ -32,7 +32,7 @@ class Source extends Component  {
                 </TouchableHighlight>
               </View>
             :
-              <View style={{width: this.state.progress, height: 1, backgroundColor: 'red'}}></View>
+              <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
           :
             <View style={styles.topRow}>
               <TouchableHighlight onPress={this.tapOriginalsList}>
@@ -77,19 +77,19 @@ class Source extends Component  {
     })
 
     let progress = 0;
-    setTimeout(cool.bind(this), 100);
+    setTimeout(cool.bind(this), 10);
     function cool() {
       this.setState({
         progress: ++progress
       });
 
-      if( progress > 400 ) {
+      if( progress > 100 ) {
         return this.setState({
           isDone: true
         })
       }
 
-      return setTimeout(cool.bind(this), 100);
+      return setTimeout(cool.bind(this), 10);
     }
   }
 
