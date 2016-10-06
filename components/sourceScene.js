@@ -13,7 +13,10 @@ class Source extends Component  {
   constructor(props) {
     super(props);
     this.navigator = props.navigator;
-    this.state = {};
+    this.state = {
+      isDone: true,
+      isRecording: true
+    };
   }
 
   render = () => {
@@ -21,38 +24,70 @@ class Source extends Component  {
 
     return (
       <View style={[styles.container, styles.blackBg]}>
-        <View style={styles.topRow}>
-          <TouchableHighlight style={[styles.topLeft]} onPress={this.tapOriginalsList}>
-            <Image source={require('../images/SeeAllOriginals.png')}/>
-          </TouchableHighlight>
+        {
+          this.state.isRecording ?
+            this.state.isDone ?
+              <TouchableHighlight onPress={this.cancel}>
+                <Image source={require('../images/Cancel.png')}/>
+              </TouchableHighlight>
+            :
+              <Text style={styles.debug}>Recording</Text>
+          :
+            <View style={styles.topRow}>
+              <TouchableHighlight onPress={this.tapOriginalsList}>
+                <Image source={require('../images/SeeAllOriginals.png')}/>
+              </TouchableHighlight>
 
-          <TouchableHighlight style={[styles.topRight]} onPress={this.tapRemixesList}>
-            <Image source={require('../images/SeeRemixes.png')}/>
-          </TouchableHighlight>
-        </View>
+              <TouchableHighlight onPress={this.tapRemixesList}>
+                <Image source={require('../images/SeeRemixes.png')}/>
+              </TouchableHighlight>
+            </View>
+        }
+
 
         <View style={[{height: imageHeight}, styles.mainImage]}>
           <Image style={{width: imageWidth, height: imageHeight}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         </View>
 
-
-        <View style={styles.bottomMiddle}>
-          <TouchableHighlight onPress={this.tapMicrophone}>
-            <Image source={require('../images/Record.png')}/>
-          </TouchableHighlight>
-        </View>
+        {
+          !this.state.isDone ?
+            <View style={styles.bottomMiddle}>
+              <TouchableHighlight onPress={this.tapMicrophone}>
+                <Image source={require('../images/Record.png')}/>
+              </TouchableHighlight>
+            </View>
+          :
+            <View style={styles.bottomMiddle}>
+              <TouchableHighlight onPress={this.replay}>
+                <Image source={require('../images/Play.png')}/>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.submit}>
+                <Image source={require('../images/Submit.png')}/>
+              </TouchableHighlight>
+            </View>
+        }
       </View>
     )
   }
 
   tapMicrophone = () => {
-    Alert.alert(
-      'Start recording',
-      "jk you can't",
-      [
-        { text: 'OK', onPress: () => console.log('Cool')}
-      ]
-    )
+    this.setState({
+      isRecording: true
+    })
+
+    setTimeout(cool.bind(this), 1000);
+    function cool() {
+      this.setState({
+        isDone: true
+      })
+    }
+  }
+
+  cancel = () => {
+    this.setState({
+      isRecording: false,
+      isDone: false
+    })
   }
 
   tapOriginalsList = () => {
