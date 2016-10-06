@@ -1,16 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   Dimensions,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -47,12 +42,50 @@ const styles = StyleSheet.create({
   }
 });
 
+const routes = [
+  { title: 'Home', index: 0 },
+  { title: 'Record Audio', index: 1 },
+  { title: 'Camera', index: 2 },
+  { title: 'Cool', index: 3 }
+]
+
+let flipped;
+
 class RootNav extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  nextPage = (route, navigator) => {
+    if( route.index === 0 ) {
+      flipped = false;
+    } else if( route.index === 3 ) {
+      flipped = true;
+    }
+    if( flipped ) {
+      navigator.pop();
+    } else {
+      navigator.push(routes[route.index+1]);
+    }
+  }
+
   render = () => {
     return (
-      <View>
-        <Text style={styles.welcome}>Hey</Text>
-      </View>
+      <Navigator
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={(route, navigator) => {
+          console.log("Rendering scene", route.index);
+          return (
+            <Text onPress={() => {
+              this.nextPage(route, navigator);
+            }}>
+              Sup {route.title}
+            </Text>
+          )
+        }}
+        style={{padding: 100}}
+      />
     )
   }
 }
