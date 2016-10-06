@@ -14,8 +14,7 @@ class Source extends Component  {
     super(props);
     this.navigator = props.navigator;
     this.state = {
-      isDone: true,
-      isRecording: true
+      progress: 0
     };
   }
 
@@ -33,7 +32,7 @@ class Source extends Component  {
                 </TouchableHighlight>
               </View>
             :
-              <Text style={styles.debug}>Recording</Text>
+              <View style={{width: this.state.progress, height: 1, backgroundColor: 'red'}}></View>
           :
             <View style={styles.topRow}>
               <TouchableHighlight onPress={this.tapOriginalsList}>
@@ -77,11 +76,20 @@ class Source extends Component  {
       isRecording: true
     })
 
-    setTimeout(cool.bind(this), 1000);
+    let progress = 0;
+    setTimeout(cool.bind(this), 100);
     function cool() {
       this.setState({
-        isDone: true
-      })
+        progress: ++progress
+      });
+
+      if( progress > 400 ) {
+        return this.setState({
+          isDone: true
+        })
+      }
+
+      return setTimeout(cool.bind(this), 100);
     }
   }
 
