@@ -46,8 +46,8 @@ class Source extends Component  {
         }
 
 
-        <View style={[{height: imageHeight}, styles.mainImage]}>
-          <Image style={{width: imageWidth, height: imageHeight}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+        <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
+          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         </View>
 
         {
@@ -139,9 +139,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 20,
     paddingRight: 20
-  },
-  mainImage: {
-    alignItems: 'center'
   },
   bottomMiddle: {
     alignItems: 'center',
