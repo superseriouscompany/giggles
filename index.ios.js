@@ -5,6 +5,14 @@ import {
   Dimensions
 } from 'react-native';
 
+class steffigraffiti extends Component {
+  render = () => {
+    return (
+      <Text>Sup</Text>
+    )
+  }
+}
+
 import {
   MemeScene,
   SourceScene,

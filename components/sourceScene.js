@@ -6,8 +6,12 @@ import {
   Dimensions,
   TouchableHighlight,
   Image,
-  Alert
+  Alert,
+  StatusBar,
+  Platform
 } from 'react-native'
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 
 class Source extends Component  {
   constructor(props) {
@@ -23,6 +27,8 @@ class Source extends Component  {
 
     return (
       <View style={[styles.container, styles.blackBg]}>
+        <StatusBar backgroundColor="red" barStyle="light-content"/>
+
         { !this.state.isRecording ? // if not recording, show regular top menubar
           <View style={styles.topRow}>
             <TouchableHighlight onPress={this.tapOriginalsList}>
@@ -124,8 +130,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     height: Dimensions.get('window').height,
-    paddingTop: 30,
-    paddingBottom: 30
+    paddingTop: STATUSBAR_HEIGHT,
   },
   blackBg: {
     backgroundColor: 'black'
@@ -133,8 +138,6 @@ const styles = StyleSheet.create({
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 20,
-    paddingRight: 20
   },
   bottomMiddle: {
     alignItems: 'center',
