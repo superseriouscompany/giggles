@@ -101,13 +101,7 @@ class Source extends Component  {
   }
 
   tapRemixesList = () => {
-    Alert.alert(
-      'Check out all the remixes',
-      "jk you can't",
-      [
-        { text: 'OK', onPress: () => console.log('Cool')}
-      ]
-    )
+    this.navigator.navigate('cool');
   }
 }
 
