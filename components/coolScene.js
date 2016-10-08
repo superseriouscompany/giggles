@@ -20,18 +20,18 @@ class Cool extends Component  {
   }
 
   press = () => {
-    fetch("http://localhost:3000/foo", {
-      method: 'POST'
-    }).then((response) => {
-      if( response.status > 299 ) {
-        throw new Error(`Received unexpected status code ${response.status}`);
-      }
-      return response.json().then((body) => {
-        this.setState({nice: body.good});
-      })
-    }).catch((err) => {
-      console.error(err);
-    })
+    var body = new FormData();
+    body.append('cool', 'nice');
+    body.append('good', 'great');
+
+    var xhr = new XMLHttpRequest;
+    xhr.onreadystatechange = (e) => {
+      if( xhr.readyState !== 4 ) { return; }
+
+      console.log(xhr.status, xhr.responseText);
+    }
+    xhr.open('POST', 'http://localhost:3000/foo');
+    xhr.send(body);
   }
 }
 
