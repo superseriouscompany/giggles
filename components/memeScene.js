@@ -12,8 +12,8 @@ class Meme extends Component  {
 
   render = () => {
     return (
-      <View>
-        <Text onPress={() => this.navigator.navigate('cool')}>Meme Scene</Text>
+      <View style={{paddingTop: 20}}>
+        <Text>Meme Scene</Text>
       </View>
     )
   }

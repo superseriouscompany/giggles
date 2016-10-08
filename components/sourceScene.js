@@ -97,13 +97,7 @@ class Source extends Component  {
   }
 
   tapOriginalsList = () => {
-    Alert.alert(
-      'Check out all the originals',
-      "jk you can't",
-      [
-        { text: 'OK', onPress: () => console.log('Cool')}
-      ]
-    )
+    this.navigator.navigate('meme');
   }
 
   tapRemixesList = () => {

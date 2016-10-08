@@ -12,7 +12,7 @@ class Cool extends Component  {
 
   render = () => {
     return (
-      <View>
+      <View style={{backgroundColor: 'black'}}>
         <Text onPress={() => this.navigator.popN(2)}>Cool</Text>
       </View>
     )
