@@ -29,7 +29,7 @@ class RootNav extends Component {
   render = () => {
     return (
       <Navigator
-        initialRoute={routes[0]}
+        initialRoute={routes[2]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
         style={{
@@ -50,13 +50,13 @@ class RootNav extends Component {
 
     switch(route.slug) {
       case 'source':
-        return <SourceScene navigator={navigator} onPress={this.nextPage}/>;
+        return <SourceScene navigator={navigator}/>;
       case 'meme':
-        return <MemeScene navigator={navigator} onPress={this.nextPage}/>;
+        return <MemeScene navigator={navigator}/>;
       case 'camera':
-        return <CameraScene navigator={navigator} onPress={this.nextPage}/>;
+        return <CameraScene navigator={navigator}/>;
       case 'cool':
-        return <CoolScene navigator={navigator} onPress={this.nextPage}/ >;
+        return <CoolScene navigator={navigator}/ >;
     }
   }
 }

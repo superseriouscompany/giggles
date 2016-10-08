@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We use this to take pictures of the insides of your pockets or purse when you least expect it.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We use this to figure out where you live and sneak in at night when you&apos;re asleep.</string>
 	<key>CFBundleDevelopmentRegion</key>
