@@ -7,7 +7,8 @@ import {
   View,
   TouchableHighlight,
   Image,
-  Dimensions
+  Dimensions,
+  Alert
 } from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
@@ -103,6 +104,14 @@ class AudioExample extends Component {
     this.setState({playing: true});
   }
 
+  _submit() {
+    Alert.alert('Nope', 'Nice try', [{text: 'Fine.'}]);
+  }
+
+  _cancel() {
+    this.setState({stoppedRecording: false, recording: false});
+  }
+
   render() {
     const imageWidth = 420, imageHeight = 420;
 
@@ -115,7 +124,7 @@ class AudioExample extends Component {
           </View>
         : this.state.stoppedRecording ? // if recording and done, show cancel button
           <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.cancel}>
+            <TouchableHighlight onPress={this._cancel.bind(this)}>
             <Image source={require('../images/Cancel.png')}/>
             </TouchableHighlight>
           </View>
@@ -137,10 +146,10 @@ class AudioExample extends Component {
 
         { this.state.stoppedRecording ?
           <View style={styles.bottomTwoButton}>
-            <TouchableHighlight onPress={this.replay}>
+            <TouchableHighlight onPress={this._play.bind(this)}>
               <Image source={require('../images/Play.png')}/>
             </TouchableHighlight>
-            <TouchableHighlight onPress={this.submit}>
+            <TouchableHighlight onPress={this._submit.bind(this)}>
               <Image source={require('../images/Submit.png')}/>
             </TouchableHighlight>
           </View>
