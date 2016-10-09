@@ -10,15 +10,12 @@ import {
   SourceScene,
   CameraScene,
   CoolScene,
-  CaptionCreateScene
 } from './components/scenes';
 
 const routes = [
   { slug: 'meme' },
-  // { slug: 'captionCreate'},
   { slug: 'source'},
   { slug: 'cool' },
-  // { slug: 'camera' },
 ]
 
 let flipped;
