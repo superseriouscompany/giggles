@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+
 import {
-  View,
-  Text,
+  AppRegistry,
   StyleSheet,
-  Dimensions,
+  Text,
+  View,
   TouchableHighlight,
   Image,
+  Dimensions,
   Alert
-} from 'react-native'
+} from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
-
-class CaptionCreate extends Component  {
+class Caption extends Component {
   constructor(props) {
     super(props);
-    this.navigator = props.navigator;
+
     this.state = {
-      progress: 0,
       currentTime: 0.0,
       recording: false,
       stoppedRecording: false,
@@ -27,57 +27,7 @@ class CaptionCreate extends Component  {
     };
   }
 
-  render = () => {
-    const imageWidth = 420, imageHeight = 420;
-
-    return (
-
-      <View style={[styles.container, styles.blackBg]}>
-        { !this.state.isRecording ? // if not recording, show regular top menubar
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.tapOriginalsList}>
-              <Image source={require('../images/SeeAllOriginals.png')}/>
-            </TouchableHighlight>
-
-            <TouchableHighlight onPress={this.tapRemixesList}>
-              <Image source={require('../images/SeeRemixes.png')}/>
-            </TouchableHighlight>
-          </View>
-        : this.state.isDone ? // if recording and done, show cancel button
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.cancel}>
-            <Image source={require('../images/Cancel.png')}/>
-            </TouchableHighlight>
-          </View>
-        : // if recording and not done, show progress bar
-          <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
-        }
-
-        <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
-          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
-        </View>
-
-        { !this.state.isDone ?
-          <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPress={this.record}>
-              <Image source={require('../images/Record.png')}/>
-            </TouchableHighlight>
-          </View>
-        :
-          <View style={styles.bottomTwoButton}>
-            <TouchableHighlight onPress={this.replay}>
-              <Image source={require('../images/Play.png')}/>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={this.submit}>
-              <Image source={require('../images/Submit.png')}/>
-            </TouchableHighlight>
-          </View>
-        }
-      </View>
-    )
-  }
-
-  prepareRecordingPath = (audioPath) => {
+  prepareRecordingPath(audioPath){
     AudioRecorder.prepareRecordingAtPath(audioPath, {
       SampleRate: 22050,
       Channels: 1,
@@ -90,63 +40,117 @@ class CaptionCreate extends Component  {
   componentDidMount() {
     let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
     this.prepareRecordingPath(audioPath);
-    console.log("caption scene mounted");
-    // AudioRecorder.onProgress = (data) => {
-    //   console.log("Got progress", data);
-    //   this.setState({currentTime: Math.floor(data.currentTime)});
-    // };
-    // AudioRecorder.onFinished = (data) => {
-    //   this.setState({finished: data.finished});
-    //   console.log(`Finished recording: ${data.finished}`);
-    // };
+    AudioRecorder.onProgress = (data) => {
+      this.setState({currentTime: Math.floor(data.currentTime)});
+    };
+    AudioRecorder.onFinished = (data) => {
+      this.setState({finished: data.finished});
+      console.log(`Finished recording: ${data.finished}`);
+    };
   }
 
-  record = () => {
+  _renderButton(title, onPress, active) {
+    var style = (active) ? styles.activeButtonText : styles.buttonText;
+
+    return (
+      <TouchableHighlight style={styles.button} onPress={onPress}>
+        <Text style={style}>
+          {title}
+        </Text>
+      </TouchableHighlight>
+    );
+  }
+
+  _stop() {
+    AudioRecorder.stopRecording();
+    this.setState({stoppedRecording: true, recording: false});
+  }
+
+  _record() {
+    if(this.state.stoppedRecording){
+      let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
+      this.prepareRecordingPath(audioPath);
+    }
     AudioRecorder.startRecording();
-
-    this.setState({
-      isRecording: true
-    })
-
-    setTimeout(() => {
-      AudioRecorder.stopRecording();
-      console.log("hit timeout jam");
-      this.setState({
-        isDone: true
-      })
-    }, 2000);
-
+    this.setState({recording: true, playing: false});
   }
 
-  replay = () => {
+ _play() {
+    if (this.state.recording) {
+      this._stop();
+      this.setState({recording: false});
+    }
     AudioRecorder.playRecording();
+    this.setState({playing: true});
   }
 
-  cancel = () => {
-    this.setState({
-      isRecording: false,
-      isDone: false
-    })
+  _submit() {
+    Alert.alert('Nope', 'Nice try', [{text: 'Fine.'}]);
   }
 
-  tapOriginalsList = () => {
-    this.navigator.navigate('meme');
+  _cancel() {
+    this.setState({stoppedRecording: false, recording: false});
   }
 
-  tapRemixesList = () => {
-    this.navigator.navigate('cool');
+  render() {
+    const imageWidth = 420, imageHeight = 420;
+
+    return (
+      <View style={[styles.container, styles.blackBg]}>
+        { this.state.recording ? // if recording, show progress
+          <View>
+            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
+            <Text style={{color: 'white'}}>{this.state.currentTime}s</Text>
+          </View>
+        : this.state.stoppedRecording ? // if recording and done, show cancel button
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={this._cancel.bind(this)}>
+            <Image source={require('../images/Cancel.png')}/>
+            </TouchableHighlight>
+          </View>
+        : // default: show top bar
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={this.tapOriginalsList}>
+              <Image source={require('../images/SeeAllOriginals.png')}/>
+            </TouchableHighlight>
+
+            <TouchableHighlight onPress={this.tapRemixesList}>
+              <Image source={require('../images/SeeRemixes.png')}/>
+            </TouchableHighlight>
+          </View>
+        }
+
+        <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
+          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+        </View>
+
+        { this.state.stoppedRecording ?
+          <View style={styles.bottomTwoButton}>
+            <TouchableHighlight onPress={this._play.bind(this)}>
+              <Image source={require('../images/Play.png')}/>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={this._submit.bind(this)}>
+              <Image source={require('../images/Submit.png')}/>
+            </TouchableHighlight>
+          </View>
+        :
+          <View style={styles.bottomMiddle}>
+            <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
+              <Image source={require('../images/Record.png')}/>
+            </TouchableHighlight>
+          </View>
+        }
+      </View>
+    );
   }
 }
 
-const styles = StyleSheet.create({
-  debug: {
-    backgroundColor: 'pink'
-  },
+var styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-between',
     flex: 1,
+    justifyContent: 'space-between',
     paddingTop: 30,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   blackBg: {
     backgroundColor: 'black'
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  }
-})
+  },
+});
 
-module.exports = CaptionCreate;
+module.exports = Caption;
