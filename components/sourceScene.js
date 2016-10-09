@@ -68,6 +68,11 @@ class Source extends Component  {
               <View style={styles.topRow}>
                 <Image source={require('../images/Recording.png')}/>
               </View>
+              <View style={styles.bottomMiddle}>
+                <TouchableHighlight onPress={this.tapStopMicrophone}>
+                  <Image source={require('../images/StopRecord.png')}/>
+                </TouchableHighlight>
+              </View>
             </View>
           }
 
@@ -112,6 +117,12 @@ class Source extends Component  {
 
       return setTimeout(cool.bind(this), 10);
     }
+  }
+
+  tapStopMicrophone = () => {
+    return this.setState({
+      isDone: true
+    })
   }
 
   cancel = () => {
