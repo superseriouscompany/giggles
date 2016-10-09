@@ -5,17 +5,12 @@ import {
   Dimensions
 } from 'react-native';
 
-import {
-  CaptionScene,
-  SourceScene,
-  CameraScene,
-  CoolScene,
-} from './components/scenes';
+import CaptionScene from './components/captionScene';
+import CaptionsScene from './components/captionsScene';
 
 const routes = [
   { slug: 'caption' },
-  { slug: 'source'},
-  { slug: 'cool' },
+  { slug: 'captions'},
 ]
 
 let flipped;
@@ -28,7 +23,7 @@ class RootNav extends Component {
   render = () => {
     return (
       <Navigator
-        initialRoute={routes[0]}
+        initialRoute={routes[1]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
         style={{
@@ -48,16 +43,10 @@ class RootNav extends Component {
     }
 
     switch(route.slug) {
-      case 'source':
-        return <SourceScene navigator={navigator}/>;
+      case 'captions':
+        return <CaptionsScene navigator={navigator}/>;
       case 'caption':
         return <CaptionScene navigator={navigator}/>;
-      case 'camera':
-        return <CameraScene navigator={navigator}/>;
-      case 'cool':
-        return <CoolScene navigator={navigator} />;
-      case 'captionCreate':
-        return <CaptionCreateScene navigator={navigator} />;
     }
   }
 }
