@@ -14,9 +14,9 @@ import {
 } from './components/scenes';
 
 const routes = [
+  { slug: 'meme' },
   { slug: 'captionCreate'},
   { slug: 'source'},
-  { slug: 'meme' },
   { slug: 'cool' },
   // { slug: 'camera' },
 ]

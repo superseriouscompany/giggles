@@ -9,12 +9,21 @@ import {
   Alert
 } from 'react-native'
 
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
+
+
 class CaptionCreate extends Component  {
   constructor(props) {
     super(props);
     this.navigator = props.navigator;
     this.state = {
-      progress: 0
+      progress: 0,
+      currentTime: 0.0,
+      recording: false,
+      stoppedRecording: false,
+      stoppedPlaying: false,
+      playing: false,
+      finished: false
     };
   }
 
@@ -22,7 +31,11 @@ class CaptionCreate extends Component  {
     const imageWidth = 420, imageHeight = 420;
 
     return (
+
       <View style={[styles.container, styles.blackBg]}>
+        <View>
+          <Text style={{color: 'white'}}>Halp {this.currentTime}</Text>
+        </View>
         { !this.state.isRecording ? // if not recording, show regular top menubar
           <View style={styles.topRow}>
             <TouchableHighlight onPress={this.tapOriginalsList}>
@@ -49,7 +62,7 @@ class CaptionCreate extends Component  {
 
         { !this.state.isDone ?
           <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPress={this.tapMicrophone}>
+            <TouchableHighlight onPress={this.record}>
               <Image source={require('../images/Record.png')}/>
             </TouchableHighlight>
           </View>
@@ -67,26 +80,49 @@ class CaptionCreate extends Component  {
     )
   }
 
-  tapMicrophone = () => {
+  prepareRecordingPath = (audioPath) => {
+    AudioRecorder.prepareRecordingAtPath(audioPath, {
+      SampleRate: 22050,
+      Channels: 1,
+      AudioQuality: "Low",
+      AudioEncoding: "aac",
+      AudioEncodingBitRate: 32000
+    });
+  }
+
+  componentDidMount() {
+    let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
+    this.prepareRecordingPath(audioPath);
+    console.log("caption scene mounted");
+    // AudioRecorder.onProgress = (data) => {
+    //   console.log("Got progress", data);
+    //   this.setState({currentTime: Math.floor(data.currentTime)});
+    // };
+    // AudioRecorder.onFinished = (data) => {
+    //   this.setState({finished: data.finished});
+    //   console.log(`Finished recording: ${data.finished}`);
+    // };
+  }
+
+  record = () => {
+    AudioRecorder.startRecording();
+
     this.setState({
       isRecording: true
     })
 
-    let progress = 0;
-    setTimeout(cool.bind(this), 10);
-    function cool() {
+    setTimeout(() => {
+      AudioRecorder.stopRecording();
+      console.log("hit timeout jam");
       this.setState({
-        progress: ++progress
-      });
+        isDone: true
+      })
+    }, 2000);
 
-      if( progress > 100 ) {
-        return this.setState({
-          isDone: true
-        })
-      }
+  }
 
-      return setTimeout(cool.bind(this), 10);
-    }
+  replay = () => {
+    AudioRecorder.playRecording();
   }
 
   cancel = () => {
