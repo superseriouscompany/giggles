@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-var windowSize = Dimensions.get('window'); // TODO: remove all Dimensions gets
+var windowSize = Dimensions.get('window');
 
 const imageWidth = 200, imageHeight = 100;
 var windowRatio = windowSize.width / windowSize.height;
@@ -63,7 +63,7 @@ class Source extends Component  {
               </TouchableHighlight>
             </View>
           : // if recording and not done, show progress bar
-            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
+            <View style={{width: windowSize.width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
           }
 
           { !this.state.isDone ?
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     justifyContent: 'space-between',
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: windowSize.width,
+    height: windowSize.height,
   },
   blackBg: {
     backgroundColor: 'black'
