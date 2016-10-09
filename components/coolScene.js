@@ -24,8 +24,6 @@ class Cool extends Component  {
     this._randomPhoto().then(function(photo) {
       console.log("got photo", photo);
       var body = new FormData();
-      body.append('cool', 'nice');
-      body.append('good', 'great');
       body.append('photo', {...photo, name: 'photo.jpg'});
 
       var xhr = new XMLHttpRequest;
