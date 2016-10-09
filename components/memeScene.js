@@ -82,7 +82,10 @@ class AudioExample extends Component {
   }
 
   _record() {
-    console.log("triggered")
+    console.log("dopiness");
+    if( this.state.recording ) {
+      return this._stop();
+    }
     if(this.state.stoppedRecording){
       let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
       this.prepareRecordingPath(audioPath);
@@ -105,7 +108,18 @@ class AudioExample extends Component {
 
     return (
       <View style={[styles.container, styles.blackBg]}>
-        { !this.state.recording ? // if not recording, show regular top menubar
+        { this.state.recording ? // if recording, show progress
+          <View>
+            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
+            <Text style={{color: 'white'}}>{this.state.currentTime}s</Text>
+          </View>
+        : this.state.stoppedRecording ? // if recording and done, show cancel button
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={this.cancel}>
+            <Image source={require('../images/Cancel.png')}/>
+            </TouchableHighlight>
+          </View>
+        : // default: show top bar
           <View style={styles.topRow}>
             <TouchableHighlight onPress={this.tapOriginalsList}>
               <Image source={require('../images/SeeAllOriginals.png')}/>
@@ -115,36 +129,25 @@ class AudioExample extends Component {
               <Image source={require('../images/SeeRemixes.png')}/>
             </TouchableHighlight>
           </View>
-        : this.state.stoppedRecording ? // if recording and done, show cancel button
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.cancel}>
-            <Image source={require('../images/Cancel.png')}/>
-            </TouchableHighlight>
-          </View>
-        : // if recording and not done, show progress bar
-          <View>
-            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
-            <Text style={{color: 'white'}}>{this.state.currentTime}s</Text>
-          </View>
         }
 
         <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
           <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         </View>
 
-        { !this.state.isDone ?
-          <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPress={this._record.bind(this)}>
-              <Image source={require('../images/Record.png')}/>
-            </TouchableHighlight>
-          </View>
-        :
+        { this.state.stoppedRecording ?
           <View style={styles.bottomTwoButton}>
             <TouchableHighlight onPress={this.replay}>
               <Image source={require('../images/Play.png')}/>
             </TouchableHighlight>
             <TouchableHighlight onPress={this.submit}>
               <Image source={require('../images/Submit.png')}/>
+            </TouchableHighlight>
+          </View>
+        :
+          <View style={styles.bottomMiddle}>
+            <TouchableHighlight onPress={this._record.bind(this)}>
+              <Image source={require('../images/Record.png')}/>
             </TouchableHighlight>
           </View>
         }
@@ -177,27 +180,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
-  progressText: {
-    paddingTop: 50,
-    fontSize: 50,
-    color: "#fff"
-  },
-  button: {
-    padding: 20
-  },
-  disabledButtonText: {
-    color: '#eee'
-  },
-  buttonText: {
-    fontSize: 20,
-    color: "#fff"
-  },
-  activeButtonText: {
-    fontSize: 20,
-    color: "#B81F00"
-  }
-
 });
 
 module.exports = AudioExample;
