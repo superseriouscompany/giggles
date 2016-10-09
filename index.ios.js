@@ -15,7 +15,7 @@ import {
 
 const routes = [
   { slug: 'meme' },
-  { slug: 'captionCreate'},
+  // { slug: 'captionCreate'},
   { slug: 'source'},
   { slug: 'cool' },
   // { slug: 'camera' },
