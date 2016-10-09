@@ -1,8 +1,20 @@
 var express = require('express');
 var multer  = require('multer');
-var upload  = multer({storage: multer.memoryStorage()});
 var app     = express();
+var UUID    = require('node-uuid');
 var port    = process.env.PORT || 3000;
+
+var storage = multer.diskStorage({
+  destination: 'captions/',
+  filename: function(req, file, cb) {
+    console.log(file);
+    const uuid = UUID.v1();
+    const extension = file.originalname.split('.')[1];
+    if( !extension )  { return cb(null, uuid); }
+    cb(null, `${uuid}.${extension}`);
+  }
+})
+var upload  = multer({storage: storage});
 
 app.get('/', function(req, res) {
   res.json({cool: 'nice'});
