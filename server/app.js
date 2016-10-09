@@ -15,6 +15,8 @@ var storage = multer.diskStorage({
 })
 var upload  = multer({storage: storage});
 
+var captions = [];
+
 app.get('/', function(req, res) {
   res.json({cool: 'nice'});
 })
@@ -26,33 +28,17 @@ app.post('/foo', upload.single('photo'), function(req, res) {
 
 app.post('/captions', upload.single('audio'), function(req, res) {
   console.log("got a post", req.file);
+  if( req.file && req.file.filename ) {
+    captions.push({
+      filename: req.file.filename
+    })
+  }
   res.json({cool: 'nice'});
 })
 
 app.get('/captions', function(req, res) {
   res.json({
-    captions: [
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-    ]
+    captions: captions
   })
 })
 

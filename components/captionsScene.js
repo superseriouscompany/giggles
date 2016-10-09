@@ -44,7 +44,7 @@ class CaptionsScene extends Component {
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
               <Image source={require('../images/Play.png')}/>
-              <Text style={styles.text}>{c}</Text>
+              <Text style={styles.text}>{c.filename}</Text>
             </View>
           ))}
         </ScrollView>
