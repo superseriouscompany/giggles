@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var RNUploader = require('NativeModules').RNUploader;
+
 import {
   View,
   Text,
