@@ -97,12 +97,13 @@ class AudioExample extends Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.progressText}>{this.state.currentTime}s</Text>
+
         <View style={styles.controls}>
           {this._renderButton("RECORD", () => {this._record()}, this.state.recording )}
           {this._renderButton("STOP", () => {this._stop()} )}
           {this._renderButton("PAUSE", () => {this._pause()} )}
           {this._renderButton("PLAY", () => {this._play()}, this.state.playing )}
-          <Text style={styles.progressText}>{this.state.currentTime}s</Text>
         </View>
       </View>
     );
