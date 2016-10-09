@@ -8,9 +8,9 @@ app.get('*', function(req, res) {
   res.json({cool: 'nice'});
 })
 
-app.post('/foo', upload.array(), function(req, res) {
-  console.log(req.body);
-  res.json(req.body);
+app.post('/foo', upload.single('photo'), function(req, res) {
+  console.log("got a post", req.file);
+  res.json({cool: 'nice'});
 })
 
 app.listen(port, function() {

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We use this to look for pictures of your ex to tweet them at your parents.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We use this to take pictures of the insides of your pockets or purse when you least expect it.</string>
 	<key>NSMicrophoneUsageDescription</key>
