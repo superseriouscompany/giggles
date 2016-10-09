@@ -9,14 +9,16 @@ import {
   MemeScene,
   SourceScene,
   CameraScene,
-  CoolScene
+  CoolScene,
+  CaptionCreateScene
 } from './components/scenes';
 
 const routes = [
-  { slug: 'source', index: 0 },
-  { slug: 'meme', index: 1 },
-  { slug: 'camera', index: 2 },
-  { slug: 'cool', index: 3 }
+  { slug: 'captionCreate'},
+  { slug: 'source'},
+  { slug: 'meme' },
+  { slug: 'cool' },
+  // { slug: 'camera' },
 ]
 
 let flipped;
@@ -56,7 +58,9 @@ class RootNav extends Component {
       case 'camera':
         return <CameraScene navigator={navigator}/>;
       case 'cool':
-        return <CoolScene navigator={navigator}/ >;
+        return <CoolScene navigator={navigator} />;
+      case 'captionCreate':
+        return <CaptionCreateScene navigator={navigator} />;
     }
   }
 }
