@@ -10,48 +10,31 @@ import {
 } from 'react-native';
 
 class CaptionsScene extends Component {
+  state = {
+    captions: []
+  }
+
+  componentDidMount() {
+    fetch('https://bf9083e7.ngrok.io/captions').then(function(response) {
+      if( response.status > 299 ) { return console.error(response.status); }
+      return response.json()
+    }).then((body) => {
+      console.log("got body", body);
+      this.setState({captions: body.captions})
+    }).catch(function(err) {
+      console.error(err);
+    })
+  }
+
 
   render() {
     const imageHeight = 420, imageWidth = 420;
-
-    const captions = [
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand',
-      'cool',
-      'nice',
-      'good',
-      'great',
-      'grand'
-    ]
 
     return (
       <View style={styles.container}>
         <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         <ScrollView style={styles.scrollContainer}>
-          {captions.map((c, i) => (
+          {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
               <Image source={require('../images/Play.png')}/>
               <Text style={styles.text}>{c}</Text>
