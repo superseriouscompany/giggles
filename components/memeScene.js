@@ -114,7 +114,29 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2b608a",
+    justifyContent: 'space-between',
+    paddingTop: 30,
+    paddingBottom: 30,
   },
+  blackBg: {
+    backgroundColor: 'black'
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  bottomMiddle: {
+    alignItems: 'center',
+  },
+  bottomTwoButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  // OLD
   controls: {
     justifyContent: 'center',
     alignItems: 'center',
