@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
 import {
-  View,
-  Text,
+  Dimensions,
   Image,
   StyleSheet,
   ScrollView,
-  Dimensions
+  Text,
+  TouchableHighlight,
+  View,
 } from 'react-native';
+
+import {AudioPlayer} from 'react-native-audio';
 
 class CaptionsScene extends Component {
   constructor(props) {
@@ -32,6 +35,10 @@ class CaptionsScene extends Component {
     })
   }
 
+  _play = (filename) => {
+    const url = `https://bf9083e7.ngrok.io/${filename}`;
+    AudioPlayer.playWithUrl(url);
+  }
 
   render() {
     const imageHeight = 420, imageWidth = 420;
@@ -43,7 +50,9 @@ class CaptionsScene extends Component {
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
-              <Image source={require('../images/Play.png')}/>
+              <TouchableHighlight onPress={() => this._play(c.filename)}>
+                <Image source={require('../images/Play.png')} />
+              </TouchableHighlight>
               <Text style={styles.text}>{c.filename}</Text>
             </View>
           ))}

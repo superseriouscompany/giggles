@@ -17,6 +17,8 @@ var upload  = multer({storage: storage});
 
 var captions = [];
 
+app.use(express.static('captions'));
+
 app.get('/', function(req, res) {
   res.json({cool: 'nice'});
 })
