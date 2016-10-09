@@ -67,7 +67,6 @@ class AudioExample extends Component {
   }
 
   _record() {
-    if( this.state.recording ) { return this._stop(); }
     if(this.state.stoppedRecording){
       let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
       this.prepareRecordingPath(audioPath);
@@ -136,7 +135,7 @@ class AudioExample extends Component {
           </View>
         :
           <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPress={this._record.bind(this)}>
+            <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
               <Image source={require('../images/Record.png')}/>
             </TouchableHighlight>
           </View>
