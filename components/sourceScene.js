@@ -63,7 +63,12 @@ class Source extends Component  {
               </TouchableHighlight>
             </View>
           : // if recording and not done, show progress bar
-            <View style={{width: windowSize.width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
+            <View>
+              <View style={{width: windowSize.width * (this.state.progress / 100), height: 3, backgroundColor: '#D0021B'}}></View>
+              <View style={styles.topRow}>
+                <Image source={require('../images/Recording.png')}/>
+              </View>
+            </View>
           }
 
           { !this.state.isDone ?
