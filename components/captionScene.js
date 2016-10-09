@@ -8,8 +8,7 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
-  Alert,
-  CameraRoll
+  Alert
 } from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
