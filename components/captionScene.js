@@ -33,9 +33,6 @@ class CaptionCreate extends Component  {
     return (
 
       <View style={[styles.container, styles.blackBg]}>
-        <View>
-          <Text style={{color: 'white'}}>Halp {this.currentTime}</Text>
-        </View>
         { !this.state.isRecording ? // if not recording, show regular top menubar
           <View style={styles.topRow}>
             <TouchableHighlight onPress={this.tapOriginalsList}>
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: 'space-between',
-    height: Dimensions.get('window').height,
+    flex: 1,
     paddingTop: 30,
     paddingBottom: 30
   },
