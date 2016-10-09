@@ -10,8 +10,14 @@ import {
 } from 'react-native';
 
 class CaptionsScene extends Component {
-  state = {
-    captions: []
+  constructor(props) {
+    super(props);
+
+    this.navigator = props.navigator;
+
+    this.state = {
+      captions: []
+    }
   }
 
   componentDidMount() {
@@ -32,6 +38,7 @@ class CaptionsScene extends Component {
 
     return (
       <View style={styles.container}>
+        <Text onPress={() => this.navigator.pop()}>back</Text>
         <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (

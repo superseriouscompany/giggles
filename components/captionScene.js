@@ -17,6 +17,8 @@ class Caption extends Component {
   constructor(props) {
     super(props);
 
+    this.navigator = props.navigator;
+
     this.state = {
       currentTime: 0.0,
       recording: false,
@@ -105,6 +107,10 @@ class Caption extends Component {
 
   _cancel() {
     this.setState({stoppedRecording: false, recording: false});
+  }
+
+  tapRemixesList = () => {
+    this.navigator.navigate('captions');
   }
 
   render() {

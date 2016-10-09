@@ -23,7 +23,7 @@ class RootNav extends Component {
   render = () => {
     return (
       <Navigator
-        initialRoute={routes[1]}
+        initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
         style={{
