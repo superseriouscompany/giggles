@@ -6,14 +6,14 @@ import {
 } from 'react-native';
 
 import {
-  MemeScene,
+  CaptionScene,
   SourceScene,
   CameraScene,
   CoolScene,
 } from './components/scenes';
 
 const routes = [
-  { slug: 'meme' },
+  { slug: 'caption' },
   { slug: 'source'},
   { slug: 'cool' },
 ]
@@ -50,8 +50,8 @@ class RootNav extends Component {
     switch(route.slug) {
       case 'source':
         return <SourceScene navigator={navigator}/>;
-      case 'meme':
-        return <MemeScene navigator={navigator}/>;
+      case 'caption':
+        return <CaptionScene navigator={navigator}/>;
       case 'camera':
         return <CameraScene navigator={navigator}/>;
       case 'cool':
