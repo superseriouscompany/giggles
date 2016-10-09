@@ -61,32 +61,13 @@ class AudioExample extends Component {
     );
   }
 
-  _pause() {
-    if (this.state.recording){
-      AudioRecorder.pauseRecording();
-      this.setState({stoppedRecording: true, recording: false});
-    }
-    else if (this.state.playing) {
-      AudioRecorder.pausePlaying();
-      this.setState({playing: false, stoppedPlaying: true});
-    }
-  }
-
   _stop() {
-    if (this.state.recording) {
-      AudioRecorder.stopRecording();
-      this.setState({stoppedRecording: true, recording: false});
-    } else if (this.state.playing) {
-      AudioRecorder.stopPlaying();
-      this.setState({playing: false, stoppedPlaying: true});
-    }
+    AudioRecorder.stopRecording();
+    this.setState({stoppedRecording: true, recording: false});
   }
 
   _record() {
-    console.log("dopiness");
-    if( this.state.recording ) {
-      return this._stop();
-    }
+    if( this.state.recording ) { return this._stop(); }
     if(this.state.stoppedRecording){
       let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
       this.prepareRecordingPath(audioPath);
