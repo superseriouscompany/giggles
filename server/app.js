@@ -7,7 +7,6 @@ var port    = process.env.PORT || 3000;
 var storage = multer.diskStorage({
   destination: 'captions/',
   filename: function(req, file, cb) {
-    console.log(file);
     const uuid = UUID.v1();
     const extension = file.originalname.split('.')[1];
     if( !extension )  { return cb(null, uuid); }
