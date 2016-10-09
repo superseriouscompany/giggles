@@ -13,6 +13,11 @@ app.post('/foo', upload.single('photo'), function(req, res) {
   res.json({cool: 'nice'});
 })
 
+app.post('/captions', upload.single('audio'), function(req, res) {
+  console.log("got a post", req.file);
+  res.json({cool: 'nice'});
+})
+
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 })

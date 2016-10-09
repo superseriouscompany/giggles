@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
-  Alert
+  Alert,
+  CameraRoll
 } from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
@@ -75,7 +76,7 @@ class Caption extends Component {
     this.setState({recording: true, playing: false});
   }
 
- _play() {
+  _play() {
     if (this.state.recording) {
       this._stop();
       this.setState({recording: false});
@@ -85,7 +86,22 @@ class Caption extends Component {
   }
 
   _submit() {
-    Alert.alert('Nope', 'Nice try', [{text: 'Fine.'}]);
+    const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
+    console.log(path);
+
+    let body = new FormData();
+    body.append('cool', 'nice');
+    body.append('good', 'great');
+    body.append('audio', {uri: 'file://'+path, name: 'test.aac'});
+
+    var xhr = new XMLHttpRequest;
+    xhr.onreadystatechange = (e) => {
+      if( xhr.readyState !== 4 ) { return; }
+
+      console.log(xhr.status, xhr.responseText);
+    }
+    xhr.open('POST', 'https://bf9083e7.ngrok.io/captions');
+    xhr.send(body);
   }
 
   _cancel() {
