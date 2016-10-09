@@ -12,6 +12,22 @@ import {
 } from 'react-native'
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+var windowSize = Dimensions.get('window'); // TODO: remove all Dimensions gets
+
+const imageWidth = 200, imageHeight = 100;
+var windowRatio = windowSize.width / windowSize.height;
+var imageRatio = imageWidth / imageHeight;
+
+var newImageWidth, newImageHeight;
+if( imageRatio >= windowRatio ) {
+  // wide image
+  newImageWidth = windowSize.width;
+  newImageHeight = newImageWidth / (imageWidth / imageHeight);
+} else {
+  // tall image
+  newImageHeight = windowSize.height;
+  newImageWidth = (imageWidth / imageHeight) * newImageHeight;
+}
 
 class Source extends Component  {
   constructor(props) {
@@ -23,52 +39,50 @@ class Source extends Component  {
   }
 
   render = () => {
-    const imageWidth = 200, imageHeight = 200;
-
     return (
-      <View style={[styles.container, styles.blackBg]}>
-        <StatusBar backgroundColor="red" barStyle="light-content"/>
+      <View style={styles.imageBackground}>
+        <StatusBar backgroundColor="black" barStyle="light-content"/>
 
-        { !this.state.isRecording ? // if not recording, show regular top menubar
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.tapOriginalsList}>
-              <Image source={require('../images/SeeAllOriginals.png')}/>
-            </TouchableHighlight>
+        <Image style={styles.mainImage} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}}></Image>
 
-            <TouchableHighlight onPress={this.tapRemixesList}>
-              <Image source={require('../images/SeeRemixes.png')}/>
-            </TouchableHighlight>
-          </View>
-        : this.state.isDone ? // if recording and done, show cancel button
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.cancel}>
-            <Image source={require('../images/Cancel.png')}/>
-            </TouchableHighlight>
-          </View>
-        : // if recording and not done, show progress bar
-          <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
-        }
+        <View style={styles.container}>
+          { !this.state.isRecording ? // if not recording, show regular top menubar
+            <View style={styles.topRow}>
+              <TouchableHighlight onPress={this.tapOriginalsList}>
+                <Image source={require('../images/SeeAllOriginals.png')}/>
+              </TouchableHighlight>
 
-        <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
-          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+              <TouchableHighlight onPress={this.tapRemixesList}>
+                <Image source={require('../images/SeeRemixes.png')}/>
+              </TouchableHighlight>
+            </View>
+          : this.state.isDone ? // if recording and done, show cancel button
+            <View style={styles.topRow}>
+              <TouchableHighlight onPress={this.cancel}>
+              <Image source={require('../images/Cancel.png')}/>
+              </TouchableHighlight>
+            </View>
+          : // if recording and not done, show progress bar
+            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
+          }
+
+          { !this.state.isDone ?
+            <View style={styles.bottomMiddle}>
+              <TouchableHighlight onPress={this.tapMicrophone}>
+                <Image source={require('../images/Record.png')}/>
+              </TouchableHighlight>
+            </View>
+          :
+            <View style={styles.bottomTwoButton}>
+              <TouchableHighlight onPress={this.replay}>
+                <Image source={require('../images/Play.png')}/>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.submit}>
+                <Image source={require('../images/Submit.png')}/>
+              </TouchableHighlight>
+            </View>
+          }
         </View>
-
-        { !this.state.isDone ?
-          <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPress={this.tapMicrophone}>
-              <Image source={require('../images/Record.png')}/>
-            </TouchableHighlight>
-          </View>
-        :
-          <View style={styles.bottomTwoButton}>
-            <TouchableHighlight onPress={this.replay}>
-              <Image source={require('../images/Play.png')}/>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={this.submit}>
-              <Image source={require('../images/Submit.png')}/>
-            </TouchableHighlight>
-          </View>
-        }
       </View>
     )
   }
@@ -127,10 +141,27 @@ const styles = StyleSheet.create({
   debug: {
     backgroundColor: 'pink'
   },
+  imageBackground: {
+    backgroundColor: 'black',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mainImage: {
+    width: newImageWidth,
+    height: newImageHeight,
+  },
   container: {
-    justifyContent: 'space-between',
-    height: Dimensions.get('window').height,
+    position: 'absolute',
+    top: 0,
+    left: 0,
     paddingTop: STATUSBAR_HEIGHT,
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'space-between',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   blackBg: {
     backgroundColor: 'black'
