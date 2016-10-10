@@ -5,18 +5,12 @@ import {
   Dimensions
 } from 'react-native';
 
-import {
-  MemeScene,
-  SourceScene,
-  CameraScene,
-  CoolScene
-} from './components/scenes';
+import CaptionScene from './components/captionScene';
+import CaptionsScene from './components/captionsScene';
 
 const routes = [
-  { slug: 'source', index: 0 },
-  { slug: 'meme', index: 1 },
-  { slug: 'camera', index: 2 },
-  { slug: 'cool', index: 3 }
+  { slug: 'caption' },
+  { slug: 'captions'},
 ]
 
 let flipped;
@@ -49,14 +43,10 @@ class RootNav extends Component {
     }
 
     switch(route.slug) {
-      case 'source':
-        return <SourceScene navigator={navigator} onPress={this.nextPage}/>;
-      case 'meme':
-        return <MemeScene navigator={navigator} onPress={this.nextPage}/>;
-      case 'camera':
-        return <CameraScene navigator={navigator} onPress={this.nextPage}/>;
-      case 'cool':
-        return <CoolScene navigator={navigator} onPress={this.nextPage}/ >;
+      case 'captions':
+        return <CaptionsScene navigator={navigator}/>;
+      case 'caption':
+        return <CaptionScene navigator={navigator}/>;
     }
   }
 }
