@@ -112,7 +112,7 @@ class Caption extends Component {
     let body = new FormData();
     body.append('cool', 'nice');
     body.append('good', 'great');
-    body.append('audio', {uri: 'file://'+path, name: 'test.aac'});
+    body.append('audio', {uri: 'file://'+path, name: 'test.aac', type: 'audio/aac'});
 
     var xhr = new XMLHttpRequest;
     xhr.onreadystatechange = (e) => {
