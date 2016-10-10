@@ -18,9 +18,6 @@ class SubmissionsScene extends Component {
         <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
           <Text style={styles.button}>Upload Photo</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.press.bind(this)}>
-          <Text style={styles.button}>Random Photo</Text>
-        </TouchableOpacity>
       </View>
     )
   }
@@ -38,52 +35,22 @@ class SubmissionsScene extends Component {
         return Alert.alert('ImagePicker Error: ' + response.error);
       }
 
-      console.log("chosen or taken", photo);
       var body = new FormData();
-      body.append('photo', {uri: response.origURL, name: 'photo.jpg'});
+      body.append('photo', {uri: response.origURL || response.uri, name: 'photo.jpg'});
 
       var xhr = new XMLHttpRequest;
       xhr.onreadystatechange = (e) => {
         if( xhr.readyState !== 4 ) { return; }
 
-        Alert.alert(xhr.status + ': ' + xhr.responseText);
-      }
-      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
-      xhr.send(body);
-    })
-  }
-
-  press = () => {
-    this._randomPhoto().then(function(photo) {
-      console.log("random", photo);
-      var body = new FormData();
-      body.append('photo', {...photo, name: 'photo.jpg'});
-
-      var xhr = new XMLHttpRequest;
-      xhr.onreadystatechange = (e) => {
-        if( xhr.readyState !== 4 ) { return; }
-
-        Alert.alert(xhr.status + ': ' + xhr.responseText);
-      }
-      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
-      xhr.send(body);
-    })
-  }
-
-  _randomPhoto = () => {
-    return CameraRoll.getPhotos(
-      {first: 20}
-    ).then(
-      (data) => {
-        var edges = data.edges;
-        var edge = edges[0];
-        var randomPhoto = edge && edge.node && edge.node.image;
-        if (randomPhoto) {
-          return randomPhoto;
+        if( xhr.status === 200 ) {
+          Alert.alert("Uploaded.")
+        } else {
+          Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
-      },
-      (error) => undefined
-    );
+      }
+      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
+      xhr.send(body);
+    })
   }
 }
 
