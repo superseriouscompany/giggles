@@ -4,7 +4,7 @@ var app     = express();
 var UUID    = require('node-uuid');
 var port    = process.env.PORT || 3000;
 
-var storage = multer.diskStorage({
+var captionStorage = multer.diskStorage({
   destination: 'captions/',
   filename: function(req, file, cb) {
     const uuid = UUID.v1();
@@ -13,7 +13,18 @@ var storage = multer.diskStorage({
     cb(null, `${uuid}.${extension}`);
   }
 })
-var upload  = multer({storage: storage});
+var submissionStorage = multer.diskStorage({
+  destination: 'submissions/',
+  filename: function(req, file, cb) {
+    const uuid = UUID.v1();
+    const extension = file.originalname.split('.')[1];
+    if( !extension )  { return cb(null, uuid); }
+    cb(null, `${uuid}.${extension}`);
+  }
+})
+
+var captionUpload    = multer({storage: captionStorage});
+var submissionUpload = multer({storage: submissionStorage});
 
 var captions = [];
 
@@ -23,12 +34,12 @@ app.get('/', function(req, res) {
   res.json({cool: 'nice'});
 })
 
-app.post('/foo', upload.single('photo'), function(req, res) {
+app.post('/foo', submissionUpload.single('photo'), function(req, res) {
   console.log("got a post", req.file);
   res.json({cool: 'nice'});
 })
 
-app.post('/captions', upload.single('audio'), function(req, res) {
+app.post('/captions', captionUpload.single('audio'), function(req, res) {
   console.log("got a post", req.file);
   if( req.file && req.file.filename ) {
     captions.push({

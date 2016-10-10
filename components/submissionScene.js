@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {
   Alert,
+  CameraRoll,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,6 +17,9 @@ class SubmissionsScene extends Component {
       <View style={styles.bg}>
         <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
           <Text style={styles.button}>Upload Photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.press.bind(this)}>
+          <Text style={styles.button}>Random Photo</Text>
         </TouchableOpacity>
       </View>
     )
@@ -34,8 +38,54 @@ class SubmissionsScene extends Component {
         return Alert.alert('ImagePicker Error: ' + response.error);
       }
 
-      Alert.alert(response.uri);
+      var body = new FormData();
+      console.log(response);
+
+      body.append('cool', 'nice');
+      // body.append('photo', {uri: response.origURL, name: 'photo.jpg'});
+
+      var xhr = new XMLHttpRequest;
+      xhr.onreadystatechange = (e) => {
+        if( xhr.readyState !== 4 ) { return; }
+
+        Alert.alert(xhr.status + ': ' + xhr.responseText);
+      }
+      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
+      xhr.send(body);
     })
+  }
+
+  press = () => {
+    this._randomPhoto().then(function(photo) {
+      console.log("got photo", photo);
+      var body = new FormData();
+      body.append('photo', {...photo, name: 'photo.jpg'});
+
+      var xhr = new XMLHttpRequest;
+      xhr.onreadystatechange = (e) => {
+        if( xhr.readyState !== 4 ) { return; }
+
+        console.log(xhr.status, xhr.responseText);
+      }
+      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
+      xhr.send(body);
+    })
+  }
+
+  _randomPhoto = () => {
+    return CameraRoll.getPhotos(
+      {first: 20}
+    ).then(
+      (data) => {
+        var edges = data.edges;
+        var edge = edges[Math.floor(Math.random() * edges.length)];
+        var randomPhoto = edge && edge.node && edge.node.image;
+        if (randomPhoto) {
+          return randomPhoto;
+        }
+      },
+      (error) => undefined
+    );
   }
 }
 
