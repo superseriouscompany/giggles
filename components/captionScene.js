@@ -1,22 +1,41 @@
 import React, {Component} from 'react';
 
 import {
+  Alert,
   AppRegistry,
+  Dimensions,
+  Image,
+  Platform,
+  StatusBar,
   StyleSheet,
   Text,
-  View,
   TouchableHighlight,
-  Image,
-  Dimensions,
-  Alert
+  View,
 } from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+var windowSize = Dimensions.get('window');
+
+const imageWidth = 200, imageHeight = 100;
+const windowRatio = windowSize.width / windowSize.height;
+const imageRatio = imageWidth / imageHeight;
+
+let newImageWidth, newImageHeight;
+if( imageRatio >= windowRatio ) {
+  // wide image
+  newImageWidth = windowSize.width;
+  newImageHeight = newImageWidth / (imageWidth / imageHeight);
+} else {
+  // tall image
+  newImageHeight = windowSize.height;
+  newImageWidth = (imageWidth / imageHeight) * newImageHeight;
+}
+
 class Caption extends Component {
   constructor(props) {
     super(props);
-
     this.navigator = props.navigator;
 
     this.state = {
@@ -114,73 +133,93 @@ class Caption extends Component {
   }
 
   render() {
-    const imageWidth = 420, imageHeight = 420;
-
     return (
-      <View style={[styles.container, styles.blackBg]}>
-        { this.state.recording ? // if recording, show progress
-          <View>
-            <View style={{width: Dimensions.get('window').width * (this.state.progress / 100), height: 1, backgroundColor: 'red'}}></View>
-            <Text style={{color: 'white'}}>{this.state.currentTime}s</Text>
-          </View>
-        : this.state.stoppedRecording ? // if recording and done, show cancel button
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this._cancel.bind(this)}>
-            <Image source={require('../images/Cancel.png')}/>
-            </TouchableHighlight>
-          </View>
-        : // default: show top bar
-          <View style={styles.topRow}>
-            <TouchableHighlight onPress={this.tapOriginalsList}>
-              <Image source={require('../images/SeeAllOriginals.png')}/>
-            </TouchableHighlight>
+      <View style={styles.imageBackground}>
+        <StatusBar backgroundColor="black" barStyle="light-content"/>
+        <Image style={styles.mainImage} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}}></Image>
 
-            <TouchableHighlight onPress={this.tapRemixesList}>
-              <Image source={require('../images/SeeRemixes.png')}/>
-            </TouchableHighlight>
-          </View>
-        }
+        <View style={styles.container}>
+          { this.state.recording ? // if recording, show progress
+            <View>
+              <View style={{width: windowSize.width * (this.state.progress / 100), height: 3, backgroundColor: '#D0021B'}}></View>
+              <View style={styles.topRow}>
+                <Image source={require('../images/Recording.png')}/>
+              </View>
+              <View style={styles.bottomMiddle}>
+                <TouchableHighlight onPress={this.tapStopMicrophone}>
+                  <Image source={require('../images/StopRecord.png')}/>
+                </TouchableHighlight>
+              </View>
+            </View>
+          : this.state.stoppedRecording ? // if recording and done, show cancel button
+            <View style={styles.topRow}>
+              <TouchableHighlight onPress={this._cancel.bind(this)}>
+                <Image source={require('../images/Cancel.png')}/>
+              </TouchableHighlight>
+            </View>
+          : // default: show top bar
+            <View style={styles.topRow}>
+              <TouchableHighlight onPress={this.tapOriginalsList}>
+                <Image source={require('../images/SeeAllOriginals.png')}/>
+              </TouchableHighlight>
 
-        <View style={{height: Dimensions.get('window').width * (imageHeight / imageWidth)}}>
-          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+              <TouchableHighlight onPress={this.tapRemixesList}>
+                <Image source={require('../images/SeeRemixes.png')}/>
+              </TouchableHighlight>
+            </View>
+          }
+
+          { this.state.stoppedRecording ?
+            <View style={styles.bottomTwoButton}>
+              <TouchableHighlight onPress={this._play.bind(this)}>
+                <Image source={require('../images/Play.png')}/>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this._submit.bind(this)}>
+                <Image source={require('../images/Submit.png')}/>
+              </TouchableHighlight>
+            </View>
+          :
+            <View style={styles.bottomMiddle}>
+              <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
+                <Image source={require('../images/Record.png')}/>
+              </TouchableHighlight>
+            </View>
+          }
         </View>
-
-        { this.state.stoppedRecording ?
-          <View style={styles.bottomTwoButton}>
-            <TouchableHighlight onPress={this._play.bind(this)}>
-              <Image source={require('../images/Play.png')}/>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={this._submit.bind(this)}>
-              <Image source={require('../images/Submit.png')}/>
-            </TouchableHighlight>
-          </View>
-        :
-          <View style={styles.bottomMiddle}>
-            <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
-              <Image source={require('../images/Record.png')}/>
-            </TouchableHighlight>
-          </View>
-        }
       </View>
     );
   }
 }
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingTop: 30,
-    paddingBottom: 30,
+let styles = StyleSheet.create({
+  debug: {
+    backgroundColor: 'pink'
   },
-  blackBg: {
-    backgroundColor: 'black'
+  imageBackground: {
+    backgroundColor: 'black',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mainImage: {
+    width: newImageWidth,
+    height: newImageHeight,
+  },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    paddingTop: STATUSBAR_HEIGHT,
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'space-between',
+    width: windowSize.width,
+    height: windowSize.height,
   },
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 20,
-    paddingRight: 20
   },
   bottomMiddle: {
     alignItems: 'center',
@@ -189,7 +228,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }
 });
 
 module.exports = Caption;
