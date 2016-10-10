@@ -5,12 +5,14 @@ import {
   Dimensions
 } from 'react-native';
 
-import CaptionScene from './components/captionScene';
-import CaptionsScene from './components/captionsScene';
+import CaptionScene    from './components/captionScene';
+import CaptionsScene   from './components/captionsScene';
+import SubmissionsScene from './components/submissionScene';
 
 const routes = [
   { slug: 'caption' },
   { slug: 'captions'},
+  { slug: 'submissions'},
 ]
 
 let flipped;
@@ -26,6 +28,7 @@ class RootNav extends Component {
         initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
+        configureScene={this.configureScene}
         style={{
           height: Dimensions.get('window').height,
           width: Dimensions.get('window').width
@@ -47,6 +50,17 @@ class RootNav extends Component {
         return <CaptionsScene navigator={navigator}/>;
       case 'caption':
         return <CaptionScene navigator={navigator}/>;
+      case 'submissions':
+        return <SubmissionsScene navigator={navigator}/>;
+    }
+  }
+
+  configureScene = (route, navigator) => {
+    switch(route.slug) {
+      case 'submissions':
+        return Navigator.SceneConfigs.FloatFromLeft
+      default:
+        return Navigator.SceneConfigs.FloatFromRight
     }
   }
 }
