@@ -38,11 +38,9 @@ class SubmissionsScene extends Component {
         return Alert.alert('ImagePicker Error: ' + response.error);
       }
 
+      console.log("chosen or taken", photo);
       var body = new FormData();
-      console.log(response);
-
-      body.append('cool', 'nice');
-      // body.append('photo', {uri: response.origURL, name: 'photo.jpg'});
+      body.append('photo', {uri: response.origURL, name: 'photo.jpg'});
 
       var xhr = new XMLHttpRequest;
       xhr.onreadystatechange = (e) => {
@@ -57,7 +55,7 @@ class SubmissionsScene extends Component {
 
   press = () => {
     this._randomPhoto().then(function(photo) {
-      console.log("got photo", photo);
+      console.log("random", photo);
       var body = new FormData();
       body.append('photo', {...photo, name: 'photo.jpg'});
 
@@ -65,7 +63,7 @@ class SubmissionsScene extends Component {
       xhr.onreadystatechange = (e) => {
         if( xhr.readyState !== 4 ) { return; }
 
-        console.log(xhr.status, xhr.responseText);
+        Alert.alert(xhr.status + ': ' + xhr.responseText);
       }
       xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
       xhr.send(body);
@@ -78,7 +76,7 @@ class SubmissionsScene extends Component {
     ).then(
       (data) => {
         var edges = data.edges;
-        var edge = edges[Math.floor(Math.random() * edges.length)];
+        var edge = edges[0];
         var randomPhoto = edge && edge.node && edge.node.image;
         if (randomPhoto) {
           return randomPhoto;
