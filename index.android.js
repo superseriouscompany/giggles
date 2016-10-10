@@ -7,13 +7,11 @@ import {
 
 import {
   MemeScene,
-  SourceScene,
   CameraScene,
   CoolScene
 } from './components/scenes';
 
 const routes = [
-  { slug: 'source', index: 0 },
   { slug: 'meme', index: 1 },
   { slug: 'camera', index: 2 },
   { slug: 'cool', index: 3 }
@@ -49,8 +47,6 @@ class RootNav extends Component {
     }
 
     switch(route.slug) {
-      case 'source':
-        return <SourceScene navigator={navigator} onPress={this.nextPage}/>;
       case 'meme':
         return <MemeScene navigator={navigator} onPress={this.nextPage}/>;
       case 'camera':
