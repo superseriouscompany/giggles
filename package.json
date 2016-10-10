@@ -9,6 +9,6 @@
     "react": "15.3.2",
     "react-native": "0.34.1",
     "react-native-audio": "git@github.com:superseriouscompany/react-native-audio.git",
-    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git"
+    "react-native-image-picker": "^0.22.9"
   }
 }

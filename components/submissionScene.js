@@ -8,26 +8,34 @@ import {
   View,
 } from 'react-native';
 
+import ImagePicker from 'react-native-image-picker';
+
 class SubmissionsScene extends Component {
   render() {
     return(
       <View style={styles.bg}>
-        <TouchableOpacity onPress={this._choosePhoto.bind(this)}>
-          <Text style={styles.button}>Choose Photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._takePhoto.bind(this)}>
-          <Text style={styles.button}>Take Photo</Text>
+        <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+          <Text style={styles.button}>Upload Photo</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-  _takePhoto() {
-    Alert.alert('Take');
-  }
+  _uploadPhoto() {
+    let options = {
+      title: 'Santi farts too much.'
+    }
 
-  _choosePhoto() {
-    Alert.alert('Choose');
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        return Alert.alert('User cancelled image picker');
+      }
+      if (response.error) {
+        return Alert.alert('ImagePicker Error: ' + response.error);
+      }
+
+      Alert.alert(response.uri);
+    })
   }
 }
 
