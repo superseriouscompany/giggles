@@ -132,6 +132,10 @@ class Caption extends Component {
     this.navigator.navigate('captions');
   }
 
+  tapOriginalsList = () => {
+    this.navigator.navigate('submissions');
+  }
+
   render() {
     return (
       <View style={styles.imageBackground}>

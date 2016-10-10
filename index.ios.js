@@ -25,9 +25,10 @@ class RootNav extends Component {
   render = () => {
     return (
       <Navigator
-        initialRoute={routes[2]}
+        initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
+        configureScene={this.configureScene}
         style={{
           height: Dimensions.get('window').height,
           width: Dimensions.get('window').width
@@ -51,6 +52,15 @@ class RootNav extends Component {
         return <CaptionScene navigator={navigator}/>;
       case 'submissions':
         return <SubmissionsScene navigator={navigator}/>;
+    }
+  }
+
+  configureScene = (route, navigator) => {
+    switch(route.slug) {
+      case 'submissions':
+        return Navigator.SceneConfigs.FloatFromLeft
+      default:
+        return Navigator.SceneConfigs.FloatFromRight
     }
   }
 }
