@@ -24,16 +24,15 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
-    // console.log("mounted captions scene");
-    // fetch('https://superserious.ngrok.io/captions').then(function(response) {
-    //   if( response.status > 299 ) { return console.error(response.status); }
-    //   return response.json()
-    // }).then((body) => {
-    //   console.log("got body", body);
-    //   this.setState({captions: body.captions})
-    // }).catch(function(err) {
-    //   console.error(err);
-    // })
+    fetch('https://superserious.ngrok.io/captions').then(function(response) {
+      if( response.status > 299 ) { return console.error(response.status); }
+      return response.json()
+    }).then((body) => {
+      console.log("got body", body);
+      this.setState({captions: body.captions})
+    }).catch(function(err) {
+      console.error(err);
+    })
   }
 
   _play = (filename) => {

@@ -107,6 +107,7 @@ class Caption extends Component {
       if( xhr.readyState !== 4 ) { return; }
 
       console.log(xhr.status, xhr.responseText);
+      this.navigator.navigate('CaptionsScene');
     }
     xhr.open('POST', 'https://superserious.ngrok.io/captions');
     xhr.send(body);

@@ -33,7 +33,7 @@ class SubmissionsScene extends Component {
 
   _uploadPhoto() {
     let options = {
-      title: "You have a better chance of farting a hole through your sheets."
+      title: "Santi is a dumb dumb."
     }
 
     ImagePicker.showImagePicker(options, (response) => {

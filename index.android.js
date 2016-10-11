@@ -1,67 +1,43 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  Navigator,
-  Dimensions
+  Dimensions,
+  View
 } from 'react-native';
 
-import CaptionScene    from './components/captionScene';
-import CaptionsScene   from './components/captionsScene';
-import SubmissionsScene from './components/submissionScene';
-
-const routes = [
-  { slug: 'caption' },
-  { slug: 'captions'},
-  { slug: 'submissions'},
-]
-
-let flipped;
+import CaptionScene     from './components/captionScene';
+import CaptionsScene    from './components/captionsScene';
+import SubmissionsScene from './components/submissionsScene';
+import NoScene          from './components/noScene';
 
 class RootNav extends Component {
   constructor(props) {
     super(props);
+    this.state = { scene: 'CaptionScene' }
+
+    this.navigator = {
+      navigate: (component) => {
+        console.log("setting scene to", component);
+        this.setState({scene: component})
+      }
+    }
   }
 
-  render = () => {
+  render() {
     return (
-      <Navigator
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
-        renderScene={this.renderScene}
-        configureScene={this.configureScene}
-        style={{
-          height: Dimensions.get('window').height,
-          width: Dimensions.get('window').width
-        }}
-      />
+      <View style={{flex: 1}}>
+        {
+          this.state.scene == 'CaptionScene' ?
+            <CaptionScene navigator={this.navigator} />
+          : this.state.scene == 'CaptionsScene' ?
+            <CaptionsScene navigator={this.navigator} />
+          : this.state.scene == 'SubmissionsScene' ?
+            <SubmissionsScene navigator={this.navigator} />
+          :
+            <NoScene />
+        }
+      </View>
     )
-  }
-
-  renderScene = (route, navigator) => {
-    // TODO: don't attach this to navigator multiple times
-    navigator.navigate = function(slug) {
-      let route = routes.find(function(r) { return r.slug === slug });
-      if( !route ) return console.error("No route found matching", slug, "available routes: ", routes.map(function(r) { return r.slug}));
-      navigator.push(route);
-    }
-
-    switch(route.slug) {
-      case 'captions':
-        return <CaptionsScene navigator={navigator}/>;
-      case 'caption':
-        return <CaptionScene navigator={navigator}/>;
-      case 'submissions':
-        return <SubmissionsScene navigator={navigator}/>;
-    }
-  }
-
-  configureScene = (route, navigator) => {
-    switch(route.slug) {
-      case 'submissions':
-        return Navigator.SceneConfigs.FloatFromLeft
-      default:
-        return Navigator.SceneConfigs.FloatFromRight
-    }
   }
 }
 
