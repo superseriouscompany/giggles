@@ -24,19 +24,20 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
-    fetch('https://bf9083e7.ngrok.io/captions').then(function(response) {
-      if( response.status > 299 ) { return console.error(response.status); }
-      return response.json()
-    }).then((body) => {
-      console.log("got body", body);
-      this.setState({captions: body.captions})
-    }).catch(function(err) {
-      console.error(err);
-    })
+    // console.log("mounted captions scene");
+    // fetch('https://superserious.ngrok.io/captions').then(function(response) {
+    //   if( response.status > 299 ) { return console.error(response.status); }
+    //   return response.json()
+    // }).then((body) => {
+    //   console.log("got body", body);
+    //   this.setState({captions: body.captions})
+    // }).catch(function(err) {
+    //   console.error(err);
+    // })
   }
 
   _play = (filename) => {
-    const url = `https://bf9083e7.ngrok.io/${filename}`;
+    const url = `https://superserious.ngrok.io/${filename}`;
     AudioPlayer.playWithUrl(url);
   }
 
@@ -45,7 +46,7 @@ class CaptionsScene extends Component {
 
     return (
       <View style={styles.container}>
-        <Text onPress={() => this.navigator.pop()}>back</Text>
+        <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
         <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (

@@ -12,19 +12,28 @@ import {
 import ImagePicker from 'react-native-image-picker';
 
 class SubmissionsScene extends Component {
+  constructor(props) {
+    super(props);
+
+    this.navigator = props.navigator;
+  }
+
   render() {
     return(
-      <View style={styles.bg}>
-        <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
-          <Text style={styles.button}>Upload Photo</Text>
-        </TouchableOpacity>
+      <View style={{flex: 1, paddingTop: 20}}>
+        <Text style={{textAlign: 'right'}} onPress={() => this.navigator.navigate('CaptionScene')}>forward</Text>
+        <View style={styles.bg}>
+          <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+            <Text style={styles.button}>Upload Photo</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
 
   _uploadPhoto() {
     let options = {
-      title: 'Santi farts too much.'
+      title: "You have a better chance of farting a hole through your sheets."
     }
 
     ImagePicker.showImagePicker(options, (response) => {
@@ -48,7 +57,7 @@ class SubmissionsScene extends Component {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
       }
-      xhr.open('POST', 'https://bf9083e7.ngrok.io/foo');
+      xhr.open('POST', 'https://superserious.ngrok.io/foo');
       xhr.send(body);
     })
   }

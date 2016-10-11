@@ -70,18 +70,6 @@ class Caption extends Component {
     };
   }
 
-  _renderButton(title, onPress, active) {
-    var style = (active) ? styles.activeButtonText : styles.buttonText;
-
-    return (
-      <TouchableHighlight style={styles.button} onPress={onPress}>
-        <Text style={style}>
-          {title}
-        </Text>
-      </TouchableHighlight>
-    );
-  }
-
   _stop() {
     AudioRecorder.stopRecording();
     this.setState({stoppedRecording: true, recording: false});
@@ -120,7 +108,7 @@ class Caption extends Component {
 
       console.log(xhr.status, xhr.responseText);
     }
-    xhr.open('POST', 'https://bf9083e7.ngrok.io/captions');
+    xhr.open('POST', 'https://superserious.ngrok.io/captions');
     xhr.send(body);
   }
 
@@ -129,11 +117,11 @@ class Caption extends Component {
   }
 
   tapRemixesList = () => {
-    this.navigator.navigate('captions');
+    this.navigator.navigate('CaptionsScene');
   }
 
   tapOriginalsList = () => {
-    this.navigator.navigate('submissions');
+    this.navigator.navigate('SubmissionsScene');
   }
 
   render() {
