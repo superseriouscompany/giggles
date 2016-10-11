@@ -45,7 +45,7 @@ class SubmissionsScene extends Component {
       }
 
       var body = new FormData();
-      body.append('photo', {uri: response.origURL || response.uri, name: 'photo.jpg'});
+      body.append('photo', {uri: response.origURL || response.uri, name: 'photo.jpg', type: 'image/jpeg'});
 
       var xhr = new XMLHttpRequest;
       xhr.onreadystatechange = (e) => {
