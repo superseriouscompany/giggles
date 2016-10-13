@@ -8,14 +8,14 @@ import {
 import CaptionScene     from './components/captionScene';
 import CaptionsScene    from './components/captionsScene';
 import SubmissionsScene from './components/submissionsScene';
-import PoopScene        from './components/poopScene';
+import SubmissionScene  from './components/submissionScene';
 import NoScene          from './components/noScene';
 
 class RootNav extends Component {
   constructor(props) {
     super(props);
     this.state = { scene: 'CaptionScene' }
-    this.state = { scene: 'PoopScene' }
+    this.state = { scene: 'SubmissionScene' }
 
     this.navigator = {
       navigate: (component) => {
@@ -35,8 +35,8 @@ class RootNav extends Component {
             <CaptionsScene navigator={this.navigator} />
           : this.state.scene == 'SubmissionsScene' ?
             <SubmissionsScene navigator={this.navigator} />
-          : this.state.scene == 'PoopScene' ?
-            <PoopScene />
+          : this.state.scene == 'SubmissionScene' ?
+            <SubmissionScene navigator={this.navigator} />
           :
             <NoScene />
         }
