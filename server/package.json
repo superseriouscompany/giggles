@@ -5,6 +5,7 @@
   "repository": "nope",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon",
     "test": "mocha",
     "dev": "nodemon"
   },

@@ -40,6 +40,30 @@ class CaptionsScene extends Component {
     AudioPlayer.playWithUrl(url);
   }
 
+  _like = (id) => {
+    if( !id ) { return console.error("No id provided to like function"); }
+
+    fetch(`https://superserious.ngrok.io/captions/${id}/like`, {
+      method: 'POST'
+    }).then(function(response) {
+      if( response.status > 299 ) { return console.error(response.status); }
+    }).catch(function(err) {
+      console.error(err);
+    })
+  }
+
+  _hate = (id) => {
+    if( !id ) { return console.error("No id provided to like function"); }
+
+    fetch(`https://superserious.ngrok.io/captions/${id}/hate`, {
+      method: 'POST'
+    }).then(function(response) {
+      if( response.status > 299 ) { return console.error(response.status); }
+    }).catch(function(err) {
+      console.error(err);
+    })
+  }
+
   render() {
     const imageHeight = 420, imageWidth = 420;
 
@@ -53,7 +77,15 @@ class CaptionsScene extends Component {
               <TouchableHighlight onPress={() => this._play(c.filename)}>
                 <Image source={require('../images/Play.png')} />
               </TouchableHighlight>
-              <Text style={styles.text}>{c.filename}</Text>
+
+              <Text style={styles.text}>{c.filename.substring(0,6)}</Text>
+
+              <TouchableHighlight onPress={() => this._like(c.id)}>
+                <Image source={require('../images/Submit.png')} />
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => this._hate(c.id)}>
+                <Image source={require('../images/StopRecord.png')} />
+              </TouchableHighlight>
             </View>
           ))}
         </ScrollView>

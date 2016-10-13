@@ -1,10 +1,12 @@
-var express = require('express');
-var multer  = require('multer');
-var app     = express();
-var UUID    = require('node-uuid');
-var port    = process.env.PORT || 3000;
+'use strict';
 
-var captionStorage = multer.diskStorage({
+const express = require('express');
+const multer  = require('multer');
+const app     = express();
+const UUID    = require('node-uuid');
+const port    = process.env.PORT || 3000;
+
+let captionStorage = multer.diskStorage({
   destination: 'captions/',
   filename: function(req, file, cb) {
     const uuid = UUID.v1();
@@ -13,7 +15,7 @@ var captionStorage = multer.diskStorage({
     cb(null, `${uuid}.${extension}`);
   }
 })
-var submissionStorage = multer.diskStorage({
+let submissionStorage = multer.diskStorage({
   destination: 'submissions/',
   filename: function(req, file, cb) {
     const uuid = UUID.v1();
@@ -23,10 +25,11 @@ var submissionStorage = multer.diskStorage({
   }
 })
 
-var captionUpload    = multer({storage: captionStorage});
-var submissionUpload = multer({storage: submissionStorage});
+let captionUpload    = multer({storage: captionStorage});
+let submissionUpload = multer({storage: submissionStorage});
 
-var captions = [];
+let captions    = [],
+    submissions = [];
 
 app.use(express.static('captions'));
 
@@ -34,19 +37,48 @@ app.get('/', function(req, res) {
   res.json({cool: 'nice'});
 })
 
-app.post('/foo', submissionUpload.single('photo'), function(req, res) {
-  console.log("got a post", req.file);
-  res.json({cool: 'nice'});
+app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
+  const uuid = UUID.v1();
+  if( req.file && req.file.filename ) {
+    submissions.push({
+      id: uuid,
+      filename: req.file.filename
+    })
+    res.status(201).json({id: uuid});
+  }
 })
 
 app.post('/captions', captionUpload.single('audio'), function(req, res) {
-  console.log("got a post", req.file);
+  const uuid = UUID.v1();
   if( req.file && req.file.filename ) {
     captions.push({
-      filename: req.file.filename
+      id: uuid,
+      filename: req.file.filename,
     })
   }
-  res.json({cool: 'nice'});
+  res.status(201).json({id: uuid});
+})
+
+app.post('/captions/:id/like', function(req, res) {
+  var caption = captions.find(function(c) { return c.id === req.params.id });
+  if( !caption ) { return res.sendStatus(404); }
+  caption.likes = caption.likes || 0;
+  caption.likes++;
+  res.sendStatus(204);
+})
+
+app.post('/captions/:id/hate', function(req, res) {
+  var caption = captions.find(function(c) { return c.id === req.params.id });
+  if( !caption ) { return res.sendStatus(404); }
+  caption.hates = caption.hates || 0;
+  caption.hates++;
+  res.sendStatus(204);
+})
+
+app.get('/submissions', function(req, res) {
+  res.json({
+    submissions: submissions
+  })
 })
 
 app.get('/captions', function(req, res) {
