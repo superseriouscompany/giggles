@@ -15,7 +15,6 @@ class RootNav extends Component {
   constructor(props) {
     super(props);
     this.state = { scene: 'CaptionScene' }
-    this.state = { scene: 'SubmissionScene' }
 
     this.navigator = {
       navigate: (component) => {
