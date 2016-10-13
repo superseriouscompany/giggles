@@ -16,6 +16,7 @@ import {
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+const RECORDING_LENGTH = 30
 var windowSize = Dimensions.get('window');
 
 const imageWidth = 200, imageHeight = 100;
@@ -39,7 +40,7 @@ class Caption extends Component {
     this.navigator = props.navigator;
 
     this.state = {
-      currentTime: 0.0,
+      percentComplete: 0,
       recording: false,
       stoppedRecording: false,
       stoppedPlaying: false,
@@ -62,11 +63,11 @@ class Caption extends Component {
     let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
     this.prepareRecordingPath(audioPath);
     AudioRecorder.onProgress = (data) => {
-      this.setState({currentTime: Math.floor(data.currentTime)});
+      let percentComplete = Math.min(1, data.currentTime / RECORDING_LENGTH);
+      this.setState({percentComplete: percentComplete});
     };
     AudioRecorder.onFinished = (data) => {
       this.setState({finished: data.finished});
-      console.log(`Finished recording: ${data.finished}`);
     };
   }
 
@@ -134,14 +135,10 @@ class Caption extends Component {
         <View style={styles.container}>
           { this.state.recording ? // if recording, show progress
             <View>
-              <View style={{width: windowSize.width * (this.state.progress / 100), height: 3, backgroundColor: '#D0021B'}}></View>
+              <Text style={{color: 'white'}}>{this.state.percentComplete}</Text>
+              <View style={{width: windowSize.width * this.state.percentComplete, height: 3, backgroundColor: '#D0021B'}}></View>
               <View style={styles.topRow}>
                 <Image source={require('../images/Recording.png')}/>
-              </View>
-              <View style={styles.bottomMiddle}>
-                <TouchableHighlight onPress={this.tapStopMicrophone}>
-                  <Image source={require('../images/StopRecord.png')}/>
-                </TouchableHighlight>
               </View>
             </View>
           : this.state.stoppedRecording ? // if recording and done, show cancel button
@@ -174,7 +171,11 @@ class Caption extends Component {
           :
             <View style={styles.bottomMiddle}>
               <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
-                <Image source={require('../images/Record.png')}/>
+                { this.state.recording ?
+                  <Image source={require('../images/StopRecord.png')} />
+                :
+                  <Image source={require('../images/Record.png')}/>
+                }
               </TouchableHighlight>
             </View>
           }
