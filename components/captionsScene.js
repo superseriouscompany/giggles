@@ -57,8 +57,12 @@ class CaptionsScene extends Component {
 
     fetch(`https://superserious.ngrok.io/captions/${id}/hate`, {
       method: 'POST'
-    }).then(function(response) {
+    }).then( (response) => {
       if( response.status > 299 ) { return console.error(response.status); }
+
+      this.setState({
+        captions: this.state.captions.filter(function(c) { return c.id !== id; })
+      });
     }).catch(function(err) {
       console.error(err);
     })
