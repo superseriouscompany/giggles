@@ -135,7 +135,6 @@ class Caption extends Component {
         <View style={styles.container}>
           { this.state.recording ? // if recording, show progress
             <View>
-              <Text style={{color: 'white'}}>{this.state.percentComplete}</Text>
               <View style={{width: windowSize.width * this.state.percentComplete, height: 3, backgroundColor: '#D0021B'}}></View>
               <View style={styles.topRow}>
                 <Image source={require('../images/Recording.png')}/>
