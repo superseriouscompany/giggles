@@ -16,3 +16,5 @@ class NoScene extends Component {
     )
   }
 }
+
+module.exports = NoScene;
