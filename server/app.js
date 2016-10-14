@@ -32,6 +32,7 @@ let captions    = [],
     submissions = [];
 
 app.use(express.static('captions'));
+app.use(express.static('submissions'));
 
 app.get('/', function(req, res) {
   res.json({cool: 'nice'});
@@ -42,7 +43,9 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   if( req.file && req.file.filename ) {
     submissions.push({
       id: uuid,
-      filename: req.file.filename
+      filename: req.file.filename,
+      width: req.body.width,
+      height: req.body.height
     })
     res.status(201).json({id: uuid});
   }

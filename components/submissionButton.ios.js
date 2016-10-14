@@ -24,7 +24,7 @@ class SubmissionScene extends Component {
     const product = this.state.products && this.state.products[0];
 
     return (
-      <View style={{padding: 20}}>
+      <View>
         { product ?
           <View>
             <Text>{product.title}</Text>

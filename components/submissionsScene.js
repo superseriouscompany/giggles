@@ -51,8 +51,8 @@ class SubmissionsScene extends Component {
       xhr.onreadystatechange = (e) => {
         if( xhr.readyState !== 4 ) { return; }
 
-        if( xhr.status === 200 ) {
-          Alert.alert("Uploaded.")
+        if( xhr.status < 299 ) {
+          this.navigator.navigate('SubmissionScene');
         } else {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }

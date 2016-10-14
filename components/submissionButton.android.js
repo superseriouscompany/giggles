@@ -11,7 +11,7 @@ const InAppBilling = require("react-native-billing");
 class SubmissionScene extends Component {
   render() {
     return (
-      <View style={{padding: 20}}>
+      <View>
         <TouchableHighlight onPress={this.buy.bind(this)}>
           <Text>Hello</Text>
         </TouchableHighlight>
