@@ -15,12 +15,11 @@ class RootNav extends Component {
   constructor(props) {
     super(props);
     this.state = { scene: 'CaptionScene' }
-    this.state = { scene: 'SubmissionsScene' }
+    this.state = { scene: 'CaptionsScene' }
 
 
     this.navigator = {
       navigate: (component) => {
-        console.log("setting scene to", component);
         this.setState({scene: component})
       }
     }

@@ -12,6 +12,8 @@ import {
 
 import {AudioPlayer} from 'react-native-audio';
 
+import Api from '../lib/api';
+
 class CaptionsScene extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,8 @@ class CaptionsScene extends Component {
     this.navigator = props.navigator;
 
     this.state = {
-      captions: []
+      captions: [],
+      submission: null,
     }
   }
 
@@ -28,8 +31,16 @@ class CaptionsScene extends Component {
       if( response.status > 299 ) { return console.error(response.status); }
       return response.json()
     }).then((body) => {
-      console.log("got body", body);
       this.setState({captions: body.captions})
+    }).catch(function(err) {
+      console.error(err);
+    })
+
+    Api.submissions.current().then((submission) => {
+      console.log("got submission", submission)
+      this.setState({
+        submission: submission
+      })
     }).catch(function(err) {
       console.error(err);
     })
@@ -69,12 +80,14 @@ class CaptionsScene extends Component {
   }
 
   render() {
-    const imageHeight = 420, imageWidth = 420;
-
     return (
       <View style={styles.container}>
         <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
-        <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (imageHeight / imageWidth)}} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}} />
+        { this.state.submission ?
+          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}} source={{uri: this.state.submission.image_url}} />
+        :
+          null
+        }
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
