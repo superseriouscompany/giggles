@@ -27,11 +27,8 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
-    fetch('https://superserious.ngrok.io/captions').then(function(response) {
-      if( response.status > 299 ) { return console.error(response.status); }
-      return response.json()
-    }).then((body) => {
-      this.setState({captions: body.captions})
+    Api.captions.all().then((captions) => {
+      this.setState({captions: captions})
     }).catch(function(err) {
       console.error(err);
     })
@@ -54,11 +51,7 @@ class CaptionsScene extends Component {
   _like = (id) => {
     if( !id ) { return console.error("No id provided to like function"); }
 
-    fetch(`https://superserious.ngrok.io/captions/${id}/like`, {
-      method: 'POST'
-    }).then(function(response) {
-      if( response.status > 299 ) { return console.error(response.status); }
-    }).catch(function(err) {
+    Api.captions.like(id).catch(function(err) {
       console.error(err);
     })
   }
@@ -66,11 +59,7 @@ class CaptionsScene extends Component {
   _hate = (id) => {
     if( !id ) { return console.error("No id provided to like function"); }
 
-    fetch(`https://superserious.ngrok.io/captions/${id}/hate`, {
-      method: 'POST'
-    }).then( (response) => {
-      if( response.status > 299 ) { return console.error(response.status); }
-
+    Api.captions.hate(id).then(() => {
       this.setState({
         captions: this.state.captions.filter(function(c) { return c.id !== id; })
       });
