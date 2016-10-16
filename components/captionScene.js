@@ -100,6 +100,12 @@ class Caption extends Component {
     this.setState({recording: true, playing: false});
   }
 
+  _pressHint() {
+    if( !this.state.recording ) {
+      Alert.alert("You gotta hold the button record", "Dumbass.");
+    }
+  }
+
   _play() {
     if (this.state.recording) {
       this._stop();
@@ -188,7 +194,7 @@ class Caption extends Component {
             </View>
           :
             <View style={styles.bottomMiddle}>
-              <TouchableHighlight onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
+              <TouchableHighlight onPress={this._pressHint.bind(this)} onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
                 { this.state.recording ?
                   <Image source={require('../images/StopRecord.png')} />
                 :
