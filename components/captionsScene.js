@@ -57,24 +57,37 @@ class CaptionsScene extends Component {
 
     this.setState({
       captions: this.state.captions.map(function(c) {
-        if( c.id === caption.id ) { c.playing = true; }
+        if( c.id === caption.id ) {
+          c.playing = true;
+          c.played  = true;
+        }
         return c;
       })
     })
   }
 
-  _like = (id) => {
-    if( !id ) { return console.error("No id provided to like function"); }
+  _like = (caption) => {
+    if( !caption ) { return console.error("No caption provided to like function"); }
 
-    Api.captions.like(id).catch(function(err) {
+    Api.captions.like(caption.id).then(() => {
+      this.setState({
+        captions: this.state.captions.map(function(c) {
+          if( c.id === caption.id ) {
+            c.rated = true;
+          }
+
+          return c;
+        })
+      });
+    }).catch(function(err) {
       console.error(err);
     })
   }
 
-  _hate = (id) => {
-    if( !id ) { return console.error("No id provided to like function"); }
+  _hate = (caption) => {
+    if( !caption ) { return console.error("No caption provided to like function"); }
 
-    Api.captions.hate(id).then(() => {
+    Api.captions.hate(caption.id).then(() => {
       this.setState({
         captions: this.state.captions.filter(function(c) { return c.id !== id; })
       });
@@ -105,12 +118,18 @@ class CaptionsScene extends Component {
                 <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
               }
 
-              <TouchableHighlight onPress={() => this._like(c.id)}>
-                <Image source={require('../images/Submit.png')} />
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => this._hate(c.id)}>
-                <Image source={require('../images/StopRecord.png')} />
-              </TouchableHighlight>
+              { c.played && !c.rated ?
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableHighlight onPress={() => this._like(c)}>
+                    <Image source={require('../images/Submit.png')} />
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={() => this._hate(c)}>
+                    <Image source={require('../images/StopRecord.png')} />
+                  </TouchableHighlight>
+                </View>
+              :
+                null
+              }
             </View>
           ))}
         </ScrollView>
