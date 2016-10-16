@@ -28,6 +28,15 @@ class CaptionsScene extends Component {
 
   componentDidMount() {
     Api.captions.all().then((captions) => {
+      captions = captions.map(function(c) {
+        let randomColor = 0;
+        for( var i = 0; i < c.id.length; i++ ) {
+          randomColor += c.id.charCodeAt(i);
+        }
+        c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
+        return c;
+      })
+
       this.setState({captions: captions})
     }).catch(function(err) {
       console.error(err);
@@ -83,7 +92,7 @@ class CaptionsScene extends Component {
                 <Image source={require('../images/Play.png')} />
               </TouchableHighlight>
 
-              <Text style={styles.text}>{c.filename.substring(0,6)}</Text>
+              <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
 
               <TouchableHighlight onPress={() => this._like(c.id)}>
                 <Image source={require('../images/Submit.png')} />
