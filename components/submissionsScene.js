@@ -44,9 +44,13 @@ class SubmissionsScene extends Component {
       <View style={{flex: 1, paddingTop: 20}}>
         <Text style={{textAlign: 'right'}} onPress={() => this.navigator.navigate('CaptionScene')}>forward</Text>
         <View style={styles.bg}>
-          <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
-            <Text style={styles.button}>Upload Photo</Text>
-          </TouchableOpacity>
+          { this.state.uploading ?
+            <Text style={styles.button}>Uploading...</Text>
+          :
+            <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+              <Text style={styles.button}>Upload Photo</Text>
+            </TouchableOpacity>
+          }
 
           <View style={{backgroundColor: 'tomato'}}>
             <Text>{this.state.loaded} {this.state.submissions.length} Photos</Text>
@@ -82,6 +86,10 @@ class SubmissionsScene extends Component {
         return Alert.alert('ImagePicker Error: ' + response.error);
       }
 
+
+      this.setState({
+        uploading: true
+      })
       var body = new FormData();
       body.append('photo', {uri: response.origURL || response.uri, name: 'photo.jpg', type: 'image/jpeg'});
 
