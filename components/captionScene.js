@@ -15,24 +15,31 @@ import {
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
+import Api from '../lib/api';
+
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const RECORDING_LENGTH = 30
-var windowSize = Dimensions.get('window');
 
-const imageWidth = 200, imageHeight = 100;
-const windowRatio = windowSize.width / windowSize.height;
-const imageRatio = imageWidth / imageHeight;
+const windowSize = Dimensions.get('window');
 
-let newImageWidth, newImageHeight;
-if( imageRatio >= windowRatio ) {
-  // wide image
-  newImageWidth = windowSize.width;
-  newImageHeight = newImageWidth / (imageWidth / imageHeight);
-} else {
-  // tall image
-  newImageHeight = windowSize.height;
-  newImageWidth = (imageWidth / imageHeight) * newImageHeight;
+function imageDimensions(image) {
+  const windowRatio = windowSize.width / windowSize.height;
+  const imageRatio = image.width / image.height;
+
+  if( imageRatio >= windowRatio ) {
+    // wide image
+    return {
+      width: windowSize.width,
+      height: windowSize.width / imageRatio,
+    }
+  } else {
+    return {
+      height: windowSize.height,
+      width: imageRatio * windowSize.height,
+    }
+  }
 }
+
 
 class Caption extends Component {
   constructor(props) {
@@ -69,6 +76,14 @@ class Caption extends Component {
     AudioRecorder.onFinished = (data) => {
       this.setState({finished: data.finished});
     };
+
+    Api.submissions.current().then((submission) => {
+      this.setState({
+        submission: submission
+      })
+    }).catch(function(err) {
+      console.error(err);
+    })
   }
 
   _stop() {
@@ -130,7 +145,11 @@ class Caption extends Component {
     return (
       <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
-        <Image style={styles.mainImage} source={{uri: `https://placehold.it/${imageWidth}x${imageHeight}`}}></Image>
+        { this.state.submission ?
+          <Image style={imageDimensions(this.state.submission)} source={{uri: this.state.submission.image_url}}></Image>
+        :
+          null
+        }
 
         <View style={styles.container}>
           { this.state.recording ? // if recording, show progress
@@ -194,10 +213,6 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  mainImage: {
-    width: newImageWidth,
-    height: newImageHeight,
   },
   container: {
     position: 'absolute',

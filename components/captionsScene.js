@@ -34,7 +34,6 @@ class CaptionsScene extends Component {
     })
 
     Api.submissions.current().then((submission) => {
-      console.log("got submission", submission)
       this.setState({
         submission: submission
       })
