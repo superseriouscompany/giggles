@@ -4,6 +4,7 @@ const express = require('express');
 const multer  = require('multer');
 const app     = express();
 const UUID    = require('node-uuid');
+const sizeOf  = require('image-size');
 const port    = process.env.PORT || 3000;
 
 let captionStorage = multer.diskStorage({
@@ -41,11 +42,14 @@ app.get('/', function(req, res) {
 app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   const uuid = UUID.v1();
   if( req.file && req.file.filename ) {
+    const dimensions = sizeOf(`./submissions/${req.file.filename}`);
+
     submissions.push({
       id: uuid,
       filename: req.file.filename,
-      width: req.body.width,
-      height: req.body.height
+      width: dimensions.width,
+      height: dimensions.height,
+      image_url: `https://superserious.ngrok.io/${req.file.filename}`,
     })
     res.status(201).json({id: uuid});
   }

@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import {
   Alert,
   CameraRoll,
+  Dimensions,
+  Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,11 +14,29 @@ import {
 
 import ImagePicker from 'react-native-image-picker';
 
+import Api from '../lib/api';
+
 class SubmissionsScene extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      submissions: []
+    }
     this.navigator = props.navigator;
+  }
+
+  componentDidMount() {
+    Api.submissions.all().then((submissions) => {
+      console.log("got submissions", submissions);
+
+      this.setState({
+        submissions: submissions,
+        loaded: 'loaded'
+      })
+    }).catch(function(err) {
+      console.error("Unable to get submissions", err, err.stack);
+    })
   }
 
   render() {
@@ -26,6 +47,17 @@ class SubmissionsScene extends Component {
           <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
             <Text style={styles.button}>Upload Photo</Text>
           </TouchableOpacity>
+
+          <View style={{backgroundColor: 'tomato'}}>
+            <Text>{this.state.loaded} {this.state.submissions.length} Photos</Text>
+          </View>
+          <ScrollView style={styles.scrollContainer}>
+            {this.state.submissions.map((s, i) => (
+              <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionScene')}>
+                <Image source={{uri: s.image_url}} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (s.height / s.width)}}/>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
       </View>
     )
@@ -71,9 +103,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: 'tomato',
+  },
   button: {
     color: 'white',
-  }
+  },
 })
 
 module.exports = SubmissionsScene;
