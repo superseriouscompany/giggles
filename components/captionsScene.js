@@ -51,9 +51,16 @@ class CaptionsScene extends Component {
     })
   }
 
-  _play = (filename) => {
-    const url = `https://superserious.ngrok.io/${filename}`;
+  _play = (caption) => {
+    const url = `https://superserious.ngrok.io/${caption.filename}`;
     AudioPlayer.playWithUrl(url);
+
+    this.setState({
+      captions: this.state.captions.map(function(c) {
+        if( c.id === caption.id ) { c.playing = true; }
+        return c;
+      })
+    })
   }
 
   _like = (id) => {
@@ -88,11 +95,15 @@ class CaptionsScene extends Component {
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
-              <TouchableHighlight onPress={() => this._play(c.filename)}>
+              <TouchableHighlight onPress={() => this._play(c)}>
                 <Image source={require('../images/Play.png')} />
               </TouchableHighlight>
 
-              <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
+              { c.playing ?
+                <Text style={[styles.text, {color: c.color}]}>Playing...</Text>
+              :
+                <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
+              }
 
               <TouchableHighlight onPress={() => this._like(c.id)}>
                 <Image source={require('../images/Submit.png')} />
