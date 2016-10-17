@@ -10,6 +10,7 @@
     "react-native": "0.34.1",
     "react-native-audio": "git@github.com:superseriouscompany/react-native-audio.git",
     "react-native-billing": "^2.1.0",
+    "react-native-cacheable-image": "^1.3.0",
     "react-native-image-picker": "^0.22.9",
     "react-native-in-app-utils": "^4.0.0"
   }

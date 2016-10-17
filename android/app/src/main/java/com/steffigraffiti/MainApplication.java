@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new InAppBillingBridgePackage(),
             new ImagePickerPackage(),
             new ReactNativeAudioPackage()
