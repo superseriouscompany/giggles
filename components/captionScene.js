@@ -152,9 +152,20 @@ class Caption extends Component {
       <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
         { this.state.submission ?
-          <Image style={imageDimensions(this.state.submission)} source={{uri: this.state.submission.image_url}}></Image>
+          <Image
+            style={imageDimensions(this.state.submission)}
+            source={{uri: this.state.submission.image_url}}
+            onLoadStart={() => this.setState({loadingImage: true})}
+            onLoadEnd={() => this.setState({loadingImage: false})}
+            />
         :
           null
+        }
+
+        { this.state.loadingImage ?
+          <Text style={{color: 'lavender'}}>Loading...</Text>
+        :
+            null
         }
 
         <View style={styles.container}>
@@ -216,7 +227,7 @@ let styles = StyleSheet.create({
   imageBackground: {
     backgroundColor: 'black',
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
