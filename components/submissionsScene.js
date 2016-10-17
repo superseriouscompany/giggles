@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
-
+import CacheableImage from 'react-native-cacheable-image';
 import Api from '../lib/api';
 
 class SubmissionsScene extends Component {
@@ -58,7 +58,7 @@ class SubmissionsScene extends Component {
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
               <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionScene')}>
-                <Image source={{uri: s.image_url}} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (s.height / s.width)}}/>
+                <CacheableImage source={{uri: s.image_url}} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (s.height / s.width)}}/>
               </TouchableOpacity>
             ))}
           </ScrollView>
