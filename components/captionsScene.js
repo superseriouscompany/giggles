@@ -23,6 +23,7 @@ class CaptionsScene extends Component {
     this.state = {
       captions: [],
       submission: null,
+      captionsLoading: true,
     }
   }
 
@@ -37,14 +38,15 @@ class CaptionsScene extends Component {
         return c;
       })
 
-      this.setState({captions: captions})
+      this.setState({captions: captions, captionsLoading: false})
     }).catch(function(err) {
       console.error(err);
     })
 
     Api.submissions.current().then((submission) => {
       this.setState({
-        submission: submission
+        submission: submission,
+        prefetch: Image.prefetch(submission.image_url),
       })
     }).catch(function(err) {
       console.error(err);
@@ -101,10 +103,27 @@ class CaptionsScene extends Component {
       <View style={styles.container}>
         <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
         { this.state.submission ?
-          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}} source={{uri: this.state.submission.image_url}} />
+          <Image
+            style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}}
+            source={{uri: this.state.submission.image_url}}
+            onLoadStart={ () => { this.setState({imageLoading: true}) }}
+            onLoadEnd={ () => { this.setState({imageLoading: false}) }}
+            />
         :
           null
         }
+        { this.state.imageLoading ?
+          <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
+        :
+          null
+        }
+
+        { this.state.captionsLoading ?
+          <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
+        :
+          null
+        }
+
         <ScrollView style={styles.scrollContainer}>
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>

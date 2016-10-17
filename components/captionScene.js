@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
-
 import Api from '../lib/api';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
@@ -39,7 +38,6 @@ function imageDimensions(image) {
     }
   }
 }
-
 
 class Caption extends Component {
   constructor(props) {
@@ -79,7 +77,8 @@ class Caption extends Component {
 
     Api.submissions.current().then((submission) => {
       this.setState({
-        submission: submission
+        submission: submission,
+        prefetch: Image.prefetch(submission.image_url),
       })
     }).catch(function(err) {
       console.error(err);
@@ -151,10 +150,10 @@ class Caption extends Component {
     return (
       <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
-        { this.state.submission ?
+        { this.state.submission && this.state.prefetch ?
           <Image
-            style={imageDimensions(this.state.submission)}
             source={{uri: this.state.submission.image_url}}
+            style={imageDimensions(this.state.submission)}
             onLoadStart={() => this.setState({loadingImage: true})}
             onLoadEnd={() => this.setState({loadingImage: false})}
             />
