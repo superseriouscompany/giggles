@@ -79,7 +79,6 @@ class Caption extends Component {
     Api.submissions.current().then((submission) => {
       this.setState({
         submission: submission,
-        prefetch: Image.prefetch(submission.image_url),
       })
     }).catch(function(err) {
       console.error(err);
@@ -151,7 +150,7 @@ class Caption extends Component {
     return (
       <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
-        { this.state.submission && this.state.prefetch ?
+        { this.state.submission ?
           <CacheableImage
             source={{uri: this.state.submission.image_url}}
             style={imageDimensions(this.state.submission)}
@@ -159,13 +158,13 @@ class Caption extends Component {
             onLoadEnd={() => this.setState({loadingImage: false})}
             />
         :
-          null
+          <Text style={{color: 'forestgreen'}}>Loading submission...</Text>
         }
 
         { this.state.loadingImage ?
-          <Text style={{color: 'lavender'}}>Loading...</Text>
-        :
-            null
+          <Text style={{color: 'lavender'}}>Loading image...</Text>
+          :
+          null
         }
 
         <View style={styles.container}>
