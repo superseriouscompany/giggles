@@ -1,8 +1,12 @@
+'use strict';
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  AsyncStorage,
   Dimensions,
-  View
+  Text,
+  View,
 } from 'react-native';
 
 import CaptionScene     from './components/captionScene';
