@@ -16,6 +16,8 @@ import ImagePicker from 'react-native-image-picker';
 import CacheableImage from 'react-native-cacheable-image';
 import Api from '../lib/api';
 
+let isMounted;
+
 class SubmissionsScene extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +29,10 @@ class SubmissionsScene extends Component {
   }
 
   componentDidMount() {
+    isMounted = true;
+
     Api.submissions.all().then((submissions) => {
-      console.log("got submissions", submissions);
+      if( !isMounted ) { return; }
 
       this.setState({
         submissions: submissions,
@@ -37,6 +41,10 @@ class SubmissionsScene extends Component {
     }).catch(function(err) {
       console.error("Unable to get submissions", err, err.stack);
     })
+  }
+
+  componentWillUnmount() {
+    isMounted = false;
   }
 
   render() {

@@ -40,6 +40,8 @@ function imageDimensions(image) {
   }
 }
 
+let isMounted;
+
 class Caption extends Component {
   constructor(props) {
     super(props);
@@ -66,6 +68,7 @@ class Caption extends Component {
   }
 
   componentDidMount() {
+    isMounted = true;
     let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
     this.prepareRecordingPath(audioPath);
     AudioRecorder.onProgress = (data) => {
@@ -77,12 +80,18 @@ class Caption extends Component {
     };
 
     Api.submissions.current().then((submission) => {
-      this.setState({
-        submission: submission,
-      })
+      if( isMounted ) {
+        this.setState({
+          submission: submission,
+        })
+      }
     }).catch(function(err) {
       console.error(err);
     })
+  }
+
+  componentWillUnmount() {
+    isMounted = false;
   }
 
   _stop() {

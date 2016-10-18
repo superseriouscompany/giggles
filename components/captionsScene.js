@@ -14,6 +14,8 @@ import {AudioPlayer} from 'react-native-audio';
 import CacheableImage from 'react-native-cacheable-image'
 import Api from '../lib/api';
 
+let isMounted = true;
+
 class CaptionsScene extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,8 @@ class CaptionsScene extends Component {
 
   componentDidMount() {
     Api.captions.all().then((captions) => {
+      if( !isMounted ) { return; }
+
       captions = captions.map(function(c) {
         let randomColor = 0;
         for( var i = 0; i < c.id.length; i++ ) {
@@ -44,13 +48,18 @@ class CaptionsScene extends Component {
     })
 
     Api.submissions.current().then((submission) => {
+      if( !isMounted ) { return; }
+
       this.setState({
         submission: submission,
-        prefetch: Image.prefetch(submission.image_url),
       })
     }).catch(function(err) {
       console.error(err);
     })
+  }
+
+  componentWillUnmount() {
+    isMounted = false;
   }
 
   _play = (caption) => {
@@ -72,6 +81,8 @@ class CaptionsScene extends Component {
     if( !caption ) { return console.error("No caption provided to like function"); }
 
     Api.captions.like(caption.id).then(() => {
+      if( !isMounted ) { return; }
+
       this.setState({
         captions: this.state.captions.map(function(c) {
           if( c.id === caption.id ) {
@@ -90,6 +101,8 @@ class CaptionsScene extends Component {
     if( !caption ) { return console.error("No caption provided to like function"); }
 
     Api.captions.hate(caption.id).then(() => {
+      if( !isMounted ) { return; }
+
       this.setState({
         captions: this.state.captions.filter(function(c) { return c.id !== id; })
       });
