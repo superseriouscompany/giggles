@@ -20,6 +20,7 @@ class CaptionsScene extends Component {
     super(props);
 
     this.navigator = props.navigator;
+    this.submissionId = props.submissionId;
 
     this.state = {
       captions: [],
@@ -31,7 +32,11 @@ class CaptionsScene extends Component {
   componentDidMount() {
     isMounted = true;
 
-    Api.captions.all().then((captions) => {
+    const captionsPromise = this.submissionId ?
+      Api.captions.forSubmission(this.submissionId) :
+      Api.captions.current();
+
+    captionsPromise.then((captions) => {
       if( !isMounted ) { return console.log("Not mounted."); }
 
       captions = captions.map(function(c) {
@@ -48,7 +53,11 @@ class CaptionsScene extends Component {
       console.error(err);
     })
 
-    Api.submissions.current().then((submission) => {
+    const submissionsPromise = this.submissionId ?
+      Api.submissions.get(this.submissionId) :
+      Api.submissions.current();
+
+    submissionsPromise.then((submission) => {
       if( !isMounted ) { return; }
 
       this.setState({
