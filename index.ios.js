@@ -14,11 +14,11 @@ import NoScene          from './components/noScene';
 class RootNav extends Component {
   constructor(props) {
     super(props);
-    this.state = { scene: 'CaptionScene' }
+    this.state = { scene: 'CaptionScene', props: {} }
 
     this.navigator = {
-      navigate: (component) => {
-        this.setState({scene: component})
+      navigate: (component, props) => {
+        this.setState({scene: component, props: props || {}})
       }
     }
   }
@@ -28,13 +28,13 @@ class RootNav extends Component {
       <View style={{flex: 1}}>
         {
           this.state.scene == 'CaptionScene' ?
-            <CaptionScene navigator={this.navigator} />
+            <CaptionScene {...this.state.props} navigator={this.navigator}/>
           : this.state.scene == 'CaptionsScene' ?
-            <CaptionsScene navigator={this.navigator} />
+            <CaptionsScene {...this.state.props} navigator={this.navigator}/>
           : this.state.scene == 'SubmissionsScene' ?
-            <SubmissionsScene navigator={this.navigator} />
+            <SubmissionsScene {...this.state.props} navigator={this.navigator}/>
           : this.state.scene == 'SubmissionScene' ?
-            <SubmissionScene navigator={this.navigator} />
+            <SubmissionScene {...this.state.props} navigator={this.navigator}/>
           :
             <NoScene />
         }

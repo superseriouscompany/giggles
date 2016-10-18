@@ -54,7 +54,7 @@ class CaptionsScene extends Component {
     })
 
     const submissionsPromise = this.submissionId ?
-      Api.submissions.get(this.submissionId)
+      Api.submissions.get(this.submissionId) :
       Api.submissions.current();
 
     submissionsPromise.then((submission) => {
