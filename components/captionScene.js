@@ -60,20 +60,8 @@ class Caption extends Component {
     };
   }
 
-  prepareRecordingPath(audioPath){
-    AudioRecorder.prepareRecordingAtPath(audioPath, {
-      SampleRate: 22050,
-      Channels: 1,
-      AudioQuality: "Low",
-      AudioEncoding: "aac",
-      AudioEncodingBitRate: 32000
-    });
-  }
-
   componentDidMount() {
     isMounted = true;
-    let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
-    this.prepareRecordingPath(audioPath);
     AudioRecorder.onProgress = (data) => {
       let percentComplete = Math.min(1, data.currentTime / RECORDING_LENGTH);
       this.setState({percentComplete: percentComplete});
@@ -99,22 +87,36 @@ class Caption extends Component {
   }
 
   _stop() {
+    if( !this.state.recording ) { return; }
     AudioRecorder.stopRecording();
     this.setState({stoppedRecording: true, recording: false});
   }
 
   _record() {
-    if(this.state.stoppedRecording){
+    AudioRecorder.checkAuthorizationStatus().then((status) => {
+      if( status === 'denied' ) {
+        this.setState({permissionsDenied: true});
+        return Alert.alert("You denied us microphone permissions", "I thought we were friends");
+      } else if( status === 'undetermined') {
+        return AudioRecorder.requestAuthorization();
+      }
+
       let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
-      this.prepareRecordingPath(audioPath);
-    }
-    AudioRecorder.startRecording();
-    this.setState({recording: true, playing: false});
+      AudioRecorder.prepareRecordingAtPath(audioPath, {
+        SampleRate: 22050,
+        Channels: 1,
+        AudioQuality: "Low",
+        AudioEncoding: "aac",
+        AudioEncodingBitRate: 32000
+      });
+      AudioRecorder.startRecording();
+      this.setState({recording: true, playing: false});
+    })
   }
 
   _pressHint() {
-    if( !this.state.recording ) {
-      Alert.alert("You gotta hold the button record", "Dumbass.");
+    if( !this.state.recording && !this.state.permissionsDenied ) {
+      Alert.alert("You gotta hold the record button", "Dumbass.");
     }
   }
 
