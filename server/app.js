@@ -30,7 +30,8 @@ let captionUpload    = multer({storage: captionStorage});
 let submissionUpload = multer({storage: submissionStorage});
 
 let captions    = [],
-    submissions = [];
+    submissions = [],
+    queue       = [];
 
 app.use(express.static('captions'));
 app.use(express.static('submissions'));
@@ -44,15 +45,23 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   if( req.file && req.file.filename ) {
     const dimensions = sizeOf(`./submissions/${req.file.filename}`);
 
-    submissions.unshift({
+    queue.push({
       id: uuid,
       filename: req.file.filename,
       width: dimensions.width,
       height: dimensions.height,
       image_url: `https://superserious.ngrok.io/${req.file.filename}`,
     })
-    res.status(201).json({id: uuid});
+    res.status(201).json({id: uuid, queueSize: queue.length});
   }
+})
+
+app.post('/next', function(req,res) {
+  if( !queue.length ) { return res.status(400).json({error: 'Queue empty'}) }
+
+  const chosenOne = queue.splice(Math.random() * (queue.length - 1), 1);
+  submissions.unshift(chosenOne[0]);
+  res.sendStatus(204);
 })
 
 app.get('/submissions', function(req, res) {
