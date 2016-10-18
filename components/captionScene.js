@@ -187,7 +187,7 @@ class Caption extends Component {
           : this.state.stoppedRecording ? // if recording and done, show cancel button
             <View style={styles.topRow}>
               <TouchableHighlight onPress={this._cancel.bind(this)}>
-                <Image source={require('../images/Cancel.png')}/>
+                <Image source={require('../images/GoScreenLeft.png')}/>
               </TouchableHighlight>
             </View>
           : // default: show top bar
