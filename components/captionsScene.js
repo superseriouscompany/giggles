@@ -13,7 +13,7 @@ import {
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
 
-let isMounted = true;
+let isMounted;
 
 class CaptionsScene extends Component {
   constructor(props) {
@@ -29,8 +29,10 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
+    isMounted = true;
+
     Api.captions.all().then((captions) => {
-      if( !isMounted ) { return; }
+      if( !isMounted ) { return console.log("Not mounted."); }
 
       captions = captions.map(function(c) {
         let randomColor = 0;
