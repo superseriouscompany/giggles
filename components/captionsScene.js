@@ -138,6 +138,12 @@ class CaptionsScene extends Component {
         }
 
         <ScrollView style={styles.scrollContainer}>
+          { this.state.captions.length == 0 && !this.state.captionsLoading ?
+            <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+          :
+            null
+          }
+
           {this.state.captions.map((c, i) => (
             <View key={i} style={styles.row}>
               <TouchableHighlight onPress={() => this._play(c)}>
