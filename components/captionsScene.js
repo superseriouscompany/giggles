@@ -74,6 +74,21 @@ class CaptionsScene extends Component {
 
   _play = (caption) => {
     const url = `https://superserious.ngrok.io/${caption.filename}`;
+    AudioPlayer.onProgress = (data) => {
+      console.log("Progress", data);
+    };
+    AudioPlayer.onFinished = () => {
+      this.setState({
+        captions: this.state.captions.map(function(c) {
+          if( c.id === caption.id ) {
+            c.playing = false;
+          }
+          return c;
+        })
+      })
+    };
+    AudioPlayer.setProgressSubscription();
+    AudioPlayer.setFinishedSubscription();
     AudioPlayer.playWithUrl(url);
 
     this.setState({
