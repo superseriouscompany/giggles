@@ -1,3 +1,5 @@
+'use strict';
+
 import React, {Component} from 'react';
 
 import {
@@ -53,7 +55,8 @@ class Caption extends Component {
       stoppedRecording: false,
       stoppedPlaying: false,
       playing: false,
-      finished: false
+      finished: false,
+      loadingSubmission: true,
     };
   }
 
@@ -83,6 +86,7 @@ class Caption extends Component {
       if( isMounted ) {
         this.setState({
           submission: submission,
+          loadingSubmission: false,
         })
       }
     }).catch(function(err) {
@@ -123,9 +127,8 @@ class Caption extends Component {
     this.setState({playing: true});
   }
 
-  _submit() {
+  _submit(submissionId) {
     const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
-    console.log(path);
 
     let body = new FormData();
     body.append('cool', 'nice');
@@ -136,10 +139,9 @@ class Caption extends Component {
     xhr.onreadystatechange = (e) => {
       if( xhr.readyState !== 4 ) { return; }
 
-      console.log(xhr.status, xhr.responseText);
       this.navigator.navigate('CaptionsScene');
     }
-    xhr.open('POST', 'https://superserious.ngrok.io/captions');
+    xhr.open('POST', `https://superserious.ngrok.io/submissions/${submissionId}/captions`);
     xhr.send(body);
   }
 
@@ -166,8 +168,10 @@ class Caption extends Component {
             onLoadStart={() => this.setState({loadingImage: true})}
             onLoadEnd={() => this.setState({loadingImage: false})}
             />
-        :
+        : this.state.loadingSubmission ?
           <Text style={{color: 'forestgreen'}}>Loading submission...</Text>
+        :
+          <Text style={{color: 'papayawhip'}}>Loaded no submissions.</Text>
         }
 
         { this.state.loadingImage ?
@@ -207,7 +211,7 @@ class Caption extends Component {
               <TouchableHighlight onPress={this._play.bind(this)}>
                 <Image source={require('../images/Play.png')}/>
               </TouchableHighlight>
-              <TouchableHighlight onPress={this._submit.bind(this)}>
+              <TouchableHighlight onPress={() => this._submit(this.state.submission.id)}>
                 <Image source={require('../images/Submit.png')}/>
               </TouchableHighlight>
             </View>

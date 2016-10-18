@@ -44,7 +44,7 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   if( req.file && req.file.filename ) {
     const dimensions = sizeOf(`./submissions/${req.file.filename}`);
 
-    submissions.push({
+    submissions.unshift({
       id: uuid,
       filename: req.file.filename,
       width: dimensions.width,
@@ -55,12 +55,31 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   }
 })
 
-app.post('/captions', captionUpload.single('audio'), function(req, res) {
+app.get('/submissions', function(req, res) {
+  res.json({
+    submissions: submissions
+  })
+})
+
+app.get('/captions', function(req, res) {
+  res.json({
+    captions: captions
+  })
+})
+
+app.get('/submissions/:id/captions', function(req, res) {
+  res.json({
+    captions: captions.filter(function(c) { return c.submission_id == req.params.id })
+  })
+})
+
+app.post('/submissions/:id/captions', captionUpload.single('audio'), function(req, res) {
   const uuid = UUID.v1();
   if( req.file && req.file.filename ) {
-    captions.push({
+    captions.unshift({
       id: uuid,
       filename: req.file.filename,
+      submission_id: req.params.id
     })
   }
   res.status(201).json({id: uuid});
@@ -80,18 +99,6 @@ app.post('/captions/:id/hate', function(req, res) {
   caption.hates = caption.hates || 0;
   caption.hates++;
   res.sendStatus(204);
-})
-
-app.get('/submissions', function(req, res) {
-  res.json({
-    submissions: submissions
-  })
-})
-
-app.get('/captions', function(req, res) {
-  res.json({
-    captions: captions
-  })
 })
 
 app.listen(port, function() {
