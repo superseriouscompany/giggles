@@ -30,25 +30,25 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
-    Api.submissions.current().then((submission) => {
+    Api.captions.all().then((captions) => {
       if( !isMounted ) { return; }
 
-      Api.captions.all({submission_id: submission.id}).then((captions) => {
-        if( !isMounted ) { return; }
-
-        captions = captions.map(function(c) {
-          let randomColor = 0;
-          for( var i = 0; i < c.id.length; i++ ) {
-            randomColor += c.id.charCodeAt(i);
-          }
-          c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
-          return c;
-        })
-
-        this.setState({captions: captions, captionsLoading: false})
-      }).catch(function(err) {
-        console.error(err);
+      captions = captions.map(function(c) {
+        let randomColor = 0;
+        for( var i = 0; i < c.id.length; i++ ) {
+          randomColor += c.id.charCodeAt(i);
+        }
+        c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
+        return c;
       })
+
+      this.setState({captions: captions, captionsLoading: false})
+    }).catch(function(err) {
+      console.error(err);
+    })
+
+    Api.submissions.current().then((submission) => {
+      if( !isMounted ) { return; }
 
       this.setState({
         submission: submission,

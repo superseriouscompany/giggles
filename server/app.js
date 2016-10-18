@@ -44,7 +44,7 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
   if( req.file && req.file.filename ) {
     const dimensions = sizeOf(`./submissions/${req.file.filename}`);
 
-    submissions.push({
+    submissions.unshift({
       id: uuid,
       filename: req.file.filename,
       width: dimensions.width,
@@ -76,7 +76,7 @@ app.get('/submissions/:id/captions', function(req, res) {
 app.post('/submissions/:id/captions', captionUpload.single('audio'), function(req, res) {
   const uuid = UUID.v1();
   if( req.file && req.file.filename ) {
-    captions.push({
+    captions.unshift({
       id: uuid,
       filename: req.file.filename,
       submission_id: req.params.id
