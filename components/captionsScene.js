@@ -8,10 +8,15 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Platform,
+  StatusBar,
 } from 'react-native';
 
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 5 : 0;
+const windowSize = Dimensions.get('window');
 
 let isMounted;
 
@@ -138,11 +143,12 @@ class CaptionsScene extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.background}>
+        <StatusBar backgroundColor="black" barStyle="light-content"/>
         <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
         { this.state.submission ?
           <Image
-            style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}}
+            style={styles.image}
             source={{uri: this.state.submission.image_url}}
             onLoadStart={ () => { this.setState({imageLoading: true}) }}
             onLoadEnd={ () => { this.setState({imageLoading: false}) }}
@@ -202,20 +208,37 @@ class CaptionsScene extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1
+  debug: {
+    backgroundColor: 'pink',
   },
-
+  background: {
+    backgroundColor: 'black',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: STATUSBAR_HEIGHT,
+  },
+  imageContainer: {
+    flexDirection: 'column',
+    flex: .5,
+    alignItems: 'center',
+    backgroundColor: 'pink'
+  },
+  scrollContainer: {
+    flexDirection: 'row',
+    flex: .5,
+    width: windowSize.width
+  },
+  image: {
+    flex: .5,
+    width: windowSize.width,
+    resizeMode: 'contain',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center'
   },
-
-  scrollContainer: {
-    backgroundColor: '#dfdfdf'
-  },
-
   text: {
     color: '#666'
   }

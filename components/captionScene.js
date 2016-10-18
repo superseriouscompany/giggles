@@ -18,9 +18,8 @@ import {
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import Api from '../lib/api';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-const RECORDING_LENGTH = 30
-
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 5 : 0;
+const RECORDING_LENGTH = 30;
 const windowSize = Dimensions.get('window');
 
 function imageDimensions(image) {
@@ -161,7 +160,7 @@ class Caption extends Component {
   render() {
     return (
       <View style={styles.imageBackground}>
-        <StatusBar backgroundColor="black" barStyle="light-content"/>
+        <StatusBar hidden={true}/>
         { this.state.submission ?
           <Image
             source={{uri: this.state.submission.image_url}}
