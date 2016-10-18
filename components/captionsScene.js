@@ -11,16 +11,16 @@ import {
 } from 'react-native';
 
 import {AudioPlayer} from 'react-native-audio';
-import CacheableImage from 'react-native-cacheable-image'
 import Api from '../lib/api';
 
-let isMounted = true;
+let isMounted;
 
 class CaptionsScene extends Component {
   constructor(props) {
     super(props);
 
     this.navigator = props.navigator;
+    this.submissionId = props.submissionId;
 
     this.state = {
       captions: [],
@@ -30,8 +30,14 @@ class CaptionsScene extends Component {
   }
 
   componentDidMount() {
-    Api.captions.all().then((captions) => {
-      if( !isMounted ) { return; }
+    isMounted = true;
+
+    const captionsPromise = this.submissionId ?
+      Api.captions.forSubmission(this.submissionId) :
+      Api.captions.current();
+
+    captionsPromise.then((captions) => {
+      if( !isMounted ) { return console.log("Not mounted."); }
 
       captions = captions.map(function(c) {
         let randomColor = 0;
@@ -47,7 +53,11 @@ class CaptionsScene extends Component {
       console.error(err);
     })
 
-    Api.submissions.current().then((submission) => {
+    const submissionsPromise = this.submissionId ?
+      Api.submissions.get(this.submissionId) :
+      Api.submissions.current();
+
+    submissionsPromise.then((submission) => {
       if( !isMounted ) { return; }
 
       this.setState({
@@ -64,6 +74,21 @@ class CaptionsScene extends Component {
 
   _play = (caption) => {
     const url = `https://superserious.ngrok.io/${caption.filename}`;
+    AudioPlayer.onProgress = (data) => {
+      console.log("Progress", data);
+    };
+    AudioPlayer.onFinished = () => {
+      this.setState({
+        captions: this.state.captions.map(function(c) {
+          if( c.id === caption.id ) {
+            c.playing = false;
+          }
+          return c;
+        })
+      })
+    };
+    AudioPlayer.setProgressSubscription();
+    AudioPlayer.setFinishedSubscription();
     AudioPlayer.playWithUrl(url);
 
     this.setState({
@@ -116,7 +141,7 @@ class CaptionsScene extends Component {
       <View style={styles.container}>
         <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
         { this.state.submission ?
-          <CacheableImage
+          <Image
             style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}}
             source={{uri: this.state.submission.image_url}}
             onLoadStart={ () => { this.setState({imageLoading: true}) }}
