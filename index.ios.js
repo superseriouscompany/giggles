@@ -27,17 +27,9 @@ class RootNav extends Component {
     }
   }
 
-  componentDidMount() {
-    const CurrentUser = require('./lib/currentUser');
-    CurrentUser.myId().then((id) => {
-      this.setState({myId: id})
-    }).catch(console.error);
-  }
-
   render() {
     return (
       <View style={{flex: 1}}>
-        <Text style={{color: 'lavenderblush', backgroundColor: 'teal', padding: 20}}>My id: {this.state.myId}</Text>
         {
           this.state.scene == 'CaptionScene' ?
             <CaptionScene {...this.state.props} navigator={this.navigator}/>
