@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
-import CacheableImage from 'react-native-cacheable-image';
 import Api from '../lib/api';
 
 let isMounted;
