@@ -28,13 +28,10 @@ class RootNav extends Component {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('@steffigraffiti:myId').then((id) => {
-      if( id ) { return this.setState({myId: id}) }
-      const myId = String(Math.random());
-      return AsyncStorage.setItem('@steffigraffiti:myId', myId).then(() => {
-        this.setState({myId: myId});
-      }).catch(console.error);
-    }).catch(console.error)
+    const CurrentUser = require('./lib/currentUser');
+    CurrentUser.myId().then((id) => {
+      this.setState({myId: id})
+    }).catch(console.error);
   }
 
   render() {
