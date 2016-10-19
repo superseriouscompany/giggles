@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
     "react": "15.3.2",
@@ -12,5 +13,16 @@
     "react-native-billing": "^2.1.0",
     "react-native-image-picker": "^0.22.9",
     "react-native-in-app-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-jest": "^16.0.0",
+    "babel-preset-react-native": "^1.9.0",
+    "jest": "^16.0.1",
+    "jest-react-native": "^16.0.0",
+    "react-test-renderer": "^15.3.2"
+  },
+  "jest": {
+    "preset": "jest-react-native"
   }
 }
