@@ -94,8 +94,8 @@ class Caption extends Component {
 
   _record() {
     AudioRecorder.checkAuthorizationStatus().then((status) => {
+      this.setState({audioPermissions: status});
       if( status === 'denied' ) {
-        this.setState({permissionsDenied: true});
         return Alert.alert("You denied us microphone permissions", "I thought we were friends");
       } else if( status === 'undetermined') {
         return AudioRecorder.requestAuthorization();
@@ -115,9 +115,10 @@ class Caption extends Component {
   }
 
   _pressHint() {
-    if( !this.state.recording && !this.state.permissionsDenied ) {
-      Alert.alert("You gotta hold the record button", "Dumbass.");
-    }
+    if( this.state.recording ) return;
+    if( this.state.audioPermissions == 'denied' || this.state.audioPermissions == 'undetermined' ) return;
+
+    Alert.alert("You gotta hold the record button", "Dumbass.");
   }
 
   _play() {
@@ -133,8 +134,6 @@ class Caption extends Component {
     const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
 
     let body = new FormData();
-    body.append('cool', 'nice');
-    body.append('good', 'great');
     body.append('audio', {uri: 'file://'+path, name: 'test.aac', type: 'audio/aac'});
 
     var xhr = new XMLHttpRequest;
