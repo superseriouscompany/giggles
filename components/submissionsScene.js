@@ -8,12 +8,15 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
+
+const windowSize = Dimensions.get('window');
 
 let isMounted;
 
@@ -70,6 +73,14 @@ class SubmissionsScene extends Component {
             ))}
           </ScrollView>
         </View>
+
+        <View style={styles.container}>
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+              <Image source={require('../images/GoScreenRight.png')}/>
+            </TouchableHighlight>
+          </View>
+        </View>
       </View>
     )
   }
@@ -117,6 +128,12 @@ class SubmissionsScene extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: windowSize.width,
+  },
   bg: {
     backgroundColor: '#181818',
     flex: 1,
@@ -131,6 +148,10 @@ const styles = StyleSheet.create({
   },
   button: {
     color: 'white',
+  },
+  topRow: {
+    flexDirection: 'column',
+    alignItems: 'flex-end',
   },
 })
 
