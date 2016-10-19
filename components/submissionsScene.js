@@ -58,17 +58,16 @@ class SubmissionsScene extends Component {
         <StatusBar backgroundColor="black" barStyle="light-content"/>
 
         <View style={styles.bg}>
-          { this.state.uploading ?
-            <Text style={styles.button}>Uploading...</Text>
-          :
-            <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
-              <Text style={styles.button}>Upload Photo</Text>
-            </TouchableOpacity>
-          }
-
-          <View style={{backgroundColor: 'tomato'}}>
-            <Text>{this.state.loaded} {this.state.submissions.length} Photos</Text>
+          <View style={styles.uploadBackground}>
+            { this.state.uploading ?
+              <Text style={styles.button}>Uploading...</Text>
+            :
+              <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+                <Image source={require('../images/UploadImage.png')} />
+              </TouchableOpacity>
+            }
           </View>
+
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
               <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}>
@@ -149,21 +148,22 @@ const styles = StyleSheet.create({
   bg: {
     backgroundColor: '#181818',
     flex: 1,
-    paddingTop: 20,
-    paddingBottom: 20,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    backgroundColor: 'green',
+  },
+  uploadBackground: {
+    flex: 0.2,
+    backgroundColor: 'pink',
   },
   scrollContainer: {
-    flex: 1,
+    flex: 0.8,
     backgroundColor: 'tomato',
   },
-  button: {
-    color: 'white',
-  },
   topRow: {
-    flexDirection: 'column',
-    alignItems: 'flex-end',
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 })
 
