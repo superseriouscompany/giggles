@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 
+import { InAppUtils } from 'NativeModules';
+
 import CaptionScene     from './components/captionScene';
 import CaptionsScene    from './components/captionsScene';
 import SubmissionsScene from './components/submissionsScene';
@@ -25,6 +27,16 @@ class RootNav extends Component {
         this.setState({scene: component, props: props || {}})
       }
     }
+  }
+
+  componentDidMount() {
+    InAppUtils.receiptData((error, receiptData)=> {
+      if(error) {
+        console.log('Receipt not found.', error);
+      } else {
+        console.log(receiptData);
+      }
+    });
   }
 
   render() {

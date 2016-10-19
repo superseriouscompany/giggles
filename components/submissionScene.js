@@ -8,8 +8,6 @@ import {
   View,
 } from 'react-native';
 
-import { InAppUtils } from 'NativeModules';
-
 import SubmissionButton from './submissionButton';
 
 class SubmissionScene extends Component {
