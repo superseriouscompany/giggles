@@ -159,7 +159,7 @@ class CaptionsScene extends Component {
   render() {
     return (
       <View style={styles.imageBackground}>
-        <StatusBar backgroundColor="black" barStyle="light-content"/>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
 
         <View style={styles.background}>
           { this.state.submission ?

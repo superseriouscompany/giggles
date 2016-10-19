@@ -56,7 +56,7 @@ class SubmissionsScene extends Component {
   render() {
     return(
       <View style={styles.background}>
-        <StatusBar backgroundColor="black" barStyle="light-content"/>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
 
         <View style={styles.bg}>
           <View style={styles.uploadBackground}>
@@ -184,7 +184,6 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 0.81,
-    backgroundColor: 'tomato',
   },
   scrollImage: {
     width: Dimensions.get('window').width,
