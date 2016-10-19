@@ -197,7 +197,7 @@ class Caption extends Component {
             </View>
           : // default: show top bar
             <View style={styles.topRow}>
-              <TouchableHighlight onPress={this.tapOriginalsList}>
+              <TouchableHighlight onPress={this.tapOriginalsList} accessible={true} accessibilityLabel={'See photos'}>
                 <Image source={require('../images/SeeAllOriginals.png')}/>
               </TouchableHighlight>
 
