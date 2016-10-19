@@ -1139,6 +1139,7 @@
 				3FD533E51DB7A73E00AA558C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "steffigraffiti" */ = {
 			isa = XCConfigurationList;
