@@ -124,7 +124,7 @@ class CaptionsScene extends Component {
       this.setState({
         captions: this.state.captions.map(function(c) {
           if( c.id === caption.id ) {
-            c.rated = true;
+            c.liked = true;
           }
 
           return c;
@@ -196,7 +196,7 @@ class CaptionsScene extends Component {
                 <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
               }
 
-              { c.played && !c.rated ?
+              { c.played && !c.liked ?
                 <View style={{flexDirection: 'row'}}>
                   <TouchableHighlight onPress={() => this._like(c)}>
                     <Image source={require('../images/Submit.png')} />
