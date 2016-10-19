@@ -105,7 +105,7 @@ app.get('/submissions', function(req, res) {
 
 app.get('/captions', function(req, res) {
   res.json({
-    captions: captions
+    captions: captions.filter(function(c) { return c.submission_id == submissions[0].id})
   })
 })
 
