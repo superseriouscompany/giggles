@@ -5,9 +5,12 @@ import {
   CameraRoll,
   Dimensions,
   Image,
+  Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -15,6 +18,9 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
 import CacheableImage from 'react-native-cacheable-image';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
+const windowSize = Dimensions.get('window');
 
 let isMounted;
 
@@ -49,27 +55,47 @@ class SubmissionsScene extends Component {
 
   render() {
     return(
-      <View style={{flex: 1, paddingTop: 20}}>
-        <Text style={{textAlign: 'right'}} onPress={() => this.navigator.navigate('CaptionScene')}>forward</Text>
-        <View style={styles.bg}>
-          { this.state.uploading ?
-            <Text style={styles.button}>Uploading...</Text>
-          :
-            <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
-              <Text style={styles.button}>Upload Photo</Text>
-            </TouchableOpacity>
-          }
+      <View style={styles.background}>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
 
-          <View style={{backgroundColor: 'tomato'}}>
-            <Text>{this.state.loaded} {this.state.submissions.length} Photos</Text>
+        <View style={styles.bg}>
+          <View style={styles.uploadBackground}>
+            { this.state.uploading ?
+              <Text style={styles.button}>Uploading...</Text>
+            :
+              <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
+                <Image source={require('../images/UploadImage.png')} />
+              </TouchableOpacity>
+            }
+
+            <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+              <View style={styles.backdropView}>
+                <Text style={styles.date}>tomorrow</Text>
+              </View>
+            </Image>
           </View>
+
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
               <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}>
-                <CacheableImage source={{uri: s.image_url}} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (s.height / s.width)}}/>
+                <CacheableImage source={{uri: s.image_url}} style={styles.scrollImage}>
+                  <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+                    <View style={styles.backdropView}>
+                      <Text style={styles.date}>today</Text>
+                    </View>
+                  </Image>
+                </CacheableImage>
               </TouchableOpacity>
             ))}
           </ScrollView>
+        </View>
+
+        <View style={styles.container}>
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+              <Image source={require('../images/GoScreenRight.png')}/>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     )
@@ -119,20 +145,54 @@ class SubmissionsScene extends Component {
 }
 
 const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: 'black',
+  background: {
+    backgroundColor: '#181818',
     flex: 1,
-    paddingTop: 20,
-    paddingBottom: 20,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'center',
+    paddingTop: STATUSBAR_HEIGHT,
+  },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: windowSize.width,
+  },
+  bg: {
+    backgroundColor: '#181818',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  uploadBackground: {
+    flex: 0.19,
+    width: windowSize.width,
+    alignItems: 'center',
+  },
+  darkRect: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+  },
+  date: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: 'white',
+    paddingTop: 19.5,
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   scrollContainer: {
-    flex: 1,
-    backgroundColor: 'tomato',
+    flex: 0.81,
   },
-  button: {
-    color: 'white',
+  scrollImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').width * 0.666,
+  },
+  topRow: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 })
 

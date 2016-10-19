@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
+  Platform,
+  StatusBar,
   StyleSheet,
   ScrollView,
   Text,
@@ -13,6 +15,9 @@ import {
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
 import CacheableImage from 'react-native-cacheable-image';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
+const windowSize = Dimensions.get('window');
 
 let isMounted;
 
@@ -153,91 +158,168 @@ class CaptionsScene extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
-        { this.state.submission ?
-          <CacheableImage
-            style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}}
-            source={{uri: this.state.submission.image_url}}
-            onLoadStart={ () => { this.setState({imageLoading: true}) }}
-            onLoadEnd={ () => { this.setState({imageLoading: false}) }}
-            />
-        :
-          null
-        }
-        { this.state.imageLoading ?
-          <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
-        :
-          null
-        }
+      <View style={styles.imageBackground}>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
 
-        { this.state.captionsLoading ?
-          <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
-        :
-          null
-        }
-
-        <ScrollView style={styles.scrollContainer}>
-          { this.state.captions.length == 0 && !this.state.captionsLoading ?
-            <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+        <View style={styles.background}>
+          { this.state.submission ?
+            <CacheableImage
+              style={styles.image}
+              source={{uri: this.state.submission.image_url}}
+              onLoadStart={ () => { this.setState({imageLoading: true}) }}
+              onLoadEnd={ () => { this.setState({imageLoading: false}) }}
+              />
+          :
+            null
+          }
+          { this.state.imageLoading ?
+            <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
           :
             null
           }
 
-          {this.state.captions.map((c, i) => (
-            <View key={i} style={styles.row}>
-              <TouchableHighlight onPress={() => this._play(c)}>
-                <Image source={require('../images/Play.png')} />
-              </TouchableHighlight>
+          { this.state.captionsLoading ?
+            <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
+          :
+            null
+          }
 
-              { c.playing ?
-                <Text style={[styles.text, {color: c.color}]}>Playing...</Text>
-              :
-                <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
-              }
+          <ScrollView style={styles.scrollContainer}>
+            { this.state.captions.length == 0 && !this.state.captionsLoading ?
+              <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+            :
+              null
+            }
 
-              { c.played && !c.liked ?
-                <View style={{flexDirection: 'row'}}>
-                  <TouchableHighlight onPress={() => this._like(c)}>
-                    <Image source={require('../images/Submit.png')} />
+            {this.state.captions.map((c, i) => (
+              <View key={i} style={styles.row}>
+                <View style={styles.leftHalfRow}>
+                  <TouchableHighlight onPress={() => this._play(c)}>
+                    <Image source={require('../images/PlayAudio.png')}>
+                      <View style={styles.backdropView}>
+                        <Text style={styles.duration}>4:20</Text>
+                      </View>
+                    </Image>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={() => this._hate(c)}>
-                    <Image source={require('../images/StopRecord.png')} />
-                  </TouchableHighlight>
+
+                  { c.playing ?
+                    <Image style={styles.audioGif} source={require('../images/audioPlaying.gif')} />
+                  :
+                    <Text style={[styles.text]}></Text>
+                  }
                 </View>
-              : c.liked ?
-                <View>
-                  <Image source={require('../images/Submit.png')} />
+
+                <View style={styles.rightHalfRow}>
+                  { c.played && !c.liked ?
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableHighlight onPress={() => this._hate(c)}>
+                        <Image source={require('../images/Anger.png')} />
+                      </TouchableHighlight>
+                      <TouchableHighlight onPress={() => this._like(c)}>
+                        <Image source={require('../images/Laughing.png')} />
+                      </TouchableHighlight>
+                    </View>
+                  : c.liked ?
+                    <View>
+                      <Image source={require('../images/Laughing.png')} />
+                    </View>
+                  :
+                    null
+                  }
                 </View>
-              :
-                null
-              }
-            </View>
-          ))}
-        </ScrollView>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.container}>
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+              <Image source={require('../images/GoScreenLeft.png')}/>
+            </TouchableHighlight>
+          </View>
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1
+  debug: {
+    backgroundColor: 'pink',
   },
-
+  imageBackground: {
+    backgroundColor: '#181818',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: windowSize.width,
+  },
+  background: {
+    backgroundColor: '#181818',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: STATUSBAR_HEIGHT,
+  },
+  imageContainer: {
+    flexDirection: 'column',
+    flex: .5,
+    alignItems: 'center',
+  },
+  scrollContainer: {
+    flexDirection: 'row',
+    flex: .5,
+    width: windowSize.width,
+    marginTop: STATUSBAR_HEIGHT,
+  },
+  image: {
+    flex: .5,
+    width: windowSize.width,
+    resizeMode: 'contain',
+  },
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    width: windowSize.width,
+    height: 64,
+    paddingRight: 5,
   },
-
-  scrollContainer: {
-    backgroundColor: '#dfdfdf'
+  leftHalfRow: {
+    flex: .5,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
-
+  rightHalfRow: {
+    flex: .5,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
+  audioGif: {
+    flex: .5
+  },
   text: {
     color: '#666'
-  }
+  },
+  duration: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: 'white',
+    paddingTop: 23.5,
+    paddingLeft: 30,
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 })
 
 module.exports = CaptionsScene;

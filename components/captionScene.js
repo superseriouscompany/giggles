@@ -19,9 +19,8 @@ import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import Api from '../lib/api';
 import CacheableImage from 'react-native-cacheable-image';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-const RECORDING_LENGTH = 30
-
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 5 : 0;
+const RECORDING_LENGTH = 30;
 const windowSize = Dimensions.get('window');
 
 function imageDimensions(image) {
@@ -161,7 +160,7 @@ class Caption extends Component {
   render() {
     return (
       <View style={styles.imageBackground}>
-        <StatusBar backgroundColor="black" barStyle="light-content"/>
+        <StatusBar hidden={true}/>
         { this.state.submission ?
           <CacheableImage
             source={{uri: this.state.submission.image_url}}
@@ -192,7 +191,7 @@ class Caption extends Component {
           : this.state.stoppedRecording ? // if recording and done, show cancel button
             <View style={styles.topRow}>
               <TouchableHighlight onPress={this._cancel.bind(this)}>
-                <Image source={require('../images/Cancel.png')}/>
+                <Image source={require('../images/GoScreenLeft.png')}/>
               </TouchableHighlight>
             </View>
           : // default: show top bar
@@ -238,7 +237,7 @@ let styles = StyleSheet.create({
     backgroundColor: 'pink'
   },
   imageBackground: {
-    backgroundColor: 'black',
+    backgroundColor: '#181818',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
