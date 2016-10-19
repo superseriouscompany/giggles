@@ -38,8 +38,8 @@ let captions    = [],
 
 app.use(bodyParser.json());
 
-app.use(express.static('captions'));
-app.use(express.static('submissions'));
+app.use(express.static('captions', {maxAge: 86400000}));
+app.use(express.static('submissions', {maxAge: 86400000}));
 
 app.get('/', function(req, res) {
   res.json({cool: 'nice'});

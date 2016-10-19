@@ -12,6 +12,7 @@ import {
 
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
+import CacheableImage from 'react-native-cacheable-image';
 
 let isMounted;
 
@@ -155,7 +156,7 @@ class CaptionsScene extends Component {
       <View style={styles.container}>
         <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
         { this.state.submission ?
-          <Image
+          <CacheableImage
             style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (this.state.submission.height / this.state.submission.width)}}
             source={{uri: this.state.submission.image_url}}
             onLoadStart={ () => { this.setState({imageLoading: true}) }}

@@ -12,7 +12,8 @@
     "react-native-audio": "git@github.com:superseriouscompany/react-native-audio.git",
     "react-native-billing": "^2.1.0",
     "react-native-image-picker": "^0.22.9",
-    "react-native-in-app-utils": "^4.0.0"
+    "react-native-in-app-utils": "^4.0.0",
+    "react-native-cacheable-image": "git@github.com:superseriouscompany/react-native-cacheable-image"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

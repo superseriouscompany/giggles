@@ -17,6 +17,7 @@ import {
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import Api from '../lib/api';
+import CacheableImage from 'react-native-cacheable-image';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 const RECORDING_LENGTH = 30
@@ -163,7 +164,7 @@ class Caption extends Component {
       <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
         { this.state.submission ?
-          <Image
+          <CacheableImage
             source={{uri: this.state.submission.image_url}}
             style={imageDimensions(this.state.submission)}
             onLoadStart={() => this.setState({loadingImage: true})}
