@@ -2,10 +2,11 @@
 
 const express     = require('express');
 const multer      = require('multer');
-const app         = express();
 const UUID        = require('node-uuid');
 const sizeOf      = require('image-size');
 const IAPVerifier = require('iap_verifier');
+const bodyParser  = require('body-parser');
+const app         = express();
 const port        = process.env.PORT || 3000;
 const iapClient   = new IAPVerifier();
 
@@ -34,6 +35,8 @@ let submissionUpload = multer({storage: submissionStorage});
 let captions    = [],
     submissions = [],
     queue       = [];
+
+app.use(bodyParser.json());
 
 app.use(express.static('captions'));
 app.use(express.static('submissions'));
@@ -67,7 +70,9 @@ app.post('/next', function(req,res) {
 })
 
 app.post('/submissions/:id/jumpQueue', function(req, res) {
-  const receipt = req.query.receipt;
+  console.log(req.body, req.body.receipt);
+
+  const receipt = req.body.receipt;
 
   iapClient.verifyReceipt(receipt, true, function(valid, msg, payload) {
     if( !valid ) {

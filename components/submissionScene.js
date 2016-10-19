@@ -20,7 +20,7 @@ class SubmissionScene extends Component {
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
-        <SubmissionButton />
+        <SubmissionButton navigator={this.navigator} submissionId={this.props.submissionId}/>
         <View>
           <TouchableHighlight onPress={this.enqueue.bind(this)}>
             <Text>Nope</Text>
