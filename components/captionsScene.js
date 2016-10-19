@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     width: windowSize.width,
   },
   background: {
-    backgroundColor: 'lavenderblush',
+    backgroundColor: 'black',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
@@ -254,12 +254,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: .5,
     alignItems: 'center',
-    backgroundColor: 'pink'
   },
   scrollContainer: {
     flexDirection: 'row',
     flex: .5,
-    width: windowSize.width
+    width: windowSize.width,
+    marginTop: STATUSBAR_HEIGHT,
   },
   image: {
     flex: .5,
@@ -270,19 +270,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     width: windowSize.width,
-    backgroundColor: 'cornflowerblue'
+    height: 64,
+    paddingRight: 5,
   },
   leftHalfRow: {
     flex: .5,
     flexDirection: 'column',
     alignItems: 'flex-start',
-    backgroundColor: 'green',
   },
   rightHalfRow: {
     flex: .5,
     flexDirection: 'column',
     alignItems: 'flex-end',
-    backgroundColor: 'maroon',
   },
   text: {
     color: '#666'
