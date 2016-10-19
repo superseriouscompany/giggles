@@ -66,6 +66,12 @@ class SubmissionsScene extends Component {
                 <Image source={require('../images/UploadImage.png')} />
               </TouchableOpacity>
             }
+
+            <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+              <View style={styles.backdropView}>
+                <Text style={styles.date}>tomorrow</Text>
+              </View>
+            </Image>
           </View>
 
           <ScrollView style={styles.scrollContainer}>
@@ -150,14 +156,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: 'green',
   },
   uploadBackground: {
-    flex: 0.2,
-    backgroundColor: 'pink',
+    flex: 0.19,
+    width: windowSize.width,
+    alignItems: 'center',
+  },
+  darkRect: {
+    position: 'absolute',
+    bottom: 5,
+    left: 0,
+  },
+  date: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: 'white',
+    paddingTop: 13,
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   scrollContainer: {
-    flex: 0.8,
+    flex: 0.81,
     backgroundColor: 'tomato',
   },
   topRow: {
