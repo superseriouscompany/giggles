@@ -188,7 +188,7 @@ class CaptionsScene extends Component {
                   </TouchableHighlight>
 
                   { c.playing ?
-                    <Text style={[styles.text, {color: 'white'}]}>...</Text>
+                    <Image style={styles.audioGif} source={require('../images/audioPlaying.gif')} />
                   :
                     <Text style={[styles.text]}></Text>
                   }
@@ -282,6 +282,9 @@ const styles = StyleSheet.create({
     flex: .5,
     flexDirection: 'column',
     alignItems: 'flex-end',
+  },
+  audioGif: {
+    flex: .5
   },
   text: {
     color: '#666'
