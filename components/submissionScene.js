@@ -22,7 +22,7 @@ class SubmissionScene extends Component {
       <View style={{flex: 1, padding: 20}}>
         <SubmissionButton navigator={this.navigator} submissionId={this.props.submissionId}/>
         <View>
-          <TouchableHighlight onPress={this.enqueue.bind(this)}>
+          <TouchableHighlight onPress={this.enqueue.bind(this)} accessible={true} accessibilityLabel={'Choose later'}>
             <Text>Nope</Text>
           </TouchableHighlight>
         </View>

@@ -52,6 +52,16 @@
                ReferencedContainer = "container:steffigraffiti.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3FD533DC1DB7A73E00AA558C"
+               BuildableName = "steffigraffitiUITests.xctest"
+               BlueprintName = "steffigraffitiUITests"
+               ReferencedContainer = "container:steffigraffiti.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

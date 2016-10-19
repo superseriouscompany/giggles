@@ -54,7 +54,7 @@ class SubmissionsScene extends Component {
           { this.state.uploading ?
             <Text style={styles.button}>Uploading...</Text>
           :
-            <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+            <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
               <Text style={styles.button}>Upload Photo</Text>
             </TouchableOpacity>
           }
