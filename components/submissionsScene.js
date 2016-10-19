@@ -77,7 +77,7 @@ class SubmissionsScene extends Component {
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
               <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}>
-                <Image source={{uri: s.image_url}} style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width * (s.height / s.width)}}/>
+                <Image source={{uri: s.image_url}} style={styles.scrollImage}/>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -177,6 +177,10 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 0.81,
     backgroundColor: 'tomato',
+  },
+  scrollImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').width * 0.666,
   },
   topRow: {
     position: 'absolute',
