@@ -5,7 +5,9 @@ import {
   CameraRoll,
   Dimensions,
   Image,
+  Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -16,6 +18,7 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
 
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
 
 let isMounted;
@@ -51,8 +54,9 @@ class SubmissionsScene extends Component {
 
   render() {
     return(
-      <View style={{flex: 1, paddingTop: 20}}>
-        <Text style={{textAlign: 'right'}} onPress={() => this.navigator.navigate('CaptionScene')}>forward</Text>
+      <View style={styles.background}>
+        <StatusBar backgroundColor="black" barStyle="light-content"/>
+
         <View style={styles.bg}>
           { this.state.uploading ?
             <Text style={styles.button}>Uploading...</Text>
@@ -128,6 +132,14 @@ class SubmissionsScene extends Component {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#181818',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: STATUSBAR_HEIGHT,
+  },
   container: {
     position: 'absolute',
     top: 0,
