@@ -118,7 +118,7 @@ class SubmissionsScene extends Component {
 
 const styles = StyleSheet.create({
   bg: {
-    backgroundColor: 'black',
+    backgroundColor: '#181818',
     flex: 1,
     paddingTop: 20,
     paddingBottom: 20,

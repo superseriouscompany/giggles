@@ -237,7 +237,7 @@ let styles = StyleSheet.create({
     backgroundColor: 'pink'
   },
   imageBackground: {
-    backgroundColor: 'black',
+    backgroundColor: '#181818',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
