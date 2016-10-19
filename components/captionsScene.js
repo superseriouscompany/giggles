@@ -15,7 +15,7 @@ import {
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 5 : 0;
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
 
 let isMounted;
@@ -143,65 +143,83 @@ class CaptionsScene extends Component {
 
   render() {
     return (
-      <View style={styles.background}>
+      <View style={styles.imageBackground}>
         <StatusBar backgroundColor="black" barStyle="light-content"/>
-        <Text onPress={() => this.navigator.navigate('CaptionScene')}>back</Text>
-        { this.state.submission ?
-          <Image
-            style={styles.image}
-            source={{uri: this.state.submission.image_url}}
-            onLoadStart={ () => { this.setState({imageLoading: true}) }}
-            onLoadEnd={ () => { this.setState({imageLoading: false}) }}
-            />
-        :
-          null
-        }
-        { this.state.imageLoading ?
-          <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
-        :
-          null
-        }
 
-        { this.state.captionsLoading ?
-          <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
-        :
-          null
-        }
-
-        <ScrollView style={styles.scrollContainer}>
-          { this.state.captions.length == 0 && !this.state.captionsLoading ?
-            <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+        <View style={styles.background}>
+          { this.state.submission ?
+            <Image
+              style={styles.image}
+              source={{uri: this.state.submission.image_url}}
+              onLoadStart={ () => { this.setState({imageLoading: true}) }}
+              onLoadEnd={ () => { this.setState({imageLoading: false}) }}
+              />
+          :
+            null
+          }
+          { this.state.imageLoading ?
+            <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
           :
             null
           }
 
-          {this.state.captions.map((c, i) => (
-            <View key={i} style={styles.row}>
-              <TouchableHighlight onPress={() => this._play(c)}>
-                <Image source={require('../images/Play.png')} />
-              </TouchableHighlight>
+          { this.state.captionsLoading ?
+            <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
+          :
+            null
+          }
 
-              { c.playing ?
-                <Text style={[styles.text, {color: c.color}]}>Playing...</Text>
-              :
-                <Text style={[styles.text, {color: c.color}]}>{c.color}</Text>
-              }
+          <ScrollView style={styles.scrollContainer}>
+            { this.state.captions.length == 0 && !this.state.captionsLoading ?
+              <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+            :
+              null
+            }
 
-              { c.played && !c.rated ?
-                <View style={{flexDirection: 'row'}}>
-                  <TouchableHighlight onPress={() => this._like(c)}>
-                    <Image source={require('../images/Submit.png')} />
+            {this.state.captions.map((c, i) => (
+              <View key={i} style={styles.row}>
+                <View style={styles.leftHalfRow}>
+                  <TouchableHighlight onPress={() => this._play(c)}>
+                    <Image source={require('../images/PlayAudio.png')}>
+                      <View style={styles.backdropView}>
+                        <Text style={styles.duration}>4:20</Text>
+                      </View>
+                    </Image>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={() => this._hate(c)}>
-                    <Image source={require('../images/StopRecord.png')} />
-                  </TouchableHighlight>
+
+                  { c.playing ?
+                    <Text style={[styles.text, {color: 'white'}]}>...</Text>
+                  :
+                    <Text style={[styles.text]}></Text>
+                  }
                 </View>
-              :
-                null
-              }
-            </View>
-          ))}
-        </ScrollView>
+
+                <View style={styles.rightHalfRow}>
+                  { c.played && !c.rated ?
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableHighlight onPress={() => this._hate(c)}>
+                        <Image source={require('../images/Anger.png')} />
+                      </TouchableHighlight>
+                      <TouchableHighlight onPress={() => this._like(c)}>
+                        <Image source={require('../images/Laughing.png')} />
+                      </TouchableHighlight>
+                    </View>
+                  :
+                    null
+                  }
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.container}>
+          <View style={styles.topRow}>
+            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+              <Image source={require('../images/GoScreenLeft.png')}/>
+            </TouchableHighlight>
+          </View>
+        </View>
       </View>
     )
   }
@@ -211,8 +229,21 @@ const styles = StyleSheet.create({
   debug: {
     backgroundColor: 'pink',
   },
-  background: {
+  imageBackground: {
     backgroundColor: 'black',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: windowSize.width,
+  },
+  background: {
+    backgroundColor: 'lavenderblush',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
@@ -237,11 +268,37 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    width: windowSize.width,
+    backgroundColor: 'cornflowerblue'
+  },
+  leftHalfRow: {
+    flex: .5,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    backgroundColor: 'green',
+  },
+  rightHalfRow: {
+    flex: .5,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    backgroundColor: 'maroon',
   },
   text: {
     color: '#666'
-  }
+  },
+  duration: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: 'white',
+    paddingTop: 23.5,
+    paddingLeft: 30,
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 })
 
 module.exports = CaptionsScene;
