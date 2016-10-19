@@ -10,14 +10,18 @@ import {
 } from 'react-native';
 
 import { InAppUtils } from 'NativeModules';
+import Api from '../lib/api';
 
 const products = [
   'com.superserious.steffigraffiti.gonext'
 ]
 
-class SubmissionScene extends Component {
-  state = {
-    products: []
+class SubmissionButton extends Component {
+  constructor(props) {
+    super(props);
+
+    this.navigator = props.navigator;
+    this.state = { products: [] }
   }
 
   render() {
@@ -27,7 +31,7 @@ class SubmissionScene extends Component {
       <View>
         { product ?
           <View>
-            <Text>{product.title}</Text>
+            <Text>{product.title} {this.props.submissionId}</Text>
             <Text>{product.priceString}</Text>
             <TouchableHighlight onPress={() => this.purchase(product.identifier) }>
               <Text style={{color: 'blue'}}>
@@ -49,9 +53,18 @@ class SubmissionScene extends Component {
       if( err ) { return console.error(err); }
 
       if( response && response.productIdentifier ) {
-        Alert.alert('Purchase successful');
+        InAppUtils.receiptData((error, base64EncodedReceipt)=> {
+          if(error) {
+            console.error(error);
+            Alert.alert('Verification failed');
+          }
+          Api.submissions.jumpQueue(this.props.submissionId, base64EncodedReceipt).then(() => {
+            this.navigator.navigate('CaptionScene');
+          }).catch(console.error);
+        });
       } else {
-        Alert.alert('Unknown response');
+        console.error(response);
+        Alert.alert('Purchase failed');
       }
     })
   }
@@ -67,4 +80,4 @@ class SubmissionScene extends Component {
   }
 }
 
-module.exports = SubmissionScene;
+module.exports = SubmissionButton;

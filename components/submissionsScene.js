@@ -17,6 +17,7 @@ import {
 
 import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
+import CacheableImage from 'react-native-cacheable-image';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
@@ -62,7 +63,7 @@ class SubmissionsScene extends Component {
             { this.state.uploading ?
               <Text style={styles.button}>Uploading...</Text>
             :
-              <TouchableOpacity onPress={this._uploadPhoto.bind(this)}>
+              <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
                 <Image source={require('../images/UploadImage.png')} />
               </TouchableOpacity>
             }
@@ -77,7 +78,13 @@ class SubmissionsScene extends Component {
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
               <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}>
-                <Image source={{uri: s.image_url}} style={styles.scrollImage}/>
+                <CacheableImage source={{uri: s.image_url}} style={styles.scrollImage}>
+                  <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+                    <View style={styles.backdropView}>
+                      <Text style={styles.date}>today</Text>
+                    </View>
+                  </Image>
+                </CacheableImage>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -125,7 +132,8 @@ class SubmissionsScene extends Component {
         if( xhr.readyState !== 4 ) { return; }
 
         if( xhr.status < 299 ) {
-          this.navigator.navigate('SubmissionScene');
+          const id = JSON.parse(xhr.responseText).id
+          this.navigator.navigate('SubmissionScene', { submissionId: id });
         } else {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
@@ -164,14 +172,14 @@ const styles = StyleSheet.create({
   },
   darkRect: {
     position: 'absolute',
-    bottom: 5,
+    bottom: 0,
     left: 0,
   },
   date: {
     textAlign: 'center',
     fontSize: 14,
     color: 'white',
-    paddingTop: 13,
+    paddingTop: 19.5,
     backgroundColor: 'rgba(0,0,0,0)',
   },
   scrollContainer: {

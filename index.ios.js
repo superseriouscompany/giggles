@@ -1,9 +1,15 @@
+'use strict';
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  AsyncStorage,
   Dimensions,
-  View
+  Text,
+  View,
 } from 'react-native';
+
+import { InAppUtils } from 'NativeModules';
 
 import CaptionScene     from './components/captionScene';
 import CaptionsScene    from './components/captionsScene';
@@ -22,6 +28,16 @@ class RootNav extends Component {
         this.setState({scene: component, props: props || {}})
       }
     }
+  }
+
+  componentDidMount() {
+    InAppUtils.receiptData((error, receiptData)=> {
+      if(error) {
+        console.log('Receipt not found.', error);
+      } else {
+        console.log(receiptData);
+      }
+    });
   }
 
   render() {

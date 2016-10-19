@@ -26,6 +26,7 @@
 		3C501A2DE6934C039E3DC257 /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAB82DFFCD24D799E53F401 /* libInAppUtils.a */; };
 		3F066E621DA9D21A0065C2A4 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F066E611DA9D2090065C2A4 /* libRCTCameraRoll.a */; };
 		3FAB95981DADA6E700197CB3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAB95971DADA6E700197CB3 /* StoreKit.framework */; };
+		3FD533E01DB7A73E00AA558C /* steffigraffitiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD533DF1DB7A73E00AA558C /* steffigraffitiUITests.swift */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		B2E7C59C61904B2EA57401A4 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8B2A7EAABD4D209944DAA9 /* libRNImagePicker.a */; };
 		C39079B6D4184F3E86D4BF3C /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C99978AFEF4E9CA21FD23D /* libRNFS.a */; };
@@ -137,6 +138,13 @@
 			remoteGlobalIDString = 46E6943D1B289730000B634E;
 			remoteInfo = InAppUtilsTests;
 		};
+		3FD533E21DB7A73E00AA558C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = steffigraffiti;
+		};
 		3FD7DC091DB505CD00772778 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 36B1748413164508AA8A7B10 /* RNFS.xcodeproj */;
@@ -185,6 +193,9 @@
 		3F066E501DA9D1E50065C2A4 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		3F066E5C1DA9D2090065C2A4 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		3FAB95971DADA6E700197CB3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3FD533DD1DB7A73E00AA558C /* steffigraffitiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = steffigraffitiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FD533DF1DB7A73E00AA558C /* steffigraffitiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = steffigraffitiUITests.swift; sourceTree = "<group>"; };
+		3FD533E11DB7A73E00AA558C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		656ADEC8410C4082A48DE09D /* InAppUtils.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = InAppUtils.xcodeproj; path = "../node_modules/react-native-in-app-utils/InAppUtils.xcodeproj"; sourceTree = "<group>"; };
 		677A2A01D3C541D38372DDE4 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -224,6 +235,13 @@
 				B2E7C59C61904B2EA57401A4 /* libRNImagePicker.a in Frameworks */,
 				3C501A2DE6934C039E3DC257 /* libInAppUtils.a in Frameworks */,
 				C39079B6D4184F3E86D4BF3C /* libRNFS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FD533DA1DB7A73E00AA558C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +393,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3FD533DE1DB7A73E00AA558C /* steffigraffitiUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3FD533DF1DB7A73E00AA558C /* steffigraffitiUITests.swift */,
+				3FD533E11DB7A73E00AA558C /* Info.plist */,
+			);
+			path = steffigraffitiUITests;
+			sourceTree = "<group>";
+		};
 		3FD7DBF71DB505CD00772778 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +454,7 @@
 				13B07FAE1A68108700A75B9A /* steffigraffiti */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* steffigraffitiTests */,
+				3FD533DE1DB7A73E00AA558C /* steffigraffitiUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				3FAB95961DADA6E700197CB3 /* Frameworks */,
 			);
@@ -439,6 +467,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* steffigraffiti.app */,
 				00E356EE1AD99517003FC87E /* steffigraffitiTests.xctest */,
+				3FD533DD1DB7A73E00AA558C /* steffigraffitiUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -482,12 +511,31 @@
 			productReference = 13B07F961A680F5B00A75B9A /* steffigraffiti.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3FD533DC1DB7A73E00AA558C /* steffigraffitiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FD533F61DB7A73E00AA558C /* Build configuration list for PBXNativeTarget "steffigraffitiUITests" */;
+			buildPhases = (
+				3FD533D91DB7A73E00AA558C /* Sources */,
+				3FD533DA1DB7A73E00AA558C /* Frameworks */,
+				3FD533DB1DB7A73E00AA558C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3FD533E31DB7A73E00AA558C /* PBXTargetDependency */,
+			);
+			name = steffigraffitiUITests;
+			productName = steffigraffitiUITests;
+			productReference = 3FD533DD1DB7A73E00AA558C /* steffigraffitiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -498,6 +546,12 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = SL8THA84AW;
+					};
+					3FD533DC1DB7A73E00AA558C = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = SL8THA84AW;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -582,6 +636,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* steffigraffiti */,
 				00E356ED1AD99517003FC87E /* steffigraffitiTests */,
+				3FD533DC1DB7A73E00AA558C /* steffigraffitiUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -725,6 +780,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3FD533DB1DB7A73E00AA558C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -762,6 +824,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3FD533D91DB7A73E00AA558C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FD533E01DB7A73E00AA558C /* steffigraffitiUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -769,6 +839,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* steffigraffiti */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		3FD533E31DB7A73E00AA558C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* steffigraffiti */;
+			targetProxy = 3FD533E21DB7A73E00AA558C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -886,6 +961,46 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.superserious.steffigraffiti;
 				PRODUCT_NAME = steffigraffiti;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		3FD533E41DB7A73E00AA558C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = SL8THA84AW;
+				INFOPLIST_FILE = steffigraffitiUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.superserious.steffigraffitiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = steffigraffiti;
+			};
+			name = Debug;
+		};
+		3FD533E51DB7A73E00AA558C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = SL8THA84AW;
+				INFOPLIST_FILE = steffigraffitiUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.superserious.steffigraffitiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = steffigraffiti;
 			};
 			name = Release;
 		};
@@ -1013,6 +1128,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FD533F61DB7A73E00AA558C /* Build configuration list for PBXNativeTarget "steffigraffitiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FD533E41DB7A73E00AA558C /* Debug */,
+				3FD533E51DB7A73E00AA558C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

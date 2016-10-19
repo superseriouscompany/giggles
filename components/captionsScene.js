@@ -14,11 +14,14 @@ import {
 
 import {AudioPlayer} from 'react-native-audio';
 import Api from '../lib/api';
+import CacheableImage from 'react-native-cacheable-image';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
 
 let isMounted;
+
+const CurrentUser = require('../lib/currentUser');
 
 class CaptionsScene extends Component {
   constructor(props) {
@@ -41,22 +44,30 @@ class CaptionsScene extends Component {
       Api.captions.forSubmission(this.submissionId) :
       Api.captions.current();
 
-    captionsPromise.then((captions) => {
-      if( !isMounted ) { return console.log("Not mounted."); }
+    CurrentUser.likes().then((likes) => {
+      return CurrentUser.hates().then((hates) => {
+        return captionsPromise.then((captions) => {
+          if( !isMounted ) { return console.log("Not mounted."); }
 
-      captions = captions.map(function(c) {
-        let randomColor = 0;
-        for( var i = 0; i < c.id.length; i++ ) {
-          randomColor += c.id.charCodeAt(i);
-        }
-        c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
-        return c;
+          captions = captions.map(function(c) {
+            let randomColor = 0;
+            for( var i = 0; i < c.id.length; i++ ) {
+              randomColor += c.id.charCodeAt(i);
+            }
+            c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
+
+            if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
+            return c;
+          })
+
+          captions = captions.filter(function(c) {
+            return hates.indexOf(c.id) === -1;
+          })
+
+          this.setState({captions: captions, captionsLoading: false})
+        })
       })
-
-      this.setState({captions: captions, captionsLoading: false})
-    }).catch(function(err) {
-      console.error(err);
-    })
+    }).catch(console.error);
 
     const submissionsPromise = this.submissionId ?
       Api.submissions.get(this.submissionId) :
@@ -111,12 +122,14 @@ class CaptionsScene extends Component {
     if( !caption ) { return console.error("No caption provided to like function"); }
 
     Api.captions.like(caption.id).then(() => {
+      CurrentUser.addLike(caption.id);
+
       if( !isMounted ) { return; }
 
       this.setState({
         captions: this.state.captions.map(function(c) {
           if( c.id === caption.id ) {
-            c.rated = true;
+            c.liked = true;
           }
 
           return c;
@@ -131,10 +144,12 @@ class CaptionsScene extends Component {
     if( !caption ) { return console.error("No caption provided to like function"); }
 
     Api.captions.hate(caption.id).then(() => {
+      CurrentUser.addHate(caption.id);
+
       if( !isMounted ) { return; }
 
       this.setState({
-        captions: this.state.captions.filter(function(c) { return c.id !== id; })
+        captions: this.state.captions.filter(function(c) { return c.id !== caption.id; })
       });
     }).catch(function(err) {
       console.error(err);
@@ -148,7 +163,7 @@ class CaptionsScene extends Component {
 
         <View style={styles.background}>
           { this.state.submission ?
-            <Image
+            <CacheableImage
               style={styles.image}
               source={{uri: this.state.submission.image_url}}
               onLoadStart={ () => { this.setState({imageLoading: true}) }}
@@ -195,7 +210,7 @@ class CaptionsScene extends Component {
                 </View>
 
                 <View style={styles.rightHalfRow}>
-                  { c.played && !c.rated ?
+                  { c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
                       <TouchableHighlight onPress={() => this._hate(c)}>
                         <Image source={require('../images/Anger.png')} />
@@ -203,6 +218,10 @@ class CaptionsScene extends Component {
                       <TouchableHighlight onPress={() => this._like(c)}>
                         <Image source={require('../images/Laughing.png')} />
                       </TouchableHighlight>
+                    </View>
+                  : c.liked ?
+                    <View>
+                      <Image source={require('../images/Laughing.png')} />
                     </View>
                   :
                     null

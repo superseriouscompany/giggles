@@ -8,8 +8,6 @@ import {
   View,
 } from 'react-native';
 
-import { InAppUtils } from 'NativeModules';
-
 import SubmissionButton from './submissionButton';
 
 class SubmissionScene extends Component {
@@ -22,9 +20,9 @@ class SubmissionScene extends Component {
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
-        <SubmissionButton />
+        <SubmissionButton navigator={this.navigator} submissionId={this.props.submissionId}/>
         <View>
-          <TouchableHighlight onPress={this.enqueue.bind(this)}>
+          <TouchableHighlight onPress={this.enqueue.bind(this)} accessible={true} accessibilityLabel={'Choose later'}>
             <Text>Nope</Text>
           </TouchableHighlight>
         </View>

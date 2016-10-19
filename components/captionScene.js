@@ -17,6 +17,7 @@ import {
 
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import Api from '../lib/api';
+import CacheableImage from 'react-native-cacheable-image';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 5 : 0;
 const RECORDING_LENGTH = 30;
@@ -92,8 +93,8 @@ class Caption extends Component {
 
   _record() {
     AudioRecorder.checkAuthorizationStatus().then((status) => {
+      this.setState({audioPermissions: status});
       if( status === 'denied' ) {
-        this.setState({permissionsDenied: true});
         return Alert.alert("You denied us microphone permissions", "I thought we were friends");
       } else if( status === 'undetermined') {
         return AudioRecorder.requestAuthorization();
@@ -113,9 +114,10 @@ class Caption extends Component {
   }
 
   _pressHint() {
-    if( !this.state.recording && !this.state.permissionsDenied ) {
-      Alert.alert("You gotta hold the record button", "Dumbass.");
-    }
+    if( this.state.recording ) return;
+    if( this.state.audioPermissions == 'denied' || this.state.audioPermissions == 'undetermined' ) return;
+
+    Alert.alert("You gotta hold the record button", "Dumbass.");
   }
 
   _play() {
@@ -131,8 +133,6 @@ class Caption extends Component {
     const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
 
     let body = new FormData();
-    body.append('cool', 'nice');
-    body.append('good', 'great');
     body.append('audio', {uri: 'file://'+path, name: 'test.aac', type: 'audio/aac'});
 
     var xhr = new XMLHttpRequest;
@@ -162,7 +162,7 @@ class Caption extends Component {
       <View style={styles.imageBackground}>
         <StatusBar hidden={true}/>
         { this.state.submission ?
-          <Image
+          <CacheableImage
             source={{uri: this.state.submission.image_url}}
             style={imageDimensions(this.state.submission)}
             onLoadStart={() => this.setState({loadingImage: true})}
@@ -196,7 +196,7 @@ class Caption extends Component {
             </View>
           : // default: show top bar
             <View style={styles.topRow}>
-              <TouchableHighlight onPress={this.tapOriginalsList}>
+              <TouchableHighlight onPress={this.tapOriginalsList} accessible={true} accessibilityLabel={'See photos'}>
                 <Image source={require('../images/SeeAllOriginals.png')}/>
               </TouchableHighlight>
 
