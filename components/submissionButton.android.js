@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -12,9 +12,9 @@ class SubmissionScene extends Component {
   render() {
     return (
       <View>
-        <TouchableHighlight onPress={this.buy.bind(this)}>
+        <TouchableOpacity onPress={this.buy.bind(this)}>
           <Text>Hello</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     )
   }

@@ -5,7 +5,7 @@ import {
   NativeModules,
   Platform,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -33,11 +33,11 @@ class SubmissionButton extends Component {
           <View>
             <Text>{product.title} {this.props.submissionId}</Text>
             <Text>{product.priceString}</Text>
-            <TouchableHighlight onPress={() => this.purchase(product.identifier) }>
+            <TouchableOpacity onPress={() => this.purchase(product.identifier) }>
               <Text style={{color: 'blue'}}>
                 Buy it
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         : this.state.loaded ?
           <Text>No Products Available</Text>

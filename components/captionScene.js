@@ -11,7 +11,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -190,40 +190,40 @@ class Caption extends Component {
             </View>
           : this.state.stoppedRecording ? // if recording and done, show cancel button
             <View style={styles.topRow}>
-              <TouchableHighlight onPress={this._cancel.bind(this)}>
+              <TouchableOpacity onPress={this._cancel.bind(this)}>
                 <Image source={require('../images/GoScreenLeft.png')}/>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           : // default: show top bar
             <View style={styles.topRow}>
-              <TouchableHighlight onPress={this.tapOriginalsList} accessible={true} accessibilityLabel={'See photos'}>
+              <TouchableOpacity onPress={this.tapOriginalsList} accessible={true} accessibilityLabel={'See photos'}>
                 <Image source={require('../images/SeeAllOriginals.png')}/>
-              </TouchableHighlight>
+              </TouchableOpacity>
 
-              <TouchableHighlight onPress={this.tapRemixesList}>
+              <TouchableOpacity onPress={this.tapRemixesList}>
                 <Image source={require('../images/SeeRemixes.png')}/>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           }
 
           { this.state.stoppedRecording ?
             <View style={styles.bottomTwoButton}>
-              <TouchableHighlight onPress={this._play.bind(this)}>
+              <TouchableOpacity onPress={this._play.bind(this)}>
                 <Image source={require('../images/Play.png')}/>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={() => this._submit(this.state.submission.id)}>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this._submit(this.state.submission.id)}>
                 <Image source={require('../images/Submit.png')}/>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           :
             <View style={styles.bottomMiddle}>
-              <TouchableHighlight onPress={this._pressHint.bind(this)} onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
+              <TouchableOpacity onPress={this._pressHint.bind(this)} onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
                 { this.state.recording ?
                   <Image source={require('../images/StopRecord.png')} />
                 :
                   <Image source={require('../images/Record.png')}/>
                 }
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           }
         </View>

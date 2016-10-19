@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -194,13 +194,13 @@ class CaptionsScene extends Component {
             {this.state.captions.map((c, i) => (
               <View key={i} style={styles.row}>
                 <View style={styles.leftHalfRow}>
-                  <TouchableHighlight onPress={() => this._play(c)}>
+                  <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
                         <Text style={styles.duration}>4:20</Text>
                       </View>
                     </Image>
-                  </TouchableHighlight>
+                  </TouchableOpacity>
 
                   { c.playing ?
                     <Image style={styles.audioGif} source={require('../images/audioPlaying.gif')} />
@@ -212,12 +212,12 @@ class CaptionsScene extends Component {
                 <View style={styles.rightHalfRow}>
                   { c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
-                      <TouchableHighlight onPress={() => this._hate(c)}>
+                      <TouchableOpacity onPress={() => this._hate(c)}>
                         <Image source={require('../images/Anger.png')} />
-                      </TouchableHighlight>
-                      <TouchableHighlight onPress={() => this._like(c)}>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => this._like(c)}>
                         <Image source={require('../images/Laughing.png')} />
-                      </TouchableHighlight>
+                      </TouchableOpacity>
                     </View>
                   : c.liked ?
                     <View>
@@ -234,9 +234,9 @@ class CaptionsScene extends Component {
 
         <View style={styles.container}>
           <View style={styles.topRow}>
-            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+            <TouchableOpacity onPress={() => this.navigator.navigate('CaptionScene')}>
               <Image source={require('../images/GoScreenLeft.png')}/>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

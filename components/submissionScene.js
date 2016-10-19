@@ -4,7 +4,7 @@ import {
   Alert,
   Platform,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -22,9 +22,9 @@ class SubmissionScene extends Component {
       <View style={{flex: 1, padding: 20}}>
         <SubmissionButton navigator={this.navigator} submissionId={this.props.submissionId}/>
         <View>
-          <TouchableHighlight onPress={this.enqueue.bind(this)} accessible={true} accessibilityLabel={'Choose later'}>
+          <TouchableOpacity onPress={this.enqueue.bind(this)} accessible={true} accessibilityLabel={'Choose later'}>
             <Text>Nope</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
     )

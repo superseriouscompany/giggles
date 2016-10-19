@@ -10,7 +10,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -92,9 +91,9 @@ class SubmissionsScene extends Component {
 
         <View style={styles.container}>
           <View style={styles.topRow}>
-            <TouchableHighlight onPress={() => this.navigator.navigate('CaptionScene')}>
+            <TouchableOpacity onPress={() => this.navigator.navigate('CaptionScene')}>
               <Image source={require('../images/GoScreenRight.png')}/>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
