@@ -1,11 +1,13 @@
 'use strict';
 
-const express = require('express');
-const multer  = require('multer');
-const app     = express();
-const UUID    = require('node-uuid');
-const sizeOf  = require('image-size');
-const port    = process.env.PORT || 3000;
+const express     = require('express');
+const multer      = require('multer');
+const app         = express();
+const UUID        = require('node-uuid');
+const sizeOf      = require('image-size');
+const IAPVerifier = require('iap_verifier');
+const port        = process.env.PORT || 3000;
+const iapClient   = new IAPVerifier();
 
 let captionStorage = multer.diskStorage({
   destination: 'captions/',
@@ -62,6 +64,32 @@ app.post('/next', function(req,res) {
   const chosenOne = queue.splice(Math.random() * (queue.length - 1), 1);
   submissions.unshift(chosenOne[0]);
   res.sendStatus(204);
+})
+
+app.post('/submissions/:id/jumpQueue', function(req, res) {
+  const receipt = req.query.receipt;
+
+  iapClient.verifyReceipt(receipt, true, function(valid, msg, payload) {
+    if( !valid ) {
+      console.error(msg, payload);
+      return res.status(403).json({error: msg});
+    }
+
+    if( !payload.receipt.in_app || payload.receipt.in_app[0].product_id != 'com.superserious.steffigraffiti.gonext' ) {
+      console.log(payload);
+      return res.status(403).json({error: "You have not purchased a pass to skip the line"});
+    }
+
+    for( var i = 0; i < queue.length; i++ ) {
+      if( queue[i].id == req.params.id ) {
+        const chosenOne = queue.splice(i, 1);
+        submissions.unshift(chosenOne[0]);
+        return res.sendStatus(204)
+      }
+    }
+
+    return res.status(400).json({error: `${req.params.id} isn't in the queue.`});
+  })
 })
 
 app.get('/submissions', function(req, res) {
