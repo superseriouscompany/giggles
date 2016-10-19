@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
+  Platform,
+  StatusBar,
   StyleSheet,
   ScrollView,
   Text,
   TouchableHighlight,
   View,
-  Platform,
-  StatusBar,
 } from 'react-native';
 
 import {AudioPlayer} from 'react-native-audio';
