@@ -38,3 +38,14 @@ request({
 
   console.log(resp.statusCode, body);
 })
+
+setTimeout(function() {
+  request({
+    method: 'POST',
+    url: 'http://localhost:3000/next',
+  }, function(err, resp, body) {
+    if( err ) { throw err; }
+
+    console.log(resp.statusCode, body);
+  })
+}, 500);
