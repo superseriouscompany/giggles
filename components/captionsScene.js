@@ -198,7 +198,7 @@ class CaptionsScene extends Component {
                   <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
-                        <Text style={styles.duration}>4:20</Text>
+                        <Text style={styles.duration}>0:{`0${Math.round(c.duration)}`.slice(-2)}</Text>
                       </View>
                     </Image>
                   </TouchableOpacity>

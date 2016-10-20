@@ -6,6 +6,8 @@ const UUID        = require('node-uuid');
 const sizeOf      = require('image-size');
 const IAPVerifier = require('iap_verifier');
 const bodyParser  = require('body-parser');
+const aacDuration = require('aac-duration');
+
 const app         = express();
 const port        = process.env.PORT || 3000;
 const iapClient   = new IAPVerifier();
@@ -118,12 +120,15 @@ app.get('/submissions/:id/captions', function(req, res) {
 })
 
 app.post('/submissions/:id/captions', captionUpload.single('audio'), function(req, res) {
+  const duration = aacDuration(`./captions/${req.file.filename}`);
+
   const uuid = UUID.v1();
   if( req.file && req.file.filename ) {
     captions.unshift({
       id: uuid,
       filename: req.file.filename,
-      submission_id: req.params.id
+      submission_id: req.params.id,
+      duration: duration,
     })
   }
   res.status(201).json({id: uuid});
