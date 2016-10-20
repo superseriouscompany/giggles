@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   Platform,
@@ -174,13 +175,21 @@ class CaptionsScene extends Component {
             null
           }
           { this.state.imageLoading ?
-            <Text style={{color: 'cornflowerblue'}}>Loading image...</Text>
+            <ActivityIndicator
+              style={[styles.centering, {transform: [{scale: 1.5}]}]}
+              size="small"
+              color="ghostwhite"
+            />
           :
             null
           }
 
           { this.state.captionsLoading ?
-            <Text style={{color: 'blanchedalmond'}}>Loading captions...</Text>
+            <ActivityIndicator
+              style={[styles.centering, {transform: [{scale: 1.5}]}]}
+              size="small"
+              color="ghostwhite"
+            />
           :
             null
           }
@@ -246,6 +255,13 @@ class CaptionsScene extends Component {
 const styles = StyleSheet.create({
   debug: {
     backgroundColor: 'pink',
+  },
+  centering: {
+    position: 'absolute',
+    width: windowSize.width,
+    height: windowSize.height,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageBackground: {
     backgroundColor: '#181818',
