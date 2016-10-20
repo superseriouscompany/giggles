@@ -47,8 +47,8 @@ class SubmissionsScene extends Component {
       submissions = submissions.map((s) => {
         const publishedAt = moment(s.publishedAt);
         const diff = moment(now).diff(publishedAt);
-        if( diff < oneDay ) { s.publishedAt = 'Today'; }
-        else if( diff < oneDay * 2 ) { s.publishedAt = 'Yesterday'; }
+        if( diff < oneDay ) { s.publishedAt = 'today'; }
+        else if( diff < oneDay * 2 ) { s.publishedAt = 'yesterday'; }
         else if( diff < oneDay * 7 ) { s.publishedAt = publishedAt.format('dddd'); }
         else { s.publishedAt = publishedAt.format('MMM D'); }
         return s;
