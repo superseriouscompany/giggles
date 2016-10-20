@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 
 import {
+  ActivityIndicator,
   Alert,
   AppRegistry,
   Dimensions,
@@ -171,13 +172,21 @@ class Caption extends Component {
             onLoadEnd={() => this.setState({loadingImage: false})}
             />
         : this.state.loadingSubmission ?
-          <Text style={{color: 'forestgreen'}}>Loading submission...</Text>
+          <ActivityIndicator
+            style={[styles.centering, {transform: [{scale: 1.5}]}]}
+            size="small"
+            color="ghostwhite"
+          />
         :
           <Text style={{color: 'papayawhip'}}>Loaded no submissions.</Text>
         }
 
         { this.state.loadingImage ?
-          <Text style={{color: 'lavender'}}>Loading image...</Text>
+          <ActivityIndicator
+            style={[styles.centering, {transform: [{scale: 1.5}]}]}
+            size="small"
+            color="ghostwhite"
+          />
           :
           null
         }
