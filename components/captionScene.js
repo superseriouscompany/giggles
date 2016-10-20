@@ -86,6 +86,8 @@ class Caption extends Component {
   }
 
   componentWillUnmount() {
+    this._stop();
+    AudioRecorder.stopPlaying();
     isMounted = false;
     AudioRecorder.onProgress = null;
     AudioRecorder.onFinished = null;
@@ -128,6 +130,7 @@ class Caption extends Component {
       this._stop();
       this.setState({recording: false});
     }
+    AudioRecorder.stopPlaying();
     AudioRecorder.playRecording();
     this.setState({playing: true});
   }

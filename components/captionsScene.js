@@ -88,6 +88,7 @@ class CaptionsScene extends Component {
   componentWillUnmount() {
     isMounted = false;
 
+    AudioPlayer.stop();
     AudioPlayer.onProgress = null;
     AudioPlayer.onFinished = null;
     AudioPlayer.progressSubscription && AudioPlayer.progressSubscription.remove();
@@ -112,6 +113,7 @@ class CaptionsScene extends Component {
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
 
+    AudioPlayer.stop();
     AudioPlayer.playWithUrl(url);
 
     this.setState({
