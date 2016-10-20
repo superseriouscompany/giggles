@@ -50,12 +50,17 @@ class SubmissionButton extends Component {
 
   purchase(identifier) {
     InAppUtils.purchaseProduct(identifier, (err, response) => {
-      if( err ) { return console.error(err); }
+      if( err ) {
+        // we get this code if they hit cancel
+        if( err.code == 'ESKERRORDOMAIN2' && err.domain == 'SKErrorDomain' ) {
+          return;
+        }
+        return console.error(err);
+      }
 
       if( response && response.productIdentifier ) {
-        InAppUtils.receiptData((error, base64EncodedReceipt)=> {
-          if(error) {
-            console.error(error);
+        InAppUtils.receiptData((err, base64EncodedReceipt)=> {
+          if(err) {
             Alert.alert('Verification failed');
           }
           Api.submissions.jumpQueue(this.props.submissionId, base64EncodedReceipt).then(() => {
