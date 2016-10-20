@@ -64,14 +64,17 @@ app.post('/submissions', submissionUpload.single('photo'), function(req, res) {
 app.post('/next', function(req,res) {
   if( !queue.length ) { return res.status(400).json({error: 'Queue empty'}) }
 
-  const chosenOne = queue.splice(Math.random() * (queue.length - 1), 1);
-  submissions.unshift(chosenOne[0]);
+  choose(Math.random() * (queue.length - 1));
   res.sendStatus(204);
 })
 
-app.post('/submissions/:id/jumpQueue', function(req, res) {
-  console.log(req.body, req.body.receipt);
+function choose(index) {
+  let chosenOne = queue.splice(index, 1)[0];
+  chosenOne.publishedAt = +new Date;
+  submissions.unshift(chosenOne);
+}
 
+app.post('/submissions/:id/jumpQueue', function(req, res) {
   const receipt = req.body.receipt;
 
   iapClient.verifyReceipt(receipt, true, function(valid, msg, payload) {
@@ -81,14 +84,13 @@ app.post('/submissions/:id/jumpQueue', function(req, res) {
     }
 
     if( !payload.receipt.in_app || payload.receipt.in_app[0].product_id != 'com.superserious.steffigraffiti.gonext' ) {
-      console.log(payload);
+      console.warn(payload);
       return res.status(403).json({error: "You have not purchased a pass to skip the line"});
     }
 
     for( var i = 0; i < queue.length; i++ ) {
       if( queue[i].id == req.params.id ) {
-        const chosenOne = queue.splice(i, 1);
-        submissions.unshift(chosenOne[0]);
+        choose(i);
         return res.sendStatus(204)
       }
     }

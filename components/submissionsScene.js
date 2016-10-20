@@ -17,6 +17,7 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
 import CacheableImage from 'react-native-cacheable-image';
+import moment from 'moment';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
@@ -38,6 +39,20 @@ class SubmissionsScene extends Component {
 
     Api.submissions.all().then((submissions) => {
       if( !isMounted ) { return; }
+
+      const offset = (new Date).getTimezoneOffset() *60*1000;
+      const now = new Date;
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      submissions = submissions.map((s) => {
+        const publishedAt = moment(s.publishedAt);
+        const diff = moment(now).diff(publishedAt);
+        if( diff < oneDay ) { s.publishedAt = 'Today'; }
+        else if( diff < oneDay * 2 ) { s.publishedAt = 'Yesterday'; }
+        else if( diff < oneDay * 7 ) { s.publishedAt = publishedAt.format('dddd'); }
+        else { s.publishedAt = publishedAt.format('MMM D'); }
+        return s;
+      })
 
       this.setState({
         submissions: submissions,
@@ -80,7 +95,7 @@ class SubmissionsScene extends Component {
                 <CacheableImage source={{uri: s.image_url}} style={styles.scrollImage}>
                   <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
                     <View style={styles.backdropView}>
-                      <Text style={styles.date}>today</Text>
+                      <Text style={styles.date}>{s.publishedAt}</Text>
                     </View>
                   </Image>
                 </CacheableImage>
