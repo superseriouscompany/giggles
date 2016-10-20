@@ -96,7 +96,11 @@ class Caption extends Component {
     this.setState({stoppedRecording: true, recording: false});
   }
 
-  _record() {
+  _toggleRecord() {
+    if( this.state.recording ) {
+      return this._stop();
+    }
+
     AudioRecorder.checkAuthorizationStatus().then((status) => {
       this.setState({audioPermissions: status});
       if( status === 'denied' ) {
@@ -116,13 +120,6 @@ class Caption extends Component {
       AudioRecorder.startRecording();
       this.setState({recording: true, playing: false});
     })
-  }
-
-  _pressHint() {
-    if( this.state.recording ) return;
-    if( this.state.audioPermissions == 'denied' || this.state.audioPermissions == 'undetermined' ) return;
-
-    Alert.alert("You gotta hold the record button", "Dumbass.");
   }
 
   _play() {
@@ -222,7 +219,7 @@ class Caption extends Component {
             </View>
           :
             <View style={styles.bottomMiddle}>
-              <TouchableOpacity onPress={this._pressHint.bind(this)} onPressIn={this._record.bind(this)} onPressOut={this._stop.bind(this)}>
+              <TouchableOpacity onPress={this._toggleRecord.bind(this)}>
                 { this.state.recording ?
                   <Image source={require('../images/StopRecord.png')} />
                 :
