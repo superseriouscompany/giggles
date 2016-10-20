@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   Alert,
   Platform,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -19,13 +20,12 @@ class SubmissionScene extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, padding: 20}}>
-        <SubmissionButton navigator={this.navigator} submissionId={this.props.submissionId}/>
-        <View>
-          <TouchableOpacity onPress={this.enqueue.bind(this)} accessible={true} accessibilityLabel={'Choose later'}>
-            <Text>Nope</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.background}>
+        <Text style={styles.headerText}>
+          Success!{"\n"}{"\n"}
+          When should we show your{"\n"}
+          photo?
+        </Text>
       </View>
     )
   }
@@ -35,5 +35,22 @@ class SubmissionScene extends Component {
     this.navigator.navigate('CaptionScene');
   }
 }
+
+const styles = StyleSheet.create({
+  debug: {
+    backgroundColor: 'pink',
+  },
+  background: {
+    flex: 1,
+    backgroundColor: '#181818',
+  },
+  headerText: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+    paddingTop: 50,
+    fontFamily: 'NotoSans',
+  }
+});
 
 module.exports = SubmissionScene;
