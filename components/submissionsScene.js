@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  ActivityIndicator,
   Alert,
   CameraRoll,
   Dimensions,
@@ -75,7 +76,11 @@ class SubmissionsScene extends Component {
         <View style={styles.bg}>
           <View style={styles.uploadBackground}>
             { this.state.uploading ?
-              <Text style={styles.button}>Uploading...</Text>
+              <ActivityIndicator
+                style={[styles.loading, {transform: [{scale: 1.5}]}]}
+                size="small"
+                color="ghostwhite"
+              />
             :
               <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
                 <Image source={require('../images/UploadImage.png')} />
@@ -159,6 +164,11 @@ class SubmissionsScene extends Component {
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 35,
+  },
   background: {
     backgroundColor: '#181818',
     flex: 1,

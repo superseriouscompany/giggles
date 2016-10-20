@@ -247,6 +247,11 @@ let styles = StyleSheet.create({
   debug: {
     backgroundColor: 'pink'
   },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
   imageBackground: {
     backgroundColor: '#181818',
     flex: 1,
