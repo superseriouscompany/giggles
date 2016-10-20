@@ -7,7 +7,7 @@ request({
   method: 'POST',
   url: 'http://localhost:3000/submissions',
   formData: {
-    photo: fs.createReadStream('./fixtures/photo.jpg'),
+    photo: fs.createReadStream('./fixtures/photo3.jpg'),
   }
 }, function(err, resp, body) {
   if( err ) { throw err; }
@@ -19,7 +19,7 @@ request({
   method: 'POST',
   url: 'http://localhost:3000/submissions',
   formData: {
-    photo: fs.createReadStream('./fixtures/photo1.jpg'),
+    photo: fs.createReadStream('./fixtures/photo4.jpg'),
   }
 }, function(err, resp, body) {
   if( err ) { throw err; }
@@ -31,7 +31,7 @@ request({
   method: 'POST',
   url: 'http://localhost:3000/submissions',
   formData: {
-    photo: fs.createReadStream('./fixtures/photo2.jpg'),
+    photo: fs.createReadStream('./fixtures/photo5.jpg'),
   }
 }, function(err, resp, body) {
   if( err ) { throw err; }

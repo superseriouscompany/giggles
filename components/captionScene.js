@@ -62,8 +62,11 @@ class Caption extends Component {
   componentDidMount() {
     isMounted = true;
     AudioRecorder.onProgress = (data) => {
-      let percentComplete = Math.min(1, data.currentTime / RECORDING_LENGTH);
-      this.setState({percentComplete: percentComplete});
+      let percentComplete = data.currentTime / RECORDING_LENGTH;
+      if( percentComplete >= 1 ) {
+        return this._stop();
+      }
+      return this.setState({percentComplete: percentComplete});
     };
     AudioRecorder.onFinished = (data) => {
       this.setState({finished: data.finished});
@@ -83,6 +86,8 @@ class Caption extends Component {
 
   componentWillUnmount() {
     isMounted = false;
+    AudioRecorder.onProgress = null;
+    AudioRecorder.onFinished = null;
   }
 
   _stop() {
