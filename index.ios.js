@@ -29,17 +29,10 @@ class RootNav extends Component {
     }
   }
 
-  componentDidMount() {
-    InAppUtils.receiptData((error, receiptData)=> {
-      if(error) {
-        console.log('Receipt not found.', error);
-      } else {
-        console.log(receiptData);
-      }
-    });
-  }
-
   render() {
+    // const Poop = require('./components/poop');
+    // return <Poop />;
+
     return (
       <View style={{flex: 1}}>
         {

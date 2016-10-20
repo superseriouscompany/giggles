@@ -105,6 +105,7 @@ class CaptionsScene extends Component {
     };
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
+
     AudioPlayer.playWithUrl(url);
 
     this.setState({
@@ -201,12 +202,6 @@ class CaptionsScene extends Component {
                       </View>
                     </Image>
                   </TouchableOpacity>
-
-                  { c.playing ?
-                    <Image style={styles.audioGif} source={require('../images/audioPlaying.gif')} />
-                  :
-                    <Text style={[styles.text]}></Text>
-                  }
                 </View>
 
                 <View style={styles.rightHalfRow}>
