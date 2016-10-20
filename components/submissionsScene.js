@@ -152,7 +152,9 @@ class SubmissionsScene extends Component {
 
         if( xhr.status < 299 ) {
           const id = JSON.parse(xhr.responseText).id
-          this.navigator.navigate('SubmissionScene', { submissionId: id });
+          if( isMounted ) {
+            this.navigator.navigate('SubmissionScene', { submissionId: id });            
+          }
         } else {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
