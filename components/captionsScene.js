@@ -187,7 +187,11 @@ class CaptionsScene extends Component {
 
           <ScrollView style={styles.scrollContainer}>
             { this.state.captions.length == 0 && !this.state.captionsLoading ?
-              <Text style={{color: 'aquamarine'}}>No captions yet.</Text>
+              <View style={styles.noCaptionsImage}>
+                <TouchableOpacity onPress={() => this.navigator.navigate('CaptionScene')}>
+                  <Image source={require('../images/NoCaptionsYet.png')}/>
+                </TouchableOpacity>
+              </View>
             :
               null
             }
@@ -274,6 +278,11 @@ const styles = StyleSheet.create({
     flex: .5,
     width: windowSize.width,
     marginTop: STATUSBAR_HEIGHT,
+  },
+  noCaptionsImage: {
+    position: 'absolute',
+    width: windowSize.width,
+    alignItems: 'center',
   },
   image: {
     flex: .5,
