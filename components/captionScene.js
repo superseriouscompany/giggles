@@ -86,6 +86,8 @@ class Caption extends Component {
   }
 
   componentWillUnmount() {
+    this._stop();
+    AudioRecorder.stopPlaying();
     isMounted = false;
     AudioRecorder.onProgress = null;
     AudioRecorder.onFinished = null;
@@ -128,6 +130,7 @@ class Caption extends Component {
       this._stop();
       this.setState({recording: false});
     }
+    AudioRecorder.stopPlaying();
     AudioRecorder.playRecording();
     this.setState({playing: true});
   }
@@ -142,7 +145,9 @@ class Caption extends Component {
     xhr.onreadystatechange = (e) => {
       if( xhr.readyState !== 4 ) { return; }
 
-      this.navigator.navigate('CaptionsScene');
+      if( isMounted ) {
+        this.navigator.navigate('CaptionsScene');
+      }
     }
     xhr.open('POST', `https://superserious.ngrok.io/submissions/${submissionId}/captions`);
     xhr.send(body);
@@ -168,8 +173,8 @@ class Caption extends Component {
           <CacheableImage
             source={{uri: this.state.submission.image_url}}
             style={imageDimensions(this.state.submission)}
-            onLoadStart={() => this.setState({loadingImage: true})}
-            onLoadEnd={() => this.setState({loadingImage: false})}
+            onLoadStart={() => isMounted && this.setState({loadingImage: true})}
+            onLoadEnd={() => isMounted && this.setState({loadingImage: false})}
             />
         : this.state.loadingSubmission ?
           <ActivityIndicator

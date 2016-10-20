@@ -50,7 +50,6 @@ class SubmissionsScene extends Component {
         const diff = moment(now).diff(publishedAt);
         if( diff < oneDay ) { s.publishedAt = 'today'; }
         else if( diff < oneDay * 2 ) { s.publishedAt = 'yesterday'; }
-        else if( diff < oneDay * 7 ) { s.publishedAt = publishedAt.format('dddd'); }
         else { s.publishedAt = publishedAt.format('MMM D'); }
         return s;
       })
@@ -152,7 +151,9 @@ class SubmissionsScene extends Component {
 
         if( xhr.status < 299 ) {
           const id = JSON.parse(xhr.responseText).id
-          this.navigator.navigate('SubmissionScene', { submissionId: id });
+          if( isMounted ) {
+            this.navigator.navigate('SubmissionScene', { submissionId: id });
+          }
         } else {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
