@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native';
 
-import PoopButton from './poopButton';
 import SubmissionButton from './submissionButton';
 import { InAppUtils } from 'NativeModules';
 
@@ -213,7 +212,7 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
-          <PoopButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
+          <SubmissionButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
         </View>
       </View>
     )
