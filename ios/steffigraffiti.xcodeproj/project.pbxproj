@@ -30,6 +30,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		B2E7C59C61904B2EA57401A4 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8B2A7EAABD4D209944DAA9 /* libRNImagePicker.a */; };
 		C39079B6D4184F3E86D4BF3C /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C99978AFEF4E9CA21FD23D /* libRNFS.a */; };
+		F69A1F271DB9701200092BC8 /* Fonts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F69A1F261DB9701100092BC8 /* Fonts.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +205,7 @@
 		AB8B2A7EAABD4D209944DAA9 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		B99FD59019C645759528B9EF /* RNAudio.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudio.xcodeproj; path = "../node_modules/react-native-audio/ios/RNAudio.xcodeproj"; sourceTree = "<group>"; };
 		C3C3BA5BC696478CB3525A1A /* libRNAudio.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAudio.a; sourceTree = "<group>"; };
+		F69A1F261DB9701100092BC8 /* Fonts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Fonts.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +334,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				F69A1F261DB9701100092BC8 /* Fonts.xcassets */,
 			);
 			name = steffigraffiti;
 			sourceTree = "<group>";
@@ -777,6 +780,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				F69A1F271DB9701200092BC8 /* Fonts.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

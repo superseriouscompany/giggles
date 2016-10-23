@@ -20,7 +20,10 @@ import NoScene          from './components/noScene';
 class RootNav extends Component {
   constructor(props) {
     super(props);
-    this.state = { scene: 'CaptionScene', props: {} }
+    this.state = { props: {}};
+    this.state.scene = 'CaptionScene';
+    this.state.scene = 'SubmissionScene';
+    this.state.props = {queueSize: 420};
 
     this.navigator = {
       navigate: (component, props) => {

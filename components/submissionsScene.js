@@ -150,9 +150,9 @@ class SubmissionsScene extends Component {
         if( xhr.readyState !== 4 ) { return; }
 
         if( xhr.status < 299 ) {
-          const id = JSON.parse(xhr.responseText).id
+          const json = JSON.parse(xhr.responseText);
           if( isMounted ) {
-            this.navigator.navigate('SubmissionScene', { submissionId: id });
+            this.navigator.navigate('SubmissionScene', { submissionId: json.id, queueSize: json.queueSize });
           }
         } else {
           Alert.alert(xhr.status + ': ' + xhr.responseText);

@@ -40,7 +40,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We use this to figure out where you live and sneak in at night when you're asleep.</string>
+	<string>We use this to figure out where you live and sneak in at night when you&apos;re asleep.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We use this to look for pictures of your ex to tweet them at your parents.</string>
 	<key>UILaunchStoryboardName</key>
@@ -52,6 +52,13 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NotoSans-Bold.ttf</string>
+		<string>NotoSans-BoldItalic.ttf</string>
+		<string>NotoSans-Italic.ttf</string>
+		<string>NotoSans-Regular.ttf</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
