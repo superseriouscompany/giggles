@@ -49,25 +49,38 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={styles.optionsContainer}>
-          <TouchableOpacity style={styles.option} onPress={this._selectOne.bind(this)}>
-            <View style={styles.uncheckedCircleContainer}>
-              <Image source={require('../images/UncheckedGreyCircle.png')}/>
+          <View style={styles.optionSelected} onPress={this._selectOne.bind(this)}>
+
+            <View style={styles.leftCheckmarkContainer}>
+              <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
             </View>
 
-            <View style={styles.leftInfoContainer}>
-              <Image source={require('../images/ShuffleIcon.png')}/>
-              <Text style={styles.shufflePrice}>
-                $0.00
-              </Text>
-            </View>
+            <View style={styles.selectedInfoContainer}>
+              <View style={styles.selectedTopRowContainer}>
+                <View style={styles.leftInfoContainer}>
+                  <Image source={require('../images/ShuffleGreenBackground.png')}/>
+                  <Text style={styles.shufflePrice}>
+                    $0.00
+                  </Text>
+                </View>
 
-            <View style={styles.rightInfoContainer}>
-              <Text style={styles.imageCount}>
-                369
-              </Text>
-              <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+                <View style={styles.rightInfoContainer}>
+                  <Text style={styles.imageCount}>
+                    369
+                  </Text>
+                  <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+                </View>
+              </View>
+
+              <View style={styles.selectedDescriptionContainer}>
+                <Text style={styles.selectedDescription}>
+                  Throw it in the pile.
+                  One photo is randomly selected from here everyday.
+                  There are currently 369 photos hoping to get picked.
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
+          </View>
 
           <TouchableOpacity style={styles.option} onPress={this._selectTwo.bind(this)}>
             <View style={styles.uncheckedCircleContainer}>
@@ -171,15 +184,17 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSans',
     fontSize: 18,
     color: 'white',
+    fontWeight: 'bold',
   },
   instantIcon: {
     marginLeft: 5,
   },
   instantPrice: {
-    marginLeft: 21,
+    marginLeft: 20.69,
     fontFamily: 'NotoSans',
     fontSize: 18,
     color: 'white',
+    fontWeight: 'bold',
   },
   now: {
     marginRight: 27,
@@ -192,6 +207,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     opacity: .2,
+  },
+  optionSelected: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 173,
+    width: windowSize.width - 28,
+    marginTop: 8,
+    marginBottom: 8,
+    marginLeft: 14,
+    marginRight: 14,
+    borderColor: '#4A4A4A',
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: '#4BBB7F',
+  },
+  leftCheckmarkContainer: {
+    paddingLeft: 18,
+    paddingRight: 18,
+    paddingBottom: 2,
+  },
+  selectedInfoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    height: 173,
+  },
+  selectedTopRowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 63,
+  },
+  selectedDescriptionContainer: {
+
+  },
+  selectedDescription: {
+    fontFamily: 'NotoSans',
+    fontSize: 16,
+    color: 'white',
+    marginTop: -5,
   },
 });
 
