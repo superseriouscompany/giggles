@@ -49,6 +49,27 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={styles.optionsContainer}>
+          <TouchableOpacity style={styles.option} onPress={this._selectOne.bind(this)}>
+            <View style={styles.uncheckedCircleContainer}>
+              <Image source={require('../images/UncheckedGreyCircle.png')}/>
+            </View>
+
+            <View style={styles.leftInfoContainer}>
+              <Image source={require('../images/ShuffleGreyBackground.png')}/>
+              <Text style={styles.shufflePrice}>
+                $0.00
+              </Text>
+            </View>
+
+            <View style={styles.rightInfoContainer}>
+              <Text style={styles.imageCount}>
+                369
+              </Text>
+              <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+            </View>
+          </TouchableOpacity>
+
+
           <View style={styles.optionSelected} onPress={this._selectOne.bind(this)}>
 
             <View style={styles.leftCheckmarkContainer}>
@@ -58,48 +79,27 @@ class SubmissionScene extends Component {
             <View style={styles.selectedInfoContainer}>
               <View style={styles.selectedTopRowContainer}>
                 <View style={styles.leftInfoContainer}>
-                  <Image source={require('../images/ShuffleGreenBackground.png')}/>
-                  <Text style={styles.shufflePrice}>
-                    $0.00
+                  <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+                  <Text style={styles.instantPrice}>
+                    $0.99
                   </Text>
                 </View>
 
                 <View style={styles.rightInfoContainer}>
-                  <Text style={styles.imageCount}>
-                    369
+                  <Text style={styles.now}>
+                    Now
                   </Text>
-                  <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
                 </View>
               </View>
 
               <View style={styles.selectedDescriptionContainer}>
                 <Text style={styles.selectedDescription}>
-                  Throw it in the pile.
-                  One photo is randomly selected from here everyday.
-                  There are currently 369 photos hoping to get picked.
+                  If you don't want to wait, you can pay us a few cents and we'll
+                  immediately replace the current photo with yours.
                 </Text>
               </View>
             </View>
           </View>
-
-          <TouchableOpacity style={styles.option} onPress={this._selectTwo.bind(this)}>
-            <View style={styles.uncheckedCircleContainer}>
-              <Image source={require('../images/UncheckedGreyCircle.png')}/>
-            </View>
-
-            <View style={styles.leftInfoContainer}>
-              <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
-              <Text style={styles.instantPrice}>
-                $0.99
-              </Text>
-            </View>
-
-            <View style={styles.rightInfoContainer}>
-              <Text style={styles.now}>
-                Now
-              </Text>
-            </View>
-          </TouchableOpacity>
         </View>
 
         <View style={styles.bottomMiddle}>
@@ -128,13 +128,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#181818',
   },
   headerTextContainer: {
-    flex: 0.25,
+    flex: 0.27,
   },
   headerText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    paddingTop: 69,
+    paddingTop: 66.6,
     fontFamily: 'NotoSans',
   },
   optionsContainer: {
@@ -203,10 +203,10 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   bottomMiddle: {
-    flex: .25,
+    flex: .23,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    opacity: .2,
+    opacity: 1,
   },
   optionSelected: {
     flexDirection: 'row',
