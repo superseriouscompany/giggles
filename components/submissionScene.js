@@ -12,6 +12,8 @@ import {
   View,
 } from 'react-native';
 
+import PoopButton from './poopButton';
+
 import SubmissionButton from './submissionButton';
 
 const windowSize = Dimensions.get('window');
@@ -167,9 +169,7 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
-          <TouchableOpacity onPress={this._submit.bind(this)}>
-            <Image source={require('../images/Submit.png')} />
-          </TouchableOpacity>
+          <PoopButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
         </View>
       </View>
     )
