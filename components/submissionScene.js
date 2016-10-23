@@ -20,19 +20,27 @@ class SubmissionScene extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {};
     this.navigator = props.navigator;
   }
 
-  _selectOne() {
-
+  _selectFree() {
+    this.setState({selection: 'free'});
   }
 
-  _selectTwo() {
-
+  _selectPaid() {
+    this.setState({selection: 'paid'});
   }
 
   _submit() {
-
+    if( this.state.selection == 'paid' ) {
+      Alert.alert('Paid');
+    } else if( this.state.selection == 'free' ) {
+      this.navigator.navigate('CaptionScene');
+      Alert.alert('Added you to the queue', 'But you have no chance');
+    } else {
+      console.error("Unknown state", this.state.selection);
+    }
   }
 
   render() {
@@ -49,57 +57,48 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={styles.optionsContainer}>
-          <TouchableOpacity style={styles.option} onPress={this._selectOne.bind(this)}>
-            <View style={styles.uncheckedCircleContainer}>
-              <Image source={require('../images/UncheckedGreyCircle.png')}/>
-            </View>
+          <View>
+            { this.state.selection == 'free' ?
+              <View style={styles.optionSelected}>
 
-            <View style={styles.leftInfoContainer}>
-              <Image source={require('../images/ShuffleGreyBackground.png')}/>
-              <Text style={styles.shufflePrice}>
-                $0.00
-              </Text>
-            </View>
+                <View style={styles.leftCheckmarkContainer}>
+                  <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
+                </View>
 
-            <View style={styles.rightInfoContainer}>
-              <Text style={styles.imageCount}>
-                369
-              </Text>
-              <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
-            </View>
-          </TouchableOpacity>
+                <View style={styles.selectedInfoContainer}>
+                  <View style={styles.selectedTopRowContainer}>
+                    <View style={styles.leftInfoContainer}>
+                      <Image source={require('../images/ShuffleGreenBackground.png')}/>
+                      <Text style={styles.shufflePrice}>
+                        $0.00
+                      </Text>
+                    </View>
 
-          <TouchableOpacity style={styles.option} onPress={this._selectTwo.bind(this)}>
-            <View style={styles.uncheckedCircleContainer}>
-              <Image source={require('../images/UncheckedGreyCircle.png')}/>
-            </View>
+                    <View style={styles.rightInfoContainer}>
+                      <Text style={styles.imageCount}>
+                        369
+                      </Text>
+                      <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+                    </View>
+                  </View>
 
-            <View style={styles.leftInfoContainer}>
-              <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
-              <Text style={styles.instantPrice}>
-                $0.99
-              </Text>
-            </View>
+                  <View style={styles.selectedDescriptionContainer}>
+                    <Text style={styles.selectedDescription}>
+                      Throw it in the pile.
+                      One photo is randomly selected from here everyday.
+                      There are currently 369 photos hoping to get picked.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            :
+              <TouchableOpacity style={styles.option} onPress={this._selectFree.bind(this)}>
+                <View style={styles.uncheckedCircleContainer}>
+                  <Image source={require('../images/UncheckedGreyCircle.png')}/>
+                </View>
 
-            <View style={styles.rightInfoContainer}>
-              <Text style={styles.now}>
-                Now
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* option 1 (shuffle) selected
-
-          <View style={styles.optionSelected}}>
-
-            <View style={styles.leftCheckmarkContainer}>
-              <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
-            </View>
-
-            <View style={styles.selectedInfoContainer}>
-              <View style={styles.selectedTopRowContainer}>
                 <View style={styles.leftInfoContainer}>
-                  <Image source={require('../images/ShuffleGreenBackground.png')}/>
+                  <Image source={require('../images/ShuffleGreyBackground.png')}/>
                   <Text style={styles.shufflePrice}>
                     $0.00
                   </Text>
@@ -111,29 +110,45 @@ class SubmissionScene extends Component {
                   </Text>
                   <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
                 </View>
+              </TouchableOpacity>
+            }
+
+            { this.state.selection == 'paid' ?
+              <View style={styles.optionSelected}>
+                <View style={styles.leftCheckmarkContainer}>
+                  <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
+                </View>
+
+                <View style={styles.selectedInfoContainer}>
+                  <View style={styles.selectedTopRowContainer}>
+                    <View style={styles.leftInfoContainer}>
+                      <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+                      <Text style={styles.instantPrice}>
+                        $0.99
+                      </Text>
+                    </View>
+
+                    <View style={styles.rightInfoContainer}>
+                      <Text style={styles.now}>
+                        Now
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.selectedDescriptionContainer}>
+                    <Text style={styles.selectedDescription}>
+                      If you don't want to wait, you can pay us a few cents and we'll
+                      immediately replace the current photo with yours.
+                    </Text>
+                  </View>
+                </View>
               </View>
+            :
+              <TouchableOpacity style={styles.option} onPress={this._selectPaid.bind(this)}>
+                <View style={styles.uncheckedCircleContainer}>
+                  <Image source={require('../images/UncheckedGreyCircle.png')}/>
+                </View>
 
-              <View style={styles.selectedDescriptionContainer}>
-                <Text style={styles.selectedDescription}>
-                  Throw it in the pile.
-                  One photo is randomly selected from here everyday.
-                  There are currently 369 photos hoping to get picked.
-                </Text>
-              </View>
-            </View>
-          </View>
-          */}
-
-
-          {/* option 2 (instant) selected
-
-          <View style={styles.optionSelected}}>
-            <View style={styles.leftCheckmarkContainer}>
-              <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
-            </View>
-
-            <View style={styles.selectedInfoContainer}>
-              <View style={styles.selectedTopRowContainer}>
                 <View style={styles.leftInfoContainer}>
                   <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
                   <Text style={styles.instantPrice}>
@@ -146,41 +161,22 @@ class SubmissionScene extends Component {
                     Now
                   </Text>
                 </View>
-              </View>
-
-              <View style={styles.selectedDescriptionContainer}>
-                <Text style={styles.selectedDescription}>
-                  If you don't want to wait, you can pay us a few cents and we'll
-                  immediately replace the current photo with yours.
-                </Text>
-              </View>
-            </View>
+              </TouchableOpacity>
+            }
           </View>
-          */}
-
         </View>
 
-        <View style={styles.bottomMiddle}>
+        <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
           <TouchableOpacity onPress={this._submit.bind(this)}>
-              <Image source={require('../images/Submit.png')} />
+            <Image source={require('../images/Submit.png')} />
           </TouchableOpacity>
         </View>
       </View>
-
-
     )
-  }
-
-  enqueue() {
-    Alert.alert('Added you to the queue', 'But you have no chance');
-    this.navigator.navigate('CaptionScene');
   }
 }
 
 const styles = StyleSheet.create({
-  debug: {
-    backgroundColor: 'pink',
-  },
   background: {
     flex: 1,
     backgroundColor: '#181818',
@@ -264,7 +260,6 @@ const styles = StyleSheet.create({
     flex: .23,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    opacity: .2,
   },
   optionSelected: {
     flexDirection: 'row',
@@ -294,9 +289,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 63,
-  },
-  selectedDescriptionContainer: {
-
   },
   selectedDescription: {
     fontFamily: 'NotoSans',
