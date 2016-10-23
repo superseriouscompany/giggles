@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   StyleSheet,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -37,6 +38,8 @@ class SubmissionScene extends Component {
   render() {
     return (
       <View style={styles.background}>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
+
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText}>
             Success!{"\n"}{"\n"}
@@ -46,32 +49,44 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={styles.optionsContainer}>
-          <View style={styles.optionOne} onPress={this._selectOne.bind(this)}>
-            <TouchableOpacity style={styles.uncheckedContainer}>
+          <TouchableOpacity style={styles.option} onPress={this._selectOne.bind(this)}>
+            <View style={styles.uncheckedCircleContainer}>
               <Image source={require('../images/UncheckedGreyCircle.png')}/>
-            </TouchableOpacity>
-            <Image source={require('../images/ShuffleIcon.png')}/>
-            <Text style={{fontFamily: 'NotoSans', fontSize: 18, color: 'white'}}>
-              $0.00
-            </Text>
-            <Text style={{fontFamily: 'NotoSans', fontSize: 18, color: 'white'}}>
-              369
-            </Text>
-            <Image source={require('../images/ImagesIcon.png')}/>
-          </View>
+            </View>
 
-          <View style={styles.optionTwo} onPress={this._selectTwo.bind(this)}>
-            <TouchableOpacity style={styles.uncheckedContainer}>
+            <View style={styles.leftInfoContainer}>
+              <Image source={require('../images/ShuffleIcon.png')}/>
+              <Text style={styles.shufflePrice}>
+                $0.00
+              </Text>
+            </View>
+
+            <View style={styles.rightInfoContainer}>
+              <Text style={styles.imageCount}>
+                369
+              </Text>
+              <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.option} onPress={this._selectTwo.bind(this)}>
+            <View style={styles.uncheckedCircleContainer}>
               <Image source={require('../images/UncheckedGreyCircle.png')}/>
-            </TouchableOpacity>
-            <Image source={require('../images/InstantIcon.png')}/>
-            <Text style={{fontFamily: 'NotoSans', fontSize: 18, color: 'white'}}>
-              $0.99
-            </Text>
-            <Text style={{fontFamily: 'NotoSans', fontSize: 18, color: 'white'}}>
-              Now
-            </Text>
-          </View>
+            </View>
+
+            <View style={styles.leftInfoContainer}>
+              <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+              <Text style={styles.instantPrice}>
+                $0.99
+              </Text>
+            </View>
+
+            <View style={styles.rightInfoContainer}>
+              <Text style={styles.now}>
+                Now
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.bottomMiddle}>
@@ -101,13 +116,12 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 0.25,
-    backgroundColor: 'papayawhip',
   },
   headerText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    paddingTop: 42,
+    paddingTop: 69,
     fontFamily: 'NotoSans',
   },
   optionsContainer: {
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  optionOne: {
+  option: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 63,
@@ -128,30 +142,56 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
-  uncheckedContainer: {
-    height: 63,
-    width: 63,
-    alignItems: 'center',
-    justifyContent: 'center',
+  uncheckedCircleContainer: {
+    padding: 18,
   },
-  optionTwo: {
+  leftInfoContainer: {
+    flex: 0.50,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 63,
-    width: windowSize.width - 28,
-    marginTop: 8,
-    marginBottom: 8,
-    marginLeft: 14,
-    marginRight: 14,
-    borderColor: '#4A4A4A',
-    borderWidth: 1,
-    borderRadius: 10,
+    justifyContent: 'flex-start',
+  },
+  rightInfoContainer: {
+    flex: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  imageCount: {
+    marginRight: 8,
+    fontFamily: 'NotoSans',
+    fontSize: 18,
+    color: 'white',
+  },
+  imagesIcon: {
+    marginRight: 18,
+  },
+  shufflePrice: {
+    marginLeft: 10,
+    fontFamily: 'NotoSans',
+    fontSize: 18,
+    color: 'white',
+  },
+  instantIcon: {
+    marginLeft: 5,
+  },
+  instantPrice: {
+    marginLeft: 21,
+    fontFamily: 'NotoSans',
+    fontSize: 18,
+    color: 'white',
+  },
+  now: {
+    marginRight: 27,
+    fontFamily: 'NotoSans',
+    fontSize: 18,
+    color: 'white'
   },
   bottomMiddle: {
     flex: .25,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    backgroundColor: 'forestgreen',
+    opacity: .2,
   },
 });
 
