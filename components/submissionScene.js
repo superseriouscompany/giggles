@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  ActivityIndicator,
   Alert,
   Dimensions,
   Image,
@@ -13,10 +14,14 @@ import {
 } from 'react-native';
 
 import PoopButton from './poopButton';
-
 import SubmissionButton from './submissionButton';
+import { InAppUtils } from 'NativeModules';
 
 const windowSize = Dimensions.get('window');
+
+const products = [
+  'com.superserious.steffigraffiti.gonext'
+]
 
 class SubmissionScene extends Component {
   constructor(props) {
@@ -24,6 +29,16 @@ class SubmissionScene extends Component {
 
     this.state = {};
     this.navigator = props.navigator;
+  }
+
+  componentDidMount() {
+    InAppUtils.loadProducts(products, (err, products) => {
+      if( err ) { console.error(err); }
+      this.setState({
+        products: products,
+        loaded: true
+      });
+    })
   }
 
   _selectFree() {
@@ -36,7 +51,7 @@ class SubmissionScene extends Component {
 
   _submit() {
     if( this.state.selection == 'paid' ) {
-      Alert.alert('Paid');
+      this._pay();
     } else if( this.state.selection == 'free' ) {
       this.navigator.navigate('CaptionScene');
       Alert.alert('Added you to the queue', 'But you have no chance');
@@ -45,7 +60,35 @@ class SubmissionScene extends Component {
     }
   }
 
+  _pay() {
+    InAppUtils.purchaseProduct(this.state.products[0].identifier, (err, response) => {
+      if( err ) {
+        // we get this code if they hit cancel
+        if( err.code == 'ESKERRORDOMAIN2' && err.domain == 'SKErrorDomain' ) {
+          return;
+        }
+        return console.error(err);
+      }
+
+      if( response && response.productIdentifier ) {
+        InAppUtils.receiptData((err, base64EncodedReceipt)=> {
+          if(err) {
+            Alert.alert('Verification failed');
+          }
+          Api.submissions.jumpQueue(this.props.submissionId, base64EncodedReceipt).then(() => {
+            this.navigator.navigate('CaptionScene');
+          }).catch(console.error);
+        });
+      } else {
+        console.error(response);
+        Alert.alert('Purchase failed');
+      }
+    })
+  }
+
   render() {
+    const product = this.state.products && this.state.products[0];
+
     return (
       <View style={styles.background}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
@@ -115,7 +158,9 @@ class SubmissionScene extends Component {
               </TouchableOpacity>
             }
 
-            { this.state.selection == 'paid' ?
+            { !product ?
+              <ActivityIndicator color="ghostwhite"/>
+            : this.state.selection == 'paid' ?
               <View style={styles.optionSelected}>
                 <View style={styles.leftCheckmarkContainer}>
                   <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
@@ -126,21 +171,20 @@ class SubmissionScene extends Component {
                     <View style={styles.leftInfoContainer}>
                       <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
                       <Text style={styles.instantPrice}>
-                        $0.99
+                        {product.priceString}
                       </Text>
                     </View>
 
                     <View style={styles.rightInfoContainer}>
                       <Text style={styles.now}>
-                        Now
+                        {product.title}
                       </Text>
                     </View>
                   </View>
 
                   <View style={styles.selectedDescriptionContainer}>
                     <Text style={styles.selectedDescription}>
-                      If you don't want to wait, you can pay us a few cents and we'll
-                      immediately replace the current photo with yours.
+                      {product.description}
                     </Text>
                   </View>
                 </View>
@@ -154,13 +198,13 @@ class SubmissionScene extends Component {
                 <View style={styles.leftInfoContainer}>
                   <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
                   <Text style={styles.instantPrice}>
-                    $0.99
+                    {product.priceString}
                   </Text>
                 </View>
 
                 <View style={styles.rightInfoContainer}>
                   <Text style={styles.now}>
-                    Now
+                    {product.title}
                   </Text>
                 </View>
               </TouchableOpacity>
