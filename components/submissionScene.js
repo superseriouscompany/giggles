@@ -69,9 +69,65 @@ class SubmissionScene extends Component {
             </View>
           </TouchableOpacity>
 
+          <TouchableOpacity style={styles.option} onPress={this._selectTwo.bind(this)}>
+            <View style={styles.uncheckedCircleContainer}>
+              <Image source={require('../images/UncheckedGreyCircle.png')}/>
+            </View>
 
-          <View style={styles.optionSelected} onPress={this._selectOne.bind(this)}>
+            <View style={styles.leftInfoContainer}>
+              <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+              <Text style={styles.instantPrice}>
+                $0.99
+              </Text>
+            </View>
 
+            <View style={styles.rightInfoContainer}>
+              <Text style={styles.now}>
+                Now
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* option 1 (shuffle) selected
+
+          <View style={styles.optionSelected}}>
+
+            <View style={styles.leftCheckmarkContainer}>
+              <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
+            </View>
+
+            <View style={styles.selectedInfoContainer}>
+              <View style={styles.selectedTopRowContainer}>
+                <View style={styles.leftInfoContainer}>
+                  <Image source={require('../images/ShuffleGreenBackground.png')}/>
+                  <Text style={styles.shufflePrice}>
+                    $0.00
+                  </Text>
+                </View>
+
+                <View style={styles.rightInfoContainer}>
+                  <Text style={styles.imageCount}>
+                    369
+                  </Text>
+                  <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+                </View>
+              </View>
+
+              <View style={styles.selectedDescriptionContainer}>
+                <Text style={styles.selectedDescription}>
+                  Throw it in the pile.
+                  One photo is randomly selected from here everyday.
+                  There are currently 369 photos hoping to get picked.
+                </Text>
+              </View>
+            </View>
+          </View>
+          */}
+
+
+          {/* option 2 (instant) selected
+
+          <View style={styles.optionSelected}}>
             <View style={styles.leftCheckmarkContainer}>
               <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
             </View>
@@ -100,6 +156,8 @@ class SubmissionScene extends Component {
               </View>
             </View>
           </View>
+          */}
+
         </View>
 
         <View style={styles.bottomMiddle}>
@@ -206,7 +264,7 @@ const styles = StyleSheet.create({
     flex: .23,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    opacity: 1,
+    opacity: .2,
   },
   optionSelected: {
     flexDirection: 'row',
