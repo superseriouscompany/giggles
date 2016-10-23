@@ -76,7 +76,7 @@ class SubmissionScene extends Component {
 
                     <View style={styles.rightInfoContainer}>
                       <Text style={styles.imageCount}>
-                        369
+                        {this.props.queueSize}
                       </Text>
                       <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
                     </View>
@@ -86,7 +86,7 @@ class SubmissionScene extends Component {
                     <Text style={styles.selectedDescription}>
                       Throw it in the pile.
                       One photo is randomly selected from here everyday.
-                      There are currently 369 photos hoping to get picked.
+                      There are currently {this.props.queueSize} photos hoping to get picked.
                     </Text>
                   </View>
                 </View>
@@ -106,7 +106,7 @@ class SubmissionScene extends Component {
 
                 <View style={styles.rightInfoContainer}>
                   <Text style={styles.imageCount}>
-                    369
+                    {this.props.queueSize}
                   </Text>
                   <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
                 </View>
