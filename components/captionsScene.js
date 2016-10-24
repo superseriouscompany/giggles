@@ -175,8 +175,8 @@ class CaptionsScene extends Component {
             <CacheableImage
               style={styles.image}
               source={{uri: this.state.submission.image_url}}
-              onLoadStart={ () => { if( isMounted ) this.setState({imageLoading: true}) }}
-              onLoadEnd={ () => { if( isMounted ) this.setState({imageLoading: false}) }}
+              onLoadStart={ () => { isMounted && this.setState({imageLoading: true}) }}
+              onLoadEnd={ () => { isMounted && this.setState({imageLoading: false}) }}
               />
           :
             null
