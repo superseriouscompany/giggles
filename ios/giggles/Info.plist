@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We use this to record your private conversations</string>
+	<key>NSCameraUsageDescription</key>
 	<string>We use this to take pictures of your pockets when you least expect it</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We use this to find your most embarassing pictures and tweet them</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
