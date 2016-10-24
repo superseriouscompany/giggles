@@ -95,15 +95,7 @@ class SubmissionsScene extends Component {
 
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
-              <TouchableOpacity key={i} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}>
-                <CacheableImage source={{uri: s.image_url}} style={styles.scrollImage}>
-                  <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
-                    <View style={styles.backdropView}>
-                      <Text style={styles.date}>{s.publishedAt}</Text>
-                    </View>
-                  </Image>
-                </CacheableImage>
-              </TouchableOpacity>
+              <Submission key={i} submission={s} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: this.props.submission.id})}/>
             ))}
           </ScrollView>
         </View>
@@ -160,6 +152,38 @@ class SubmissionsScene extends Component {
       xhr.send(body);
     })
   }
+}
+
+class Submission extends Component {
+  state = {}
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  render() { return (
+    <TouchableOpacity onPress={this.props.onPress}>
+      { this.state.loading ?
+        <ActivityIndicator color="hotpink" />
+      :
+        null
+      }
+      <CacheableImage source={{uri: this.props.submission.image_url}}
+                      style={styles.scrollImage}
+                      onLoadStart={() => this.mounted && this.setState({loading: true})}
+                      onLoadEnd={() => this.mounted && this.setState({loading: false})}>
+        <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+          <View style={styles.backdropView}>
+            <Text style={styles.date}>{this.props.submission.publishedAt}</Text>
+          </View>
+        </Image>
+      </CacheableImage>
+    </TouchableOpacity>
+  )}
 }
 
 const styles = StyleSheet.create({
