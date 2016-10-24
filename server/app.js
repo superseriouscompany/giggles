@@ -150,6 +150,12 @@ app.post('/captions/:id/hate', function(req, res) {
   res.sendStatus(204);
 })
 
+app.get('/kill', function(req, res) {
+  res.json({
+    kill: false
+  })
+})
+
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 })
