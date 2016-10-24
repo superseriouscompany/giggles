@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2553a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -16,24 +16,30 @@
                 <userLayoutGuide location="239" affinity="minX"/>
             </userGuides>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by super serious company" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Microphone" translatesAutoresizingMaskIntoConstraints="NO" id="d5d-gm-sfm"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="giggles" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="2I2-hG-i2T"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="24"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Microphone" translatesAutoresizingMaskIntoConstraints="NO" id="d5d-gm-sfm"/>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="giggles" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by super serious company" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="cRz-eE-lGc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" id="H6o-lM-TfF"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Hgt-FA-zRb"/>
                 <constraint firstItem="d5d-gm-sfm" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IL0-YI-FfZ"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="l9K-M9-0fz"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="4" id="RUQ-rH-MjB"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="25" id="l9K-M9-0fz"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sro-sb-UGE"/>
                 <constraint firstItem="d5d-gm-sfm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yBN-qe-WES"/>
             </constraints>
