@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import SubmissionButton from './submissionButton';
+import Api from '../lib/api';
 import { InAppUtils } from 'NativeModules';
 
 const windowSize = Dimensions.get('window');
@@ -21,6 +22,8 @@ const windowSize = Dimensions.get('window');
 const products = [
   'com.superserious.steffigraffiti.gonext'
 ]
+
+let isPurchasing = false;
 
 class SubmissionScene extends Component {
   constructor(props) {
@@ -60,6 +63,9 @@ class SubmissionScene extends Component {
   }
 
   _pay() {
+    if( isPurchasing ) { return; }
+    isPurchasing = true;
+
     InAppUtils.purchaseProduct(this.state.products[0].identifier, (err, response) => {
       if( err ) {
         // we get this code if they hit cancel
@@ -75,6 +81,7 @@ class SubmissionScene extends Component {
             Alert.alert('Verification failed');
           }
           Api.submissions.jumpQueue(this.props.submissionId, base64EncodedReceipt).then(() => {
+            isPurchasing = false;
             this.navigator.navigate('CaptionScene');
           }).catch(console.error);
         });
@@ -211,7 +218,7 @@ class SubmissionScene extends Component {
           </View>
         </View>
 
-        <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
+        <View style={[styles.bottomMiddle, {opacity: this.state.selection && !isPurchasing ? 1 : 0.2}]}>
           <SubmissionButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
         </View>
       </View>
