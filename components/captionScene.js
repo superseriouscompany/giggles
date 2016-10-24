@@ -107,7 +107,7 @@ class Caption extends Component {
     AudioRecorder.checkAuthorizationStatus().then((status) => {
       this.setState({audioPermissions: status});
       if( status === 'denied' ) {
-        return Alert.alert("You denied us microphone permissions", "I thought we were friends");
+        return Alert.alert("Oops! You denied microphone permissions", "To fix this, go into your iPhone Settings > Giggles > Microphone ");
       } else if( status === 'undetermined') {
         return AudioRecorder.requestAuthorization();
       }

@@ -128,10 +128,10 @@ class SubmissionsScene extends Component {
       if( response.didCancel ) { return; }
       if( response.error ) {
         if( response.error === 'Photo library permissions not granted' ) {
-          return Alert.alert("Hey asshole", "Give us photo library access.");
+          return Alert.alert("Oops! You denied Photo Library permissions", "To fix this, go into your iPhone Settings > Giggles > Photos");
         }
         if( response.error === 'Camera permissions not granted' ) {
-          return Alert.alert("Hey asshole", "Give us camera access.");
+          return Alert.alert("Oops! You denied Camera permissions", "To fix this, go into your iPhone Settings > Giggles > Camera");
         }
         return Alert.alert('ImagePicker Error: ' + response.error);
       }

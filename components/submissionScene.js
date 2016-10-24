@@ -56,7 +56,7 @@ class SubmissionScene extends Component {
       this._pay();
     } else if( this.state.selection == 'free' ) {
       this.navigator.navigate('CaptionScene');
-      Alert.alert('Added you to the queue', 'But you have no chance');
+      Alert.alert('Your photo was put into the pile', 'Keep an eye out for it');
     } else {
       console.error("Unknown state", this.state.selection);
     }
