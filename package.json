@@ -9,10 +9,10 @@
   "dependencies": {
     "moment": "^2.15.1",
     "react": "15.3.2",
-    "react-native": "0.34.1",
+    "react-native": "git@github.com:superseriouscompany/react-native.git",
     "react-native-audio": "git@github.com:superseriouscompany/react-native-audio.git",
     "react-native-billing": "^2.1.0",
-    "react-native-cacheable-image": "git@github.com:superseriouscompany/react-native-cacheable-image",
+    "react-native-cacheable-image": "git@github.com:superseriouscompany/react-native-cacheable-image.git",
     "react-native-image-picker": "^0.22.9",
     "react-native-in-app-utils": "^4.0.0"
   },
