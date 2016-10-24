@@ -96,7 +96,7 @@ class CaptionsScene extends Component {
   }
 
   _play = (caption) => {
-    const url = `https://superserious.ngrok.io/${caption.filename}`;
+    const url = `https://giggles.superserious.co/${caption.filename}`;
     AudioPlayer.onProgress = (data) => {
       console.log("Progress", data);
     };

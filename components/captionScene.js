@@ -149,7 +149,7 @@ class Caption extends Component {
         this.navigator.navigate('CaptionsScene');
       }
     }
-    xhr.open('POST', `https://superserious.ngrok.io/submissions/${submissionId}/captions`);
+    xhr.open('POST', `https://giggles.superserious.co/submissions/${submissionId}/captions`);
     xhr.send(body);
   }
 

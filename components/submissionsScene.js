@@ -156,7 +156,7 @@ class SubmissionsScene extends Component {
           Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
       }
-      xhr.open('POST', 'https://superserious.ngrok.io/submissions');
+      xhr.open('POST', 'https://giggles.superserious.co/submissions');
       xhr.send(body);
     })
   }
