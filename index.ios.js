@@ -67,4 +67,4 @@ class RootNav extends Component {
   }
 }
 
-AppRegistry.registerComponent('steffigraffiti', () => RootNav);
+AppRegistry.registerComponent('giggles', () => RootNav);

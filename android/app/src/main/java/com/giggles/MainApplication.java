@@ -1,17 +1,9 @@
-package com.steffigraffiti;
+package com.giggles;
 
 import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
-import com.imagepicker.ImagePickerPackage;
-import com.idehub.Billing.InAppBillingBridgePackage;
-import com.rnim.rn.audio.ReactNativeAudioPackage;
-import com.rnfs.RNFSPackage;
-import com.idehub.Billing.InAppBillingBridgePackage;
-import com.imagepicker.ImagePickerPackage;
-import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -31,15 +23,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNFSPackage(),
-            new ImagePickerPackage(),
-            new InAppBillingBridgePackage(),
-            new ReactNativeAudioPackage(),
-            new RNFSPackage(),
-            new InAppBillingBridgePackage(),
-            new ImagePickerPackage(),
-            new ReactNativeAudioPackage()
+          new MainReactPackage()
       );
     }
   };
