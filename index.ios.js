@@ -49,7 +49,7 @@ class RootNav extends Component {
 
     return (
       <View style={{flex: 1}}>
-        { true || this.state.killed ?
+        { this.state.killed ?
           <KilledScene />
         : this.state.scene == 'CaptionScene' ?
           <CaptionScene {...this.state.props} navigator={this.navigator}/>
