@@ -94,7 +94,6 @@ class SubmissionScene extends Component {
 
   render() {
     const product = this.state.products && this.state.products[0];
-
     return (
       <View style={styles.background}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
@@ -108,122 +107,127 @@ class SubmissionScene extends Component {
         </View>
 
         <View style={styles.optionsContainer}>
-          <View>
-            { this.state.selection == 'free' ?
-              <View style={styles.optionSelected}>
-
-                <View style={styles.leftCheckmarkContainer}>
-                  <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
-                </View>
-
-                <View style={styles.selectedInfoContainer}>
-                  <View style={styles.selectedTopRowContainer}>
-                    <View style={styles.leftInfoContainer}>
-                      <Image source={require('../images/ShuffleGreenBackground.png')}/>
-                      <Text style={styles.shufflePrice}>
-                        $0.00
-                      </Text>
-                    </View>
-
-                    <View style={styles.rightInfoContainer}>
-                      <Text style={styles.imageCount}>
-                        {this.props.queueSize}
-                      </Text>
-                      <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
-                    </View>
-                  </View>
-
-                  <View style={styles.selectedDescriptionContainer}>
-                    <Text style={styles.selectedDescription}>
-                      Throw it in the pile.
-                      One photo is randomly selected from here everyday.
-                      There are currently {this.props.queueSize} photos hoping to get picked.
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            :
-              <TouchableOpacity style={styles.option} onPress={this._selectFree.bind(this)}>
-                <View style={styles.uncheckedCircleContainer}>
-                  <Image source={require('../images/UncheckedGreyCircle.png')}/>
-                </View>
-
-                <View style={styles.leftInfoContainer}>
-                  <Image source={require('../images/ShuffleGreyBackground.png')}/>
-                  <Text style={styles.shufflePrice}>
-                    $0.00
-                  </Text>
-                </View>
-
-                <View style={styles.rightInfoContainer}>
-                  <Text style={styles.imageCount}>
-                    {this.props.queueSize}
-                  </Text>
-                  <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
-                </View>
-              </TouchableOpacity>
-            }
-
-            { !product ?
-              <ActivityIndicator color="ghostwhite"/>
-            : this.state.selection == 'paid' ?
-              <View style={styles.optionSelected}>
-                <View style={styles.leftCheckmarkContainer}>
-                  <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
-                </View>
-
-                <View style={styles.selectedInfoContainer}>
-                  <View style={styles.selectedTopRowContainer}>
-                    <View style={styles.leftInfoContainer}>
-                      <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
-                      <Text style={styles.instantPrice}>
-                        {product.priceString}
-                      </Text>
-                    </View>
-
-                    <View style={styles.rightInfoContainer}>
-                      <Text style={styles.now}>
-                        {product.title}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.selectedDescriptionContainer}>
-                    <Text style={styles.selectedDescription}>
-                      {product.description}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            :
-              <TouchableOpacity style={styles.option} onPress={this._selectPaid.bind(this)}>
-                <View style={styles.uncheckedCircleContainer}>
-                  <Image source={require('../images/UncheckedGreyCircle.png')}/>
-                </View>
-
-                <View style={styles.leftInfoContainer}>
-                  <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
-                  <Text style={styles.instantPrice}>
-                    {product.priceString}
-                  </Text>
-                </View>
-
-                <View style={styles.rightInfoContainer}>
-                  <Text style={styles.now}>
-                    {product.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            }
-          </View>
+          { !product ?
+            <ActivityIndicator color="hotpink" />
+          :
+            this.options(product)
+          }
         </View>
-
         <View style={[styles.bottomMiddle, {opacity: this.state.selection && !isPurchasing ? 1 : 0.2}]}>
           <SubmissionButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
         </View>
       </View>
     )
   }
+
+  options(product) { return(
+    <View>
+      { this.state.selection == 'free' ?
+        <View style={styles.optionSelected}>
+
+          <View style={styles.leftCheckmarkContainer}>
+            <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
+          </View>
+
+          <View style={styles.selectedInfoContainer}>
+            <View style={styles.selectedTopRowContainer}>
+              <View style={styles.leftInfoContainer}>
+                <Image source={require('../images/ShuffleGreenBackground.png')}/>
+                <Text style={styles.shufflePrice}>
+                  $0.00
+                </Text>
+              </View>
+
+              <View style={styles.rightInfoContainer}>
+                <Text style={styles.imageCount}>
+                  {this.props.queueSize}
+                </Text>
+                <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+              </View>
+            </View>
+
+            <View style={styles.selectedDescriptionContainer}>
+              <Text style={styles.selectedDescription}>
+                Throw it in the pile.
+                One photo is randomly selected from here everyday.
+                There are currently {this.props.queueSize} photos hoping to get picked.
+              </Text>
+            </View>
+          </View>
+        </View>
+      :
+        <TouchableOpacity style={styles.option} onPress={this._selectFree.bind(this)}>
+          <View style={styles.uncheckedCircleContainer}>
+            <Image source={require('../images/UncheckedGreyCircle.png')}/>
+          </View>
+
+          <View style={styles.leftInfoContainer}>
+            <Image source={require('../images/ShuffleGreyBackground.png')}/>
+            <Text style={styles.shufflePrice}>
+              $0.00
+            </Text>
+          </View>
+
+          <View style={styles.rightInfoContainer}>
+            <Text style={styles.imageCount}>
+              {this.props.queueSize}
+            </Text>
+            <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
+          </View>
+        </TouchableOpacity>
+      }
+
+      { this.state.selection == 'paid' ?
+        <View style={styles.optionSelected}>
+          <View style={styles.leftCheckmarkContainer}>
+            <Image style={styles.whiteCheckmark} source={require('../images/whiteCheckmark.png')} />
+          </View>
+
+          <View style={styles.selectedInfoContainer}>
+            <View style={styles.selectedTopRowContainer}>
+              <View style={styles.leftInfoContainer}>
+                <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+                <Text style={styles.instantPrice}>
+                  {product.priceString}
+                </Text>
+              </View>
+
+              <View style={styles.rightInfoContainer}>
+                <Text style={styles.now}>
+                  {product.title}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.selectedDescriptionContainer}>
+              <Text style={styles.selectedDescription}>
+                {product.description}
+              </Text>
+            </View>
+          </View>
+        </View>
+      :
+        <TouchableOpacity style={styles.option} onPress={this._selectPaid.bind(this)}>
+          <View style={styles.uncheckedCircleContainer}>
+            <Image source={require('../images/UncheckedGreyCircle.png')}/>
+          </View>
+
+          <View style={styles.leftInfoContainer}>
+            <Image style={styles.instantIcon} source={require('../images/InstantIcon.png')}/>
+            <Text style={styles.instantPrice}>
+              {product.priceString}
+            </Text>
+          </View>
+
+          <View style={styles.rightInfoContainer}>
+            <Text style={styles.now}>
+              {product.title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      }
+    </View>
+  )}
 }
 
 const styles = StyleSheet.create({
