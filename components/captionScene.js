@@ -107,7 +107,7 @@ class Caption extends Component {
     AudioRecorder.checkAuthorizationStatus().then((status) => {
       this.setState({audioPermissions: status});
       if( status === 'denied' ) {
-        return Alert.alert("Oops! You denied microphone permissions", "To fix this, go into your iPhone Settings > Giggles > Microphone ");
+        return Alert.alert("Oops! You denied microphone permissions", "To fix this, go into your iPhone Settings > Giggles > Microphone");
       } else if( status === 'undetermined') {
         return AudioRecorder.requestAuthorization();
       }
@@ -253,9 +253,16 @@ let styles = StyleSheet.create({
     backgroundColor: 'pink'
   },
   centering: {
+    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
+    width: windowSize.width,
+    height: windowSize.height,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   imageBackground: {
     backgroundColor: '#181818',

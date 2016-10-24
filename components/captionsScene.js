@@ -265,10 +265,15 @@ const styles = StyleSheet.create({
   },
   centering: {
     position: 'absolute',
-    width: windowSize.width,
-    height: windowSize.height,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 8,
+    width: windowSize.width,
+    height: windowSize.height,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   imageBackground: {
     backgroundColor: '#181818',
