@@ -125,10 +125,8 @@ class SubmissionsScene extends Component {
     }
 
     ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        return Alert.alert('User cancelled image picker');
-      }
-      if (response.error) {
+      if( response.didCancel ) { return; }
+      if( response.error ) {
         if( response.error === 'Photo library permissions not granted' ) {
           return Alert.alert("Hey asshole", "Give us photo library access.");
         }
