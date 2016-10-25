@@ -20,7 +20,7 @@ import { InAppUtils } from 'NativeModules';
 const windowSize = Dimensions.get('window');
 
 const products = [
-  'com.superserious.steffigraffiti.gonext'
+  'com.superserious.giggles.now'
 ]
 
 let isPurchasing = false;
