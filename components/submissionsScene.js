@@ -167,19 +167,21 @@ class Submission extends Component {
 
   render() { return (
     <TouchableOpacity onPress={this.props.onPress}>
-      { this.state.loading ?
-        <ActivityIndicator
-          style={[{transform: [{scale: 1.5}]}]}
-          size="small"
-          color="ghostwhite"
-        />
-      :
-        null
-      }
       <CacheableImage source={{uri: this.props.submission.image_url}}
                       style={styles.scrollImage}
                       onLoadStart={() => this.mounted && this.setState({loading: true})}
                       onLoadEnd={() => this.mounted && this.setState({loading: false})}>
+
+        { this.state.loading ?
+          <ActivityIndicator
+            style={[{transform: [{scale: 1.5}]}]}
+            size="small"
+            color="ghostwhite"
+          />
+        :
+          null
+        }
+
         <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
           <View style={styles.backdropView}>
             <Text style={styles.date}>{this.props.submission.publishedAt}</Text>
@@ -239,6 +241,8 @@ const styles = StyleSheet.create({
   scrollImage: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').width * 0.666,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   topRow: {
     position: 'absolute',
