@@ -228,15 +228,15 @@ class CaptionsScene extends Component {
                   { c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
                       <TouchableOpacity onPress={() => this._hate(c)}>
-                        <Image source={require('../images/Anger.png')} />
+                        <Image style={styles.translucentAnger} source={require('../images/Anger.png')} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => this._like(c)}>
-                        <Image source={require('../images/Laughing.png')} />
+                        <Image style={styles.translucentLaughing} source={require('../images/Laughing.png')} />
                       </TouchableOpacity>
                     </View>
                   : c.liked ?
                     <View>
-                      <Image source={require('../images/Laughing.png')} />
+                      <Image style={styles.opaqueLaughing} source={require('../images/Laughing.png')} />
                     </View>
                   :
                     null
@@ -333,6 +333,15 @@ const styles = StyleSheet.create({
     flex: .5,
     flexDirection: 'column',
     alignItems: 'flex-end',
+  },
+  translucentAnger: {
+    opacity: 0.5,
+  },
+  translucentLaughing: {
+    opacity: 0.5,
+  },
+  opaqueLaughing: {
+    opacity: 1.0,
   },
   audioGif: {
     flex: .5
