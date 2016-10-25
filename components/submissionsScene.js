@@ -168,7 +168,11 @@ class Submission extends Component {
   render() { return (
     <TouchableOpacity onPress={this.props.onPress}>
       { this.state.loading ?
-        <ActivityIndicator color="hotpink" />
+        <ActivityIndicator
+          style={[{transform: [{scale: 1.5}]}]}
+          size="small"
+          color="ghostwhite"
+        />
       :
         null
       }
