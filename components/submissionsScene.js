@@ -95,7 +95,7 @@ class SubmissionsScene extends Component {
 
           <ScrollView style={styles.scrollContainer}>
             {this.state.submissions.map((s, i) => (
-              <Submission key={i} submission={s} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: this.props.submission.id})}/>
+              <Submission key={i} submission={s} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}/>
             ))}
           </ScrollView>
         </View>
