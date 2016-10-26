@@ -25,32 +25,26 @@ export default class TermsScene extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#181818'}}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
-        { this.state.bye ?
-          <Text style={{color: 'slategray'}}>
-            Bye Felicia
-          </Text>
-        :
-          <View style = {styles.background}>
-            <View style={styles.termsContainer}>
-              <Text style={styles.terms}>
-                As a condition of use, you promise not to post any objectionable content to Giggles.
-                This is a place of giggling, not of being mean.
-                Content found objectionable by others will be reported and removed.{"\n"}{"\n"}
-                Also, no nudity; we don't care if it's "a beautiful thing" ಠ_ಠ
-              </Text>
-            </View>
-
-            <View style={styles.optionsContainer}>
-              <TouchableOpacity style={styles.accept} onPress={this.acceptTerms.bind(this)}>
-                <Text style={styles.acceptText}>Accept Terms</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.reject} onPress={() => this.setState({bye: true})}>
-                <Text style={styles.rejectText}>Reject Terms</Text>
-              </TouchableOpacity>
-            </View>
+        <View style = {styles.background}>
+          <View style={styles.termsContainer}>
+            <Text style={styles.terms}>
+              As a condition of use, you promise not to post any objectionable content to Giggles.
+              This is a place of giggling, not of being mean.
+              Content found objectionable by others will be reported and removed.{"\n"}{"\n"}
+              Also, no nudity; we don't care if it's "a beautiful thing" ಠ_ಠ
+            </Text>
           </View>
-        }
+
+          <View style={styles.optionsContainer}>
+            <TouchableOpacity style={styles.accept} onPress={this.acceptTerms.bind(this)}>
+              <Text style={styles.acceptText}>Accept Terms</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.reject} onPress={() => this.setState({bye: true})}>
+              <Text style={styles.rejectText}>Reject Terms</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }
