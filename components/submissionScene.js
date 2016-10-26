@@ -108,7 +108,11 @@ class SubmissionScene extends Component {
 
         <View style={styles.optionsContainer}>
           { !product ?
-            <ActivityIndicator color="hotpink" />
+            <ActivityIndicator
+              style={[styles.centering, {transform: [{scale: 1.5}]}]}
+              size="small"
+              color="ghostwhite"
+            />
           :
             this.options(product)
           }
@@ -234,6 +238,18 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#181818',
+  },
+  centering: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+    width: windowSize.width,
+    height: windowSize.height,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   headerTextContainer: {
     flex: 0.27,

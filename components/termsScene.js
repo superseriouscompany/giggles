@@ -2,12 +2,17 @@ import React, {Component} from 'react';
 
 import {
   Alert,
+  Dimensions,
+  StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 
 import CurrentUser from '../lib/currentUser';
+
+const windowSize = Dimensions.get('window');
 
 export default class TermsScene extends Component {
   constructor(props) {
@@ -18,23 +23,32 @@ export default class TermsScene extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'mediumorchid', padding: 20 }}>
+      <View style={{flex: 1, backgroundColor: '#181818'}}>
+        <StatusBar backgroundColor="#181818" barStyle="light-content"/>
         { this.state.bye ?
           <Text style={{color: 'slategray'}}>
             Bye Felicia
           </Text>
         :
-          <View>
-            <Text style={{color: 'antiquewhite'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-            <Text style={{color: 'antiquewhite'}}>{"\n\n"}Accept the terms, motherfucker.{"\n\n"}</Text>
+          <View style = {styles.background}>
+            <View style={styles.termsContainer}>
+              <Text style={styles.terms}>
+                As a condition of use, you promise not to post any objectionable content to Giggles.
+                This is a place of giggling, not of being mean.
+                Content found objectionable by others will be reported and removed.{"\n"}{"\n"}
+                Also, no nudity; we don't care if it's "a beautiful thing" ಠ_ಠ
+              </Text>
+            </View>
 
-            <TouchableOpacity onPress={this.acceptTerms.bind(this)}>
-              <Text style={{color: 'mediumaquamarine'}}>Ugh, fine.</Text>
-            </TouchableOpacity>
+            <View style={styles.optionsContainer}>
+              <TouchableOpacity style={styles.accept} onPress={this.acceptTerms.bind(this)}>
+                <Text style={styles.acceptText}>Accept Terms</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.setState({bye: true})}>
-              <Text style={{color: 'firebrick'}}>Nah, I'm good.</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.reject} onPress={() => this.setState({bye: true})}>
+                <Text style={styles.rejectText}>Reject Terms</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         }
       </View>
@@ -50,3 +64,58 @@ export default class TermsScene extends Component {
     })
   }
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  termsContainer: {
+    width: windowSize.width * 0.8,
+    height: windowSize.height * 0.666,
+    paddingTop: 130,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  terms: {
+    fontFamily: 'NotoSans',
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+
+  },
+  optionsContainer: {
+    height: windowSize.height * 0.333,
+    width: windowSize.width,
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+  },
+  accept: {
+    width: windowSize.width * 0.666,
+    marginTop: 70,
+    padding: 10,
+    paddingBottom: 12,
+    borderWidth: 1,
+    borderColor: 'white',
+  },
+  reject: {
+    width: windowSize.width * 0.666,
+    marginTop: 5,
+    padding: 10,
+    paddingBottom: 12,
+  },
+  acceptText: {
+    fontFamily: 'NotoSans',
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+  },
+  rejectText: {
+    fontFamily: 'NotoSans',
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+  },
+});
