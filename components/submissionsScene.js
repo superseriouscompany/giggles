@@ -128,7 +128,6 @@ class SubmissionsScene extends Component {
         return Alert.alert('ImagePicker Error: ' + response.error);
       }
 
-
       this.setState({
         uploading: true
       })

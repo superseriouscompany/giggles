@@ -9,14 +9,16 @@ import {
   View,
 } from 'react-native';
 
-import { InAppUtils } from 'NativeModules';
-import Api from './lib/api';
+import { InAppUtils }   from 'NativeModules';
+import Api              from './lib/api';
 import CaptionScene     from './components/captionScene';
 import CaptionsScene    from './components/captionsScene';
 import SubmissionsScene from './components/submissionsScene';
 import SubmissionScene  from './components/submissionScene';
 import NoScene          from './components/noScene';
 import KilledScene      from './components/killedScene';
+import TermsScene       from './components/termsScene';
+import CurrentUser      from './lib/currentUser';
 
 class RootNav extends Component {
   constructor(props) {
@@ -26,7 +28,9 @@ class RootNav extends Component {
 
     this.navigator = {
       navigate: (component, props) => {
-        this.setState({scene: component, props: props || {}})
+        let stateChange = { scene: component, props: props || {} };
+        if( props && props.clearTerms ) { stateChange.needsTerms = false; }
+        this.setState(stateChange);
       }
     }
   }
@@ -41,6 +45,16 @@ class RootNav extends Component {
       // swallow error on kill switch
       console.log(err);
     })
+
+    CurrentUser.hasAcceptedTerms().then(yes => {
+      if( yes ) return console.log("terms accepted");
+      this.setState({
+        needsTerms: true,
+      })
+    }).catch(err => {
+      // swallow error on accepting terms
+      console.log(err);
+    })
   }
 
   render() {
@@ -51,6 +65,8 @@ class RootNav extends Component {
       <View style={{flex: 1}}>
         { this.state.killed ?
           <KilledScene />
+        : this.state.needsTerms ?
+          <TermsScene {...this.state.props} navigator={this.navigator}/>
         : this.state.scene == 'CaptionScene' ?
           <CaptionScene {...this.state.props} navigator={this.navigator}/>
         : this.state.scene == 'CaptionsScene' ?
