@@ -113,7 +113,7 @@ class SubmissionsScene extends Component {
 
   _uploadPhoto() {
     let options = {
-      title: "Neil is a dumb dumb."
+      title: "Submit a photo"
     }
 
     ImagePicker.showImagePicker(options, (response) => {
