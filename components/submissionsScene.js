@@ -86,7 +86,7 @@ class SubmissionsScene extends Component {
               </TouchableOpacity>
             }
 
-            <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+            <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
               <View style={styles.backdropView}>
                 <Text style={styles.date}>tomorrow</Text>
               </View>
@@ -181,14 +181,28 @@ class Submission extends Component {
           null
         }
 
-        <Image style={styles.darkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+        <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
           <View style={styles.backdropView}>
             <Text style={styles.date}>{this.props.submission.publishedAt}</Text>
           </View>
         </Image>
+
+        <View style={[styles.backdropView, {position: 'absolute', bottom: 0, right: 0}]}>
+          <TouchableOpacity onPress={this.reportSubmission.bind(this)}>
+            <Image source={require('../images/Flag.png')} />
+          </TouchableOpacity>
+        </View>
       </CacheableImage>
     </TouchableOpacity>
   )}
+
+  reportSubmission() {
+    Api.submissions.report(this.props.submission.id).then(() => {
+      Alert.alert("You reported an issue with this submission.", "We'll look into it.");
+    }).catch((err) => {
+      console.error(err);
+    })
+  }
 }
 
 const styles = StyleSheet.create({
@@ -222,10 +236,15 @@ const styles = StyleSheet.create({
     width: windowSize.width,
     alignItems: 'center',
   },
-  darkRect: {
+  leftDarkRect: {
     position: 'absolute',
     bottom: 0,
     left: 0,
+  },
+  rightDarkRect: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
   },
   date: {
     textAlign: 'center',
