@@ -45,27 +45,30 @@ class CaptionsScene extends Component {
       Api.captions.forSubmission(this.submissionId) :
       Api.captions.current();
 
-    CurrentUser.likes().then((likes) => {
-      return CurrentUser.hates().then((hates) => {
-        return captionsPromise.then((captions) => {
-          if( !isMounted ) { return console.log("Not mounted."); }
+    CurrentUser.listens().then((listens) => {
+      return CurrentUser.likes().then((likes) => {
+        return CurrentUser.hates().then((hates) => {
+          return captionsPromise.then((captions) => {
+            if( !isMounted ) { return console.log("Not mounted."); }
 
-          captions = captions.map(function(c) {
-            let randomColor = 0;
-            for( var i = 0; i < c.id.length; i++ ) {
-              randomColor += c.id.charCodeAt(i);
-            }
-            c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
+            captions = captions.map(function(c) {
+              let randomColor = 0;
+              for( var i = 0; i < c.id.length; i++ ) {
+                randomColor += c.id.charCodeAt(i);
+              }
+              c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
 
-            if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
-            return c;
+              if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
+              if( listens.indexOf(c.id) !== -1 ) { c.listened = true; }
+              return c;
+            })
+
+            captions = captions.filter(function(c) {
+              return hates.indexOf(c.id) === -1;
+            })
+
+            this.setState({captions: captions, captionsLoading: false})
           })
-
-          captions = captions.filter(function(c) {
-            return hates.indexOf(c.id) === -1;
-          })
-
-          this.setState({captions: captions, captionsLoading: false})
         })
       })
     }).catch(console.error);
@@ -116,11 +119,14 @@ class CaptionsScene extends Component {
     AudioPlayer.stop();
     AudioPlayer.playWithUrl(url);
 
+    CurrentUser.addListen(caption.id);
+
     this.setState({
       captions: this.state.captions.map(function(c) {
         if( c.id === caption.id ) {
           c.playing = true;
           c.played  = true;
+          c.listened = true;
         }
         return c;
       })
@@ -215,6 +221,16 @@ class CaptionsScene extends Component {
             {this.state.captions.map((c, i) => (
               <View key={i} style={styles.row}>
                 <View style={styles.leftHalfRow}>
+                  { c.listened ?
+                    null
+                  :
+                    <Text style={{color: 'bisque'}}>[new]</Text>
+                  }
+                  { c.playing ?
+                    <Text style={{color: 'cornsilk'}}>[playing]</Text>
+                  :
+                    null
+                  }
                   <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
