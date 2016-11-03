@@ -99,7 +99,6 @@ class CaptionsScene extends Component {
   }
 
   _play = (caption) => {
-    const url = __DEV__ ? `https://superserious.ngrok.io/${caption.filename}` : `https://giggles.superserious.co/${caption.filename}`;
     AudioPlayer.onProgress = (data) => {
       console.log("Progress", data);
     };
@@ -117,7 +116,7 @@ class CaptionsScene extends Component {
     AudioPlayer.setFinishedSubscription();
 
     AudioPlayer.stop();
-    AudioPlayer.playWithUrl(url);
+    AudioPlayer.playWithUrl(caption.audio_url);
 
     CurrentUser.addListen(caption.id);
 
