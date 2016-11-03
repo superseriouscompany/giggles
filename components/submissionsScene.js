@@ -134,24 +134,11 @@ class SubmissionsScene extends Component {
       })
 
       ImageResizer.createResizedImage(response.origURL || response.uri, 750, 750, 'JPEG', 80).then((resizedImageUri) => {
-        var body = new FormData();
-        body.append('photo', {uri: resizedImageUri, name: 'photo.jpg', type: 'image/jpeg'});
-
-        var xhr = new XMLHttpRequest;
-        xhr.onreadystatechange = (e) => {
-          if( xhr.readyState !== 4 ) { return; }
-
-          if( xhr.status < 299 ) {
-            const json = JSON.parse(xhr.responseText);
-            if( isMounted ) {
-              this.navigator.navigate('SubmissionScene', { submissionId: json.id, queueSize: json.queueSize });
-            }
-          } else {
-            Alert.alert(xhr.status + ': ' + xhr.responseText);
-          }
+        return Api.submissions.create(resizedImageUri);
+      }).then((payload) => {
+        if( isMounted ) {
+          this.navigator.navigate('SubmissionScene', { submissionId: payload.id, queueSize: payload.queueSize });
         }
-        xhr.open('POST', 'https://giggles.superserious.co/submissions');
-        xhr.send(body);
       }).catch((err) => {
         console.error(err);
       });
