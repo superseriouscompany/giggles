@@ -226,25 +226,50 @@ class CaptionsScene extends Component {
                   </TouchableOpacity>
                 </View>
 
-                <View>
-                  <Text style={{color: 'navajowhite'}}>
-                    {c.score}
-                  </Text>
-                </View>
-
                 <View style={styles.rightHalfRow}>
                   { c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
+
                       <TouchableOpacity onPress={() => this._hate(c)}>
-                        <Image style={styles.translucentAnger} source={require('../images/Anger.png')} />
+                        <Image style={styles.opaque} source={require('../images/Downvote.png')} />
                       </TouchableOpacity>
+
+                      <View style={styles.scoreContainer}>
+                        { c.score < -1 ?
+                          <Text style={styles.badScore}>
+                            { c.score }
+                          </Text>
+                        :
+                          <Text style={styles.goodScore}>
+                            { c.score }
+                          </Text>
+                        }
+                        </View>
+
                       <TouchableOpacity onPress={() => this._like(c)}>
-                        <Image style={styles.translucentLaughing} source={require('../images/Laughing.png')} />
+                        <Image style={styles.opaque} source={require('../images/Upvote.png')} />
                       </TouchableOpacity>
+
                     </View>
                   : c.liked ?
-                    <View>
-                      <Image style={styles.opaqueLaughing} source={require('../images/Laughing.png')} />
+                    <View style={{flexDirection: 'row'}}>
+
+                      <Image style={styles.translucentDownvote} source={require('../images/Downvote.png')} />
+
+                      <View style={styles.scoreContainer}>
+                        { c.score < -1 ?
+                          <Text style={styles.badScore}>
+                            { c.score }
+                          </Text>
+                        :
+                          <Text style={styles.goodScore}>
+                            { c.score }
+                          </Text>
+                        }
+                      </View>
+
+                      <Image style={styles.opaque} source={require('../images/Upvote.png')} />
+
                     </View>
                   :
                     null
@@ -342,14 +367,26 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-end',
   },
-  translucentAnger: {
-    opacity: 0.5,
+  translucentDownvote: {
+    opacity: 0.15,
   },
-  translucentLaughing: {
-    opacity: 0.5,
-  },
-  opaqueLaughing: {
+  opaque: {
     opacity: 1.0,
+  },
+  scoreContainer: {
+    flex: .2,
+    height: 64,
+    justifyContent: 'center',
+  },
+  badScore: {
+    fontSize: 14,
+    color: '#CB8982',
+    textAlign: 'center',
+  },
+  goodScore: {
+    fontSize: 14,
+    color: '#82CBB6',
+    textAlign: 'center',
   },
   audioGif: {
     flex: .5
