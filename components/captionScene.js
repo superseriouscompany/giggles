@@ -137,12 +137,17 @@ class Caption extends Component {
 
   _submit(submissionId) {
     const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
+    if( this.submitting ) { return false; }
+    this.submitting = true;
+    this.setState({submitting: true});
 
     Api.captions.create(submissionId, 'file://'+path).then(() => {
       if( !isMounted ) { return; }
 
       this.navigator.navigate('CaptionsScene');
     }).catch((err) => {
+      this.submitting = false;
+      this.setState({submitting: false});
       return console.error(err);
     });
   }
@@ -216,7 +221,15 @@ class Caption extends Component {
             </View>
           }
 
-          { this.state.stoppedRecording ?
+          { this.state.submitting ?
+            <View style={styles.bottomMiddle}>
+              <ActivityIndicator
+                style={{transform: [{scale: 1.5}]}}
+                size="small"
+                color="ghostwhite"
+              />
+            </View>
+          : this.state.stoppedRecording ?
             <View style={styles.bottomTwoButton}>
               <TouchableOpacity onPress={this._play.bind(this)}>
                 <Image source={require('../images/Play.png')}/>
