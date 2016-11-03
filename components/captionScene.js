@@ -138,19 +138,13 @@ class Caption extends Component {
   _submit(submissionId) {
     const path = AudioUtils.DocumentDirectoryPath + '/test.aac'
 
-    let body = new FormData();
-    body.append('audio', {uri: 'file://'+path, name: 'test.aac', type: 'audio/aac'});
+    Api.captions.create(submissionId, 'file://'+path).then(() => {
+      if( !isMounted ) { return; }
 
-    var xhr = new XMLHttpRequest;
-    xhr.onreadystatechange = (e) => {
-      if( xhr.readyState !== 4 ) { return; }
-
-      if( isMounted ) {
-        this.navigator.navigate('CaptionsScene');
-      }
-    }
-    xhr.open('POST', `https://giggles.superserious.co/submissions/${submissionId}/captions`);
-    xhr.send(body);
+      this.navigator.navigate('CaptionsScene');
+    }).catch((err) => {
+      return console.error(err);
+    });
   }
 
   _cancel() {
