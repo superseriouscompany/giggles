@@ -19,6 +19,7 @@ import ImagePicker from 'react-native-image-picker';
 import Api from '../lib/api';
 import CacheableImage from 'react-native-cacheable-image';
 import moment from 'moment';
+import ImageResizer from 'react-native-image-resizer';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 const windowSize = Dimensions.get('window');
@@ -131,24 +132,29 @@ class SubmissionsScene extends Component {
       this.setState({
         uploading: true
       })
-      var body = new FormData();
-      body.append('photo', {uri: response.origURL || response.uri, name: 'photo.jpg', type: 'image/jpeg'});
 
-      var xhr = new XMLHttpRequest;
-      xhr.onreadystatechange = (e) => {
-        if( xhr.readyState !== 4 ) { return; }
+      ImageResizer.createResizedImage(response.origURL || response.uri, 750, 750, 'JPEG', 80).then((resizedImageUri) => {
+        var body = new FormData();
+        body.append('photo', {uri: resizedImageUri, name: 'photo.jpg', type: 'image/jpeg'});
 
-        if( xhr.status < 299 ) {
-          const json = JSON.parse(xhr.responseText);
-          if( isMounted ) {
-            this.navigator.navigate('SubmissionScene', { submissionId: json.id, queueSize: json.queueSize });
+        var xhr = new XMLHttpRequest;
+        xhr.onreadystatechange = (e) => {
+          if( xhr.readyState !== 4 ) { return; }
+
+          if( xhr.status < 299 ) {
+            const json = JSON.parse(xhr.responseText);
+            if( isMounted ) {
+              this.navigator.navigate('SubmissionScene', { submissionId: json.id, queueSize: json.queueSize });
+            }
+          } else {
+            Alert.alert(xhr.status + ': ' + xhr.responseText);
           }
-        } else {
-          Alert.alert(xhr.status + ': ' + xhr.responseText);
         }
-      }
-      xhr.open('POST', 'https://giggles.superserious.co/submissions');
-      xhr.send(body);
+        xhr.open('POST', 'https://giggles.superserious.co/submissions');
+        xhr.send(body);
+      }).catch((err) => {
+        console.error(err);
+      });
     })
   }
 }
