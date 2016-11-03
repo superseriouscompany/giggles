@@ -74,27 +74,27 @@ class SubmissionsScene extends Component {
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
 
         <View style={styles.bg}>
-          <View style={styles.uploadBackground}>
-            { this.state.uploading ?
-              <ActivityIndicator
-                style={[styles.loading, {transform: [{scale: 1.5}]}]}
-                size="small"
-                color="ghostwhite"
-              />
-            :
-              <TouchableOpacity style={styles.uploadButton} onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
-                <Image source={require('../images/UploadImage.png')} />
-              </TouchableOpacity>
-            }
-
-            <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
-              <View style={styles.backdropView}>
-                <Text style={styles.date}>tomorrow</Text>
-              </View>
-            </Image>
-          </View>
-
           <ScrollView>
+            <View style={styles.uploadBackground}>
+              { this.state.uploading ?
+                <ActivityIndicator
+                  style={[styles.loading, {transform: [{scale: 1.5}]}]}
+                  size="small"
+                  color="ghostwhite"
+                />
+              :
+                <TouchableOpacity style={styles.uploadButton} onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
+                  <Image source={require('../images/UploadImage.png')} />
+                </TouchableOpacity>
+              }
+
+              <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
+                <View style={styles.backdropView}>
+                  <Text style={styles.date}>tomorrow</Text>
+                </View>
+              </Image>
+            </View>
+
             {this.state.submissions.map((s, i) => (
               <Submission key={i} submission={s} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}/>
             ))}
