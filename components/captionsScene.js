@@ -50,19 +50,21 @@ class CaptionsScene extends Component {
         return captionsPromise.then((captions) => {
           if( !isMounted ) { return console.log("Not mounted."); }
 
+          // Add decoration for liked and score
           captions = captions.map(function(c) {
-            let randomColor = 0;
-            for( var i = 0; i < c.id.length; i++ ) {
-              randomColor += c.id.charCodeAt(i);
-            }
-            c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
-
             if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
+            c.score = (c.likes || 0) - (c.hates || 0);
             return c;
           })
 
+          // Remove hated captions
           captions = captions.filter(function(c) {
             return hates.indexOf(c.id) === -1;
+          })
+
+          // Sort captions by score
+          captions = captions.sort(function(c) {
+            return -c.score
           })
 
           this.setState({captions: captions, captionsLoading: false})
@@ -222,6 +224,12 @@ class CaptionsScene extends Component {
                       </View>
                     </Image>
                   </TouchableOpacity>
+                </View>
+
+                <View>
+                  <Text style={{color: 'navajowhite'}}>
+                    {c.score}
+                  </Text>
                 </View>
 
                 <View style={styles.rightHalfRow}>
