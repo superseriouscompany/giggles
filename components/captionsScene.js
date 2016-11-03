@@ -329,16 +329,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: STATUSBAR_HEIGHT,
   },
-  imageContainer: {
-    flexDirection: 'column',
-    flex: .5,
-    alignItems: 'center',
-  },
   scrollContainer: {
     flexDirection: 'row',
-    flex: .5,
+    height:(windowSize.height - STATUSBAR_HEIGHT) * 0.55,
     width: windowSize.width,
-    marginTop: STATUSBAR_HEIGHT,
+    paddingTop: STATUSBAR_HEIGHT / 2,
   },
   noCaptionsImage: {
     position: 'absolute',
@@ -346,7 +341,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    flex: .5,
+    height: (windowSize.height - STATUSBAR_HEIGHT) * 0.45,
     width: windowSize.width,
     resizeMode: 'contain',
   },
@@ -374,7 +369,7 @@ const styles = StyleSheet.create({
     opacity: 1.0,
   },
   scoreContainer: {
-    flex: .2,
+    width: 32,
     height: 64,
     justifyContent: 'center',
   },
