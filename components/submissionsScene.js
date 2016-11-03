@@ -82,7 +82,7 @@ class SubmissionsScene extends Component {
                 color="ghostwhite"
               />
             :
-              <TouchableOpacity onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
+              <TouchableOpacity style={styles.uploadButton} onPress={this._uploadPhoto.bind(this)} accessible={true} accessibilityLabel={'Upload photo'}>
                 <Image source={require('../images/UploadImage.png')} />
               </TouchableOpacity>
             }
@@ -94,7 +94,7 @@ class SubmissionsScene extends Component {
             </Image>
           </View>
 
-          <ScrollView style={styles.scrollContainer}>
+          <ScrollView>
             {this.state.submissions.map((s, i) => (
               <Submission key={i} submission={s} onPress={() => this.navigator.navigate('CaptionsScene', { submissionId: s.id})}/>
             ))}
@@ -225,9 +225,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   uploadBackground: {
-    flex: 0.19,
     width: windowSize.width,
+    height: Dimensions.get('window').width * 0.666 - STATUSBAR_HEIGHT,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  uploadButton: {
+    paddingBottom: STATUSBAR_HEIGHT / 2 + 2,
   },
   leftDarkRect: {
     position: 'absolute',
@@ -245,9 +249,6 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingTop: 19.5,
     backgroundColor: 'rgba(0,0,0,0)',
-  },
-  scrollContainer: {
-    flex: 0.81,
   },
   scrollImage: {
     width: Dimensions.get('window').width,
