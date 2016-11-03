@@ -99,7 +99,7 @@ class CaptionsScene extends Component {
   }
 
   _play = (caption) => {
-    const url = `https://giggles.superserious.co/${caption.filename}`;
+    const url = __DEV__ ? `https://superserious.ngrok.io/${caption.filename}` : `https://giggles.superserious.co/${caption.filename}`;
     AudioPlayer.onProgress = (data) => {
       console.log("Progress", data);
     };
@@ -127,6 +127,8 @@ class CaptionsScene extends Component {
           c.playing = true;
           c.played  = true;
           c.listened = true;
+        } else if( c.playing ) {
+          c.playing = false;
         }
         return c;
       })
