@@ -1,4 +1,4 @@
-package com.giggles;
+package com.superserious.giggles;
 
 import com.facebook.react.ReactActivity;
 
