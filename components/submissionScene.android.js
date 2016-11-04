@@ -70,6 +70,7 @@ class SubmissionScene extends Component {
         this.navigator.navigate('CaptionScene');
       })
     }).catch((err) => {
+      InAppBilling.close();
       console.error(err);
       Alert.alert('Purchase failed');
     });
