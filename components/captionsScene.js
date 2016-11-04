@@ -235,7 +235,7 @@ class CaptionsScene extends Component {
                       </TouchableOpacity>
 
                       <View style={styles.scoreContainer}>
-                        { c.score < -1 ?
+                        { c.score < 0 ?
                           <Text style={styles.badScore}>
                             { c.score }
                           </Text>
@@ -257,7 +257,7 @@ class CaptionsScene extends Component {
                       <Image style={styles.translucentDownvote} source={require('../images/Downvote.png')} />
 
                       <View style={styles.scoreContainer}>
-                        { c.score < -1 ?
+                        { c.score < 0 ?
                           <Text style={styles.badScore}>
                             { c.score }
                           </Text>
