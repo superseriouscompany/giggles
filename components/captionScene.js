@@ -87,7 +87,9 @@ class Caption extends Component {
 
   componentWillUnmount() {
     this._stop();
-    AudioRecorder.stopPlaying().catch(function(err){
+    const promise = AudioRecorder.stopPlaying();
+
+    promise && promise.catch(function(err){
       if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
       console.warn(err);
     });

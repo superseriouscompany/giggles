@@ -88,7 +88,9 @@ class CaptionsScene extends Component {
   componentWillUnmount() {
     isMounted = false;
 
-    AudioPlayer.stop().catch(function(err) {
+    const promise = AudioPlayer.stop();
+
+    promise && promise.catch(function(err) {
       if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
       console.warn(err);
     });
