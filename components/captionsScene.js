@@ -50,19 +50,21 @@ class CaptionsScene extends Component {
         return captionsPromise.then((captions) => {
           if( !isMounted ) { return console.log("Not mounted."); }
 
+          // Add decoration for liked and score
           captions = captions.map(function(c) {
-            let randomColor = 0;
-            for( var i = 0; i < c.id.length; i++ ) {
-              randomColor += c.id.charCodeAt(i);
-            }
-            c.color = '#' + parseInt(randomColor*10000000).toString(16).slice(0, 6);
-
             if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
+            c.score = (c.likes || 0) - (c.hates || 0);
             return c;
           })
 
+          // Remove hated captions
           captions = captions.filter(function(c) {
             return hates.indexOf(c.id) === -1;
+          })
+
+          // Sort captions by score
+          captions = captions.sort(function(c) {
+            return -c.score
           })
 
           this.setState({captions: captions, captionsLoading: false})
@@ -227,16 +229,47 @@ class CaptionsScene extends Component {
                 <View style={styles.rightHalfRow}>
                   { c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
+
                       <TouchableOpacity onPress={() => this._hate(c)}>
-                        <Image style={styles.translucentAnger} source={require('../images/Anger.png')} />
+                        <Image style={styles.opaque} source={require('../images/Downvote.png')} />
                       </TouchableOpacity>
+
+                      <View style={styles.scoreContainer}>
+                        { c.score < 0 ?
+                          <Text style={styles.badScore}>
+                            { c.score }
+                          </Text>
+                        :
+                          <Text style={styles.goodScore}>
+                            { c.score }
+                          </Text>
+                        }
+                        </View>
+
                       <TouchableOpacity onPress={() => this._like(c)}>
-                        <Image style={styles.translucentLaughing} source={require('../images/Laughing.png')} />
+                        <Image style={styles.opaque} source={require('../images/Upvote.png')} />
                       </TouchableOpacity>
+
                     </View>
                   : c.liked ?
-                    <View>
-                      <Image style={styles.opaqueLaughing} source={require('../images/Laughing.png')} />
+                    <View style={{flexDirection: 'row'}}>
+
+                      <Image style={styles.translucentDownvote} source={require('../images/Downvote.png')} />
+
+                      <View style={styles.scoreContainer}>
+                        { c.score < 0 ?
+                          <Text style={styles.badScore}>
+                            { c.score }
+                          </Text>
+                        :
+                          <Text style={styles.goodScore}>
+                            { c.score }
+                          </Text>
+                        }
+                      </View>
+
+                      <Image style={styles.opaque} source={require('../images/Upvote.png')} />
+
                     </View>
                   :
                     null
@@ -296,16 +329,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: STATUSBAR_HEIGHT,
   },
-  imageContainer: {
-    flexDirection: 'column',
-    flex: .5,
-    alignItems: 'center',
-  },
   scrollContainer: {
     flexDirection: 'row',
-    flex: .5,
+    height:(windowSize.height - STATUSBAR_HEIGHT) * 0.55,
     width: windowSize.width,
-    marginTop: STATUSBAR_HEIGHT,
+    paddingTop: STATUSBAR_HEIGHT / 2,
   },
   noCaptionsImage: {
     position: 'absolute',
@@ -313,7 +341,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    flex: .5,
+    height: (windowSize.height - STATUSBAR_HEIGHT) * 0.45,
     width: windowSize.width,
     resizeMode: 'contain',
   },
@@ -334,14 +362,26 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-end',
   },
-  translucentAnger: {
-    opacity: 0.5,
+  translucentDownvote: {
+    opacity: 0.15,
   },
-  translucentLaughing: {
-    opacity: 0.5,
-  },
-  opaqueLaughing: {
+  opaque: {
     opacity: 1.0,
+  },
+  scoreContainer: {
+    width: 32,
+    height: 64,
+    justifyContent: 'center',
+  },
+  badScore: {
+    fontSize: 14,
+    color: '#CB8982',
+    textAlign: 'center',
+  },
+  goodScore: {
+    fontSize: 14,
+    color: '#82CBB6',
+    textAlign: 'center',
   },
   audioGif: {
     flex: .5
