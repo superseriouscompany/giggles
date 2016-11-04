@@ -103,7 +103,7 @@ class CaptionsScene extends Component {
   }
 
   _play = (caption) => {
-    const url = `https://giggles.superserious.co/${caption.filename}`;
+    const url = caption.audio_url;
     AudioPlayer.onProgress = (data) => {
       console.log("Progress", data);
     };
@@ -120,7 +120,11 @@ class CaptionsScene extends Component {
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
 
-    AudioPlayer.stop();
+    const promise = AudioPlayer.stop();
+    promise && promise.catch(function(err) {
+      if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
+      console.warn(err);
+    });
     AudioPlayer.playWithUrl(url);
 
     this.setState({
