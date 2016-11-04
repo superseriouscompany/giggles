@@ -92,6 +92,7 @@ class CaptionsScene extends Component {
 
     const promise = AudioPlayer.stop();
 
+    // AudioPlayer only returns a promise on Android
     promise && promise.catch(function(err) {
       if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
       console.warn(err);
@@ -114,16 +115,17 @@ class CaptionsScene extends Component {
             c.playing = false;
           }
           return c;
-        })
-      })
+        }),
+      });
     };
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
 
+    // AudioPlayer only returns a promise on Android
     const promise = AudioPlayer.stop();
     promise && promise.catch(function(err) {
       if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
-      console.warn(err);
+      console.warn(err)
     });
     AudioPlayer.playWithUrl(url);
 
@@ -134,7 +136,7 @@ class CaptionsScene extends Component {
           c.played  = true;
         }
         return c;
-      })
+      }),
     })
   }
 
