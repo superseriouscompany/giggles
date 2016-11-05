@@ -78,7 +78,7 @@ export default class SubmissionOptions extends Component {
 
               <View style={styles.rightInfoContainer}>
                 <Text style={styles.imageCount}>
-                  {this.props.queueSize}
+                  {this.props.queueSize || 0}
                 </Text>
                 <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
               </View>
@@ -87,8 +87,7 @@ export default class SubmissionOptions extends Component {
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
                 Throw it in the pile.
-                One photo is randomly selected from here everyday.
-                There are currently {this.props.queueSize} photos hoping to get picked.
+                There are currently {this.props.queueSize || 0} photos hoping to get chosen in the daily draw.
               </Text>
             </View>
           </View>
@@ -108,7 +107,7 @@ export default class SubmissionOptions extends Component {
 
           <View style={styles.rightInfoContainer}>
             <Text style={styles.imageCount}>
-              {this.props.queueSize}
+              {this.props.queueSize || 0}
             </Text>
             <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
           </View>
@@ -139,7 +138,8 @@ export default class SubmissionOptions extends Component {
 
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
-                {product.description}
+                {/*{product.description}*/}
+                Pay us a few cents, and we'll immediately replace the current photo with yours.
               </Text>
             </View>
           </View>
@@ -300,5 +300,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginTop: -5,
+    marginRight: 20,
   },
 });
