@@ -138,8 +138,7 @@ export default class SubmissionOptions extends Component {
 
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
-                {/*{product.description}*/}
-                Pay us a few cents, and we'll immediately replace the current photo with yours.
+                {product.description}
               </Text>
             </View>
           </View>
