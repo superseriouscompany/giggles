@@ -229,7 +229,7 @@ class Caption extends Component {
           { this.state.submitting ?
             <View style={styles.bottomMiddle}>
               <ActivityIndicator
-                style={{transform: [{scale: 1.5}]}}
+                style={{height: 110, transform: [{scale: 1.5}]}}
                 size="small"
                 color="ghostwhite"
               />
@@ -305,7 +305,7 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
 });
 
 module.exports = Caption;
