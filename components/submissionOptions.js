@@ -4,12 +4,15 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Platform,
   StyleSheet,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 
 export default class SubmissionOptions extends Component {
   state = {}
@@ -187,12 +190,15 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 0.27,
+    paddingTop: STATUSBAR_HEIGHT * 1.1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    paddingTop: 66.6,
     fontFamily: 'NotoSans',
   },
   optionsContainer: {
