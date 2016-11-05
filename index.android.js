@@ -18,6 +18,7 @@ import NoScene          from './components/noScene';
 import KilledScene      from './components/killedScene';
 import TermsScene       from './components/termsScene';
 import CurrentUser      from './lib/currentUser';
+import Scratch          from './components/scratch';
 
 class RootNav extends Component {
   constructor(props) {
@@ -57,9 +58,7 @@ class RootNav extends Component {
   }
 
   render() {
-    // const Poop = require('./components/poop');
-    // return <Poop />;
-
+    // return <Scratch />;
     return (
       <View style={{flex: 1}}>
         { this.state.killed ?
