@@ -27,16 +27,6 @@ export default class SubmissionOptions extends Component {
     return (
       <View style={styles.background}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
-
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>
-            Success!{"\n"}{"\n"}
-            When should we show your{"\n"}
-            photo?
-          </Text>
-        </View>
-
-        <View style={styles.optionsContainer}>
           { !product ?
             <ActivityIndicator
               style={[styles.centering, {transform: [{scale: 1.5}]}]}
@@ -44,14 +34,26 @@ export default class SubmissionOptions extends Component {
               color="ghostwhite"
             />
           :
-            this.options(product)
+            <View style={styles.background}>
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>
+                  Success!{"\n"}{"\n"}
+                  When should we show your{"\n"}
+                  photo?
+                </Text>
+              </View>
+
+              <View style={styles.optionsContainer}>
+                  {this.options(product)}
+              </View>
+
+              <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
+                <TouchableOpacity style={{opacity: this.props.purchasing ? 1 : 0.2}} onPress={() => this.props.onPress(this.state.selection)}>
+                  <Image source={require('../images/Submit.png')} />
+                </TouchableOpacity>
+              </View>
+            </View>
           }
-        </View>
-        <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
-          <TouchableOpacity style={{opacity: this.props.purchasing ? 1 : 0.2}} onPress={() => this.props.onPress(this.state.selection)}>
-            <Image source={require('../images/Submit.png')} />
-          </TouchableOpacity>
-        </View>
       </View>
     )
   }
