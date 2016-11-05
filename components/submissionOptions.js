@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 8,
     width: windowSize.width,
-    height: windowSize.height,
+    height: windowSize.height - (STATUSBAR_HEIGHT / 2),
     top: 0,
     bottom: 0,
     left: 0,
