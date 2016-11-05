@@ -58,8 +58,7 @@ class RootNav extends Component {
   }
 
   render() {
-    return <Scratch />;
-
+    // return <Scratch />;
     return (
       <View style={{flex: 1}}>
         { this.state.killed ?
