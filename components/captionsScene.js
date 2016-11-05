@@ -45,29 +45,36 @@ class CaptionsScene extends Component {
       Api.captions.forSubmission(this.submissionId) :
       Api.captions.current();
 
-    CurrentUser.likes().then((likes) => {
-      return CurrentUser.hates().then((hates) => {
-        return captionsPromise.then((captions) => {
-          if( !isMounted ) { return console.log("Not mounted."); }
+    CurrentUser.listens().then((listens) => {
+      return CurrentUser.likes().then((likes) => {
+        return CurrentUser.hates().then((hates) => {
+          return captionsPromise.then((captions) => {
+            if( !isMounted ) { return console.log("Not mounted."); }
 
-          // Add decoration for liked and score
-          captions = captions.map(function(c) {
-            if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
-            c.score = (c.likes || 0) - (c.hates || 0);
-            return c;
+            // Add decoration for liked, listened and score
+            captions = captions.map(function(c) {
+              if( likes.indexOf(c.id) !== -1 ) { c.liked = true; }
+              if( listens.indexOf(c.id) !== -1 ) { c.listened = true; }
+              c.score = (c.likes || 0) - (c.hates || 0);
+              return c;
+            })
+
+            // Remove hated captions
+            captions = captions.filter(function(c) {
+              return hates.indexOf(c.id) === -1;
+            })
+
+            // Sort captions by score
+            captions = captions.sort(function(c) {
+              return -c.score
+            })
+
+            captions = captions.filter(function(c) {
+              return hates.indexOf(c.id) === -1;
+            })
+
+            this.setState({captions: captions, captionsLoading: false})
           })
-
-          // Remove hated captions
-          captions = captions.filter(function(c) {
-            return hates.indexOf(c.id) === -1;
-          })
-
-          // Sort captions by score
-          captions = captions.sort(function(c) {
-            return -c.score
-          })
-
-          this.setState({captions: captions, captionsLoading: false})
         })
       })
     }).catch(console.error);
@@ -121,6 +128,8 @@ class CaptionsScene extends Component {
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
 
+    CurrentUser.addListen(caption.id);
+
     // AudioPlayer only returns a promise on Android
     const promise = AudioPlayer.stop();
     promise && promise.catch(function(err) {
@@ -134,6 +143,9 @@ class CaptionsScene extends Component {
         if( c.id === caption.id ) {
           c.playing = true;
           c.played  = true;
+          c.listened = true;
+        } else if( c.playing ) {
+          c.playing = false;
         }
         return c;
       }),
@@ -231,14 +243,18 @@ class CaptionsScene extends Component {
                   <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
-                        <Text style={styles.duration}>0:{`0${Math.round(c.duration)}`.slice(-2)}</Text>
+                        { c.playing ?
+                          <Image style={styles.nowPlaying} source={require('../images/NowPlaying.png')}/>
+                        :
+                          <Text style={styles.duration}>0:{`0${Math.round(c.duration)}`.slice(-2)}</Text>
+                        }
                       </View>
                     </Image>
                   </TouchableOpacity>
                 </View>
 
                 <View style={styles.rightHalfRow}>
-                  { c.played && !c.liked ?
+                  { c.listened && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
 
                       <TouchableOpacity onPress={() => this._hate(c)}>
@@ -399,6 +415,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#666'
+  },
+  nowPlaying: {
+    marginLeft: 42,
   },
   duration: {
     textAlign: 'center',
