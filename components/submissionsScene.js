@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   loading: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 35,
+    paddingTop: -2,
   },
   background: {
     backgroundColor: '#181818',
