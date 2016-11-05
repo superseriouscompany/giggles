@@ -234,7 +234,7 @@ class CaptionsScene extends Component {
                     <Text style={{color: 'bisque'}}>[new]</Text>
                   }
                   { c.playing ?
-                    <Text style={{color: 'cornsilk'}}>[playing]</Text>
+                    <Image source={require('../images/NowPlaying.png')}/>
                   :
                     null
                   }
