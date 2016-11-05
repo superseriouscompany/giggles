@@ -228,11 +228,6 @@ class CaptionsScene extends Component {
             {this.state.captions.map((c, i) => (
               <View key={i} style={styles.row}>
                 <View style={styles.leftHalfRow}>
-                  { c.listened ?
-                    null
-                  :
-                    <Text style={{color: 'bisque'}}>[new]</Text>
-                  }
                   <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
@@ -247,7 +242,9 @@ class CaptionsScene extends Component {
                 </View>
 
                 <View style={styles.rightHalfRow}>
-                  { c.played && !c.liked ?
+                  { !c.listened ?
+                    null
+                  : c.played && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
 
                       <TouchableOpacity onPress={() => this._hate(c)}>
