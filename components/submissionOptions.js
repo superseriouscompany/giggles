@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import {
   ActivityIndicator,
-  Alert,
   Dimensions,
   Image,
   Platform,
@@ -13,35 +12,10 @@ import {
   View,
 } from 'react-native';
 
-import SubmissionButton from './submissionButton';
-import Api from '../lib/api';
-import { InAppUtils } from 'NativeModules';
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 
-const windowSize = Dimensions.get('window');
-
-const products = [
-  'com.superserious.giggles.now'
-]
-
-let isPurchasing = false;
-
-class SubmissionScene extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-    this.navigator = props.navigator;
-  }
-
-  componentDidMount() {
-    InAppUtils.loadProducts(products, (err, products) => {
-      if( err ) { console.error(err); }
-      this.setState({
-        products: products,
-        loaded: true
-      });
-    })
-  }
+export default class SubmissionOptions extends Component {
+  state = {}
 
   _selectFree() {
     this.setState({selection: 'free'});
@@ -51,62 +25,11 @@ class SubmissionScene extends Component {
     this.setState({selection: 'paid'});
   }
 
-  _submit() {
-    if( this.state.selection == 'paid' ) {
-      this._pay();
-    } else if( this.state.selection == 'free' ) {
-      this.navigator.navigate('CaptionScene');
-      Alert.alert('Your photo was put into the pile', 'Keep an eye out for it');
-    } else {
-      console.error("Unknown state", this.state.selection);
-    }
-  }
-
-  _pay() {
-    if( isPurchasing ) { return; }
-    isPurchasing = true;
-
-    InAppUtils.purchaseProduct(this.state.products[0].identifier, (err, response) => {
-      if( err ) {
-        // we get this code if they hit cancel
-        if( err.code == 'ESKERRORDOMAIN2' && err.domain == 'SKErrorDomain' ) {
-          return;
-        }
-        return console.error(err);
-      }
-
-      if( response && response.productIdentifier ) {
-        InAppUtils.receiptData((err, base64EncodedReceipt)=> {
-          if(err) {
-            Alert.alert('Verification failed');
-          }
-          Api.submissions.jumpQueue(this.props.submissionId, base64EncodedReceipt).then(() => {
-            isPurchasing = false;
-            this.navigator.navigate('CaptionScene');
-          }).catch(console.error);
-        });
-      } else {
-        console.error(response);
-        Alert.alert('Purchase failed');
-      }
-    })
-  }
-
   render() {
-    const product = this.state.products && this.state.products[0];
+    const product = this.props.products && this.props.products[0];
     return (
       <View style={styles.background}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
-
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>
-            Success!{"\n"}{"\n"}
-            When should we show your{"\n"}
-            photo?
-          </Text>
-        </View>
-
-        <View style={styles.optionsContainer}>
           { !product ?
             <ActivityIndicator
               style={[styles.centering, {transform: [{scale: 1.5}]}]}
@@ -114,12 +37,26 @@ class SubmissionScene extends Component {
               color="ghostwhite"
             />
           :
-            this.options(product)
+            <View style={styles.background}>
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>
+                  Success!{"\n"}{"\n"}
+                  When should we show your{"\n"}
+                  photo?
+                </Text>
+              </View>
+
+              <View style={styles.optionsContainer}>
+                  {this.options(product)}
+              </View>
+
+              <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
+                <TouchableOpacity style={{opacity: this.props.purchasing ? 1 : 0.2}} onPress={() => this.props.onPress(this.state.selection)}>
+                  <Image source={require('../images/Submit.png')} />
+                </TouchableOpacity>
+              </View>
+            </View>
           }
-        </View>
-        <View style={[styles.bottomMiddle, {opacity: this.state.selection && !isPurchasing ? 1 : 0.2}]}>
-          <SubmissionButton active={!!this.state.selection} onPress={this._submit.bind(this)} />
-        </View>
       </View>
     )
   }
@@ -144,7 +81,7 @@ class SubmissionScene extends Component {
 
               <View style={styles.rightInfoContainer}>
                 <Text style={styles.imageCount}>
-                  {this.props.queueSize}
+                  {this.props.queueSize || 0}
                 </Text>
                 <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
               </View>
@@ -153,8 +90,7 @@ class SubmissionScene extends Component {
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
                 Throw it in the pile.
-                One photo is randomly selected from here everyday.
-                There are currently {this.props.queueSize} photos hoping to get picked.
+                There are currently {this.props.queueSize || 0} photos hoping to get chosen in the daily draw.
               </Text>
             </View>
           </View>
@@ -174,7 +110,7 @@ class SubmissionScene extends Component {
 
           <View style={styles.rightInfoContainer}>
             <Text style={styles.imageCount}>
-              {this.props.queueSize}
+              {this.props.queueSize || 0}
             </Text>
             <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
           </View>
@@ -234,6 +170,7 @@ class SubmissionScene extends Component {
   )}
 }
 
+const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -253,12 +190,15 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 0.27,
+    paddingTop: STATUSBAR_HEIGHT * 1.1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    paddingTop: 66.6,
     fontFamily: 'NotoSans',
   },
   optionsContainer: {
@@ -365,7 +305,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginTop: -5,
+    marginRight: 20,
   },
 });
-
-module.exports = SubmissionScene;
