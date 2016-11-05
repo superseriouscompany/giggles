@@ -233,15 +233,14 @@ class CaptionsScene extends Component {
                   :
                     <Text style={{color: 'bisque'}}>[new]</Text>
                   }
-                  { c.playing ?
-                    <Image source={require('../images/NowPlaying.png')}/>
-                  :
-                    null
-                  }
                   <TouchableOpacity onPress={() => this._play(c)}>
                     <Image source={require('../images/PlayAudio.png')}>
                       <View style={styles.backdropView}>
-                        <Text style={styles.duration}>0:{`0${Math.round(c.duration)}`.slice(-2)}</Text>
+                        { c.playing ?
+                          <Image style={styles.nowPlaying} source={require('../images/NowPlaying.png')}/>
+                        :
+                          <Text style={styles.duration}>0:{`0${Math.round(c.duration)}`.slice(-2)}</Text>
+                        }
                       </View>
                     </Image>
                   </TouchableOpacity>
@@ -409,6 +408,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#666'
+  },
+  nowPlaying: {
+    marginLeft: 42,
   },
   duration: {
     textAlign: 'center',
