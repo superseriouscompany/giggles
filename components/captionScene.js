@@ -87,7 +87,12 @@ class Caption extends Component {
 
   componentWillUnmount() {
     this._stop();
-    AudioRecorder.stopPlaying();
+    const promise = AudioRecorder.stopPlaying();
+
+    promise && promise.catch(function(err){
+      if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
+      console.warn(err);
+    });
     isMounted = false;
     AudioRecorder.onProgress = null;
     AudioRecorder.onFinished = null;
@@ -224,7 +229,7 @@ class Caption extends Component {
           { this.state.submitting ?
             <View style={styles.bottomMiddle}>
               <ActivityIndicator
-                style={{transform: [{scale: 1.5}]}}
+                style={{height: 110, transform: [{scale: 1.5}]}}
                 size="small"
                 color="ghostwhite"
               />
@@ -300,7 +305,7 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
 });
 
 module.exports = Caption;
