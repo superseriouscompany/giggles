@@ -97,7 +97,13 @@ class CaptionsScene extends Component {
   componentWillUnmount() {
     isMounted = false;
 
-    AudioPlayer.stop();
+    const promise = AudioPlayer.stop();
+
+    // AudioPlayer only returns a promise on Android
+    promise && promise.catch(function(err) {
+      if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
+      console.warn(err);
+    });
     AudioPlayer.onProgress = null;
     AudioPlayer.onFinished = null;
     AudioPlayer.progressSubscription && AudioPlayer.progressSubscription.remove();
@@ -105,6 +111,7 @@ class CaptionsScene extends Component {
   }
 
   _play = (caption) => {
+    const url = caption.audio_url;
     AudioPlayer.onProgress = (data) => {
       console.log("Progress", data);
     };
@@ -115,16 +122,21 @@ class CaptionsScene extends Component {
             c.playing = false;
           }
           return c;
-        })
-      })
+        }),
+      });
     };
     AudioPlayer.setProgressSubscription();
     AudioPlayer.setFinishedSubscription();
 
-    AudioPlayer.stop();
-    AudioPlayer.playWithUrl(caption.audio_url);
-
     CurrentUser.addListen(caption.id);
+
+    // AudioPlayer only returns a promise on Android
+    const promise = AudioPlayer.stop();
+    promise && promise.catch(function(err) {
+      if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
+      console.warn(err)
+    });
+    AudioPlayer.playWithUrl(url);
 
     this.setState({
       captions: this.state.captions.map(function(c) {
@@ -136,7 +148,7 @@ class CaptionsScene extends Component {
           c.playing = false;
         }
         return c;
-      })
+      }),
     })
   }
 
