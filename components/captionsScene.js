@@ -254,9 +254,7 @@ class CaptionsScene extends Component {
                 </View>
 
                 <View style={styles.rightHalfRow}>
-                  { !c.listened ?
-                    null
-                  : c.played && !c.liked ?
+                  { c.listened && !c.liked ?
                     <View style={{flexDirection: 'row'}}>
 
                       <TouchableOpacity onPress={() => this._hate(c)}>
