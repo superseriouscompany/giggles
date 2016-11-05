@@ -4,12 +4,15 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Platform,
   StyleSheet,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 21 : 0;
 
 export default class SubmissionOptions extends Component {
   state = {}
@@ -27,16 +30,6 @@ export default class SubmissionOptions extends Component {
     return (
       <View style={styles.background}>
         <StatusBar backgroundColor="#181818" barStyle="light-content"/>
-
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>
-            Success!{"\n"}{"\n"}
-            When should we show your{"\n"}
-            photo?
-          </Text>
-        </View>
-
-        <View style={styles.optionsContainer}>
           { !product ?
             <ActivityIndicator
               style={[styles.centering, {transform: [{scale: 1.5}]}]}
@@ -44,14 +37,26 @@ export default class SubmissionOptions extends Component {
               color="ghostwhite"
             />
           :
-            this.options(product)
+            <View style={styles.background}>
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>
+                  Success!{"\n"}{"\n"}
+                  When should we show your{"\n"}
+                  photo?
+                </Text>
+              </View>
+
+              <View style={styles.optionsContainer}>
+                  {this.options(product)}
+              </View>
+
+              <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
+                <TouchableOpacity style={{opacity: this.props.purchasing ? 1 : 0.2}} onPress={() => this.props.onPress(this.state.selection)}>
+                  <Image source={require('../images/Submit.png')} />
+                </TouchableOpacity>
+              </View>
+            </View>
           }
-        </View>
-        <View style={[styles.bottomMiddle, {opacity: this.state.selection ? 1 : 0.2}]}>
-          <TouchableOpacity style={{opacity: this.props.purchasing ? 1 : 0.2}} onPress={() => this.props.onPress(this.state.selection)}>
-            <Image source={require('../images/Submit.png')} />
-          </TouchableOpacity>
-        </View>
       </View>
     )
   }
@@ -76,7 +81,7 @@ export default class SubmissionOptions extends Component {
 
               <View style={styles.rightInfoContainer}>
                 <Text style={styles.imageCount}>
-                  {this.props.queueSize}
+                  {this.props.queueSize || 0}
                 </Text>
                 <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
               </View>
@@ -85,8 +90,7 @@ export default class SubmissionOptions extends Component {
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
                 Throw it in the pile.
-                One photo is randomly selected from here everyday.
-                There are currently {this.props.queueSize} photos hoping to get picked.
+                There are currently {this.props.queueSize || 0} photos hoping to get chosen in the daily draw.
               </Text>
             </View>
           </View>
@@ -106,7 +110,7 @@ export default class SubmissionOptions extends Component {
 
           <View style={styles.rightInfoContainer}>
             <Text style={styles.imageCount}>
-              {this.props.queueSize}
+              {this.props.queueSize || 0}
             </Text>
             <Image style={styles.imagesIcon} source={require('../images/ImagesIcon.png')}/>
           </View>
@@ -178,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 8,
     width: windowSize.width,
-    height: windowSize.height,
+    height: windowSize.height - (STATUSBAR_HEIGHT / 2),
     top: 0,
     bottom: 0,
     left: 0,
@@ -186,12 +190,15 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: {
     flex: 0.27,
+    paddingTop: STATUSBAR_HEIGHT * 1.1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerText: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    paddingTop: 66.6,
     fontFamily: 'NotoSans',
   },
   optionsContainer: {
@@ -298,5 +305,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginTop: -5,
+    marginRight: 20,
   },
 });
