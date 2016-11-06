@@ -57,18 +57,22 @@ class SubmissionScene extends Component {
       purchasing: true
     })
 
+    let purchaseToken;
+
     InAppBilling.open().then(() => {
       return InAppBilling.purchase('com.superserious.giggles.now');
     }).then((details) => {
-      const purchaseToken = details.purchaseToken;
-      return Api.submissions.jumpQueueAndroid(this.props.submissionId, details.purchaseToken);
+      purchaseToken = details.purchaseToken;
+      return InAppBilling.consumePurchase('com.superserious.giggles.now');
+    }).then((details) => {
+      return Api.submissions.jumpQueueAndroid(this.props.submissionId, purchaseToken);
     }).then(() => {
       isPurchasing = false;
       this.navigator.navigate('CaptionScene');
     }).catch((err) => {
       InAppBilling.close();
       console.error(err);
-      Alert.alert('Purchase failed');
+      Alert.alert(err);
     });
   }
 }
