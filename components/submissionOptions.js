@@ -90,7 +90,7 @@ export default class SubmissionOptions extends Component {
             <View style={styles.selectedDescriptionContainer}>
               <Text style={styles.selectedDescription}>
                 Throw it in the pile.
-                There are currently {this.props.queueSize || 0} photos hoping to get chosen in the daily draw.
+                There are currently {this.props.queueSize || 0} {this.props.queueSize == 1 ? 'photo' : 'photos'} hoping to get chosen in the daily draw.
               </Text>
             </View>
           </View>
