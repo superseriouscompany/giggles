@@ -260,6 +260,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
+    marginTop: STATUSBAR_HEIGHT / 4,
   },
 })
 
