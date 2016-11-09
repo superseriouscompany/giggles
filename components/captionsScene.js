@@ -430,6 +430,7 @@ const styles = StyleSheet.create({
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: STATUSBAR_HEIGHT / 4,
   },
 })
 
