@@ -76,6 +76,12 @@ class SubmissionsScene extends Component {
         <View style={styles.bg}>
           <ScrollView>
             <View style={styles.uploadBackground}>
+              <View style={styles.notificationsSetting}>
+                <TouchableOpacity>
+                  <Image source={require('../images/NotificationsOn.png')}/>
+                </TouchableOpacity>
+              </View>
+
               { this.state.uploading ?
                 <ActivityIndicator
                   style={[styles.loading, {transform: [{scale: 1.5}]}]}
@@ -107,6 +113,7 @@ class SubmissionsScene extends Component {
               <Image source={require('../images/GoScreenRight.png')}/>
             </TouchableOpacity>
           </View>
+
         </View>
       </View>
     )
@@ -255,6 +262,12 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').width * 0.666,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  notificationsSetting: {
+    position: 'absolute',
+    top: -STATUSBAR_HEIGHT,
+    left: 0,
+    marginTop: STATUSBAR_HEIGHT / 2,
   },
   topRow: {
     position: 'absolute',
