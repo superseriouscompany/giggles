@@ -47,7 +47,7 @@ class RootNav extends Component {
     })
 
     CurrentUser.hasAcceptedTerms().then(yes => {
-      if( yes ) return console.log("terms accepted");
+      if( yes ) return;
       this.setState({
         needsTerms: true,
       })
