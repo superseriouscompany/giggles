@@ -220,6 +220,8 @@ class Caption extends Component {
                 <Image source={require('../images/SeeAllOriginals.png')}/>
               </TouchableOpacity>
 
+              <Image source={require('../images/GigglesLogo.png')}/>
+
               <TouchableOpacity onPress={this.tapRemixesList}>
                 <Image source={require('../images/SeeRemixes.png')}/>
               </TouchableOpacity>
