@@ -95,7 +95,7 @@ class SubmissionsScene extends Component {
               }
 
               <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
-                <View style={styles.backdropView}>
+                <View>
                   <Text style={styles.date}>tomorrow</Text>
                 </View>
               </Image>
@@ -182,14 +182,14 @@ class Submission extends Component {
         }
 
         <Image style={styles.leftDarkRect} source={require('../images/DarkTranslucentRectangle.png')}>
-          <View style={styles.backdropView}>
+          <View>
             <Text style={styles.date}>{this.props.submission.publishedAt}</Text>
           </View>
         </Image>
 
-        <View style={[styles.backdropView, {position: 'absolute', bottom: 0, right: 0}]}>
+        <View style={{position: 'absolute', bottom: 0, right: 0}}>
           <TouchableOpacity onPress={this.reportSubmission.bind(this)}>
-            <Image source={require('../images/Flag.png')} />
+            <Image source={require('../images/FlagV3.png')} />
           </TouchableOpacity>
         </View>
       </CacheableImage>
