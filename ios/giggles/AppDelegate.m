@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 
+#import "RCTPushNotificationManager.h"
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 #import <Fabric/Fabric.h>
@@ -43,20 +44,22 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-
-  [application registerForRemoteNotifications];
+  [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo {
-  
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application :(nonnull NSData *)deviceToken {
-  
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+  [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
-  
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+{
+  [RCTPushNotificationManager didReceiveRemoteNotification:notification];
 }
 
 @end
