@@ -21,6 +21,9 @@
 {
   [Fabric with:@[[Crashlytics class]]];
 
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
+  [application registerUserNotificationSettings:settings];
+
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -37,6 +40,23 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+
+  [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo {
+  
+}
+
+- (void)application:(UIApplication *)application :(nonnull NSData *)deviceToken {
+  
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+  
 }
 
 @end
