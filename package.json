@@ -17,7 +17,8 @@
     "react-native-cacheable-image": "git@github.com:superseriouscompany/react-native-cacheable-image.git",
     "react-native-image-picker": "^0.22.9",
     "react-native-image-resizer": "0.0.11",
-    "react-native-in-app-utils": "^4.0.0"
+    "react-native-in-app-utils": "^4.0.0",
+    "react-native-push-notification": "^2.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
