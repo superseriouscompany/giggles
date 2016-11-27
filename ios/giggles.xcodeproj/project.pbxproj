@@ -29,6 +29,19 @@
 		3F5FF40E1DBFFA8C008A89D1 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5FF4011DBFFA7E008A89D1 /* libRCTCameraRoll.a */; };
 		3F5FF4111DBFFA93008A89D1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5FF4101DBFFA93008A89D1 /* StoreKit.framework */; };
 		3F818BBC1DBEDD6E007EC141 /* Fonts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F818BBB1DBEDD6E007EC141 /* Fonts.xcassets */; };
+		3F8EF2301DEB9C71000E1C45 /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF22F1DEB9C71000E1C45 /* FirebaseMessaging.framework */; };
+		3F8EF2381DEB9D1F000E1C45 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2321DEB9D1F000E1C45 /* FirebaseAnalytics.framework */; };
+		3F8EF2391DEB9D1F000E1C45 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2321DEB9D1F000E1C45 /* FirebaseAnalytics.framework */; };
+		3F8EF23A1DEB9D1F000E1C45 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2331DEB9D1F000E1C45 /* FirebaseCore.framework */; };
+		3F8EF23B1DEB9D1F000E1C45 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2331DEB9D1F000E1C45 /* FirebaseCore.framework */; };
+		3F8EF23C1DEB9D1F000E1C45 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2341DEB9D1F000E1C45 /* FirebaseInstanceID.framework */; };
+		3F8EF23D1DEB9D1F000E1C45 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2341DEB9D1F000E1C45 /* FirebaseInstanceID.framework */; };
+		3F8EF23E1DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2351DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework */; };
+		3F8EF23F1DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2351DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework */; };
+		3F8EF2401DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2361DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework */; };
+		3F8EF2411DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2361DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework */; };
+		3F8EF2421DEB9D1F000E1C45 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2371DEB9D1F000E1C45 /* GoogleToolboxForMac.framework */; };
+		3F8EF2431DEB9D1F000E1C45 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F8EF2371DEB9D1F000E1C45 /* GoogleToolboxForMac.framework */; };
 		3FFDE93F1DCBB65600AEC607 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFDE93D1DCBB65600AEC607 /* Fabric.framework */; };
 		3FFDE9401DCBB65600AEC607 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFDE93E1DCBB65600AEC607 /* Crashlytics.framework */; };
 		4B2F397E892D4EABA133CBF4 /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05917CF6455D4357A748DE06 /* libRNAudio.a */; };
@@ -273,6 +286,14 @@
 		3F5FF3F91DBFFA7E008A89D1 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		3F5FF4101DBFFA93008A89D1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3F818BBB1DBEDD6E007EC141 /* Fonts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Fonts.xcassets; path = giggles/Fonts.xcassets; sourceTree = "<group>"; };
+		3F8EF22F1DEB9C71000E1C45 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseMessaging.framework; sourceTree = "<group>"; };
+		3F8EF2311DEB9CEE000E1C45 /* Firebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
+		3F8EF2321DEB9D1F000E1C45 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		3F8EF2331DEB9D1F000E1C45 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = "<group>"; };
+		3F8EF2341DEB9D1F000E1C45 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		3F8EF2351DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		3F8EF2361DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		3F8EF2371DEB9D1F000E1C45 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleToolboxForMac.framework; sourceTree = "<group>"; };
 		3FFDE93D1DCBB65600AEC607 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		3FFDE93E1DCBB65600AEC607 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5A76818B32EB4F72A9AFE3C0 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
@@ -294,7 +315,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F8EF2431DEB9D1F000E1C45 /* GoogleToolboxForMac.framework in Frameworks */,
+				3F8EF2411DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework in Frameworks */,
+				3F8EF2391DEB9D1F000E1C45 /* FirebaseAnalytics.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
+				3F8EF23B1DEB9D1F000E1C45 /* FirebaseCore.framework in Frameworks */,
+				3F8EF23D1DEB9D1F000E1C45 /* FirebaseInstanceID.framework in Frameworks */,
+				3F8EF23F1DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,14 +329,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F8EF23E1DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework in Frameworks */,
 				3F1985AB1DEB413600EA294F /* libRCTPushNotification.a in Frameworks */,
 				3F5FF4111DBFFA93008A89D1 /* StoreKit.framework in Frameworks */,
 				3F5FF40E1DBFFA8C008A89D1 /* libRCTCameraRoll.a in Frameworks */,
 				3FFDE9401DCBB65600AEC607 /* Crashlytics.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
+				3F8EF23A1DEB9D1F000E1C45 /* FirebaseCore.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				3FFDE93F1DCBB65600AEC607 /* Fabric.framework in Frameworks */,
+				3F8EF2401DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework in Frameworks */,
+				3F8EF2381DEB9D1F000E1C45 /* FirebaseAnalytics.framework in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -317,8 +348,11 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				3F8EF23C1DEB9D1F000E1C45 /* FirebaseInstanceID.framework in Frameworks */,
 				4B2F397E892D4EABA133CBF4 /* libRNAudio.a in Frameworks */,
+				3F8EF2421DEB9D1F000E1C45 /* GoogleToolboxForMac.framework in Frameworks */,
 				689606EA8B70444A9CDA596C /* libRNImagePicker.a in Frameworks */,
+				3F8EF2301DEB9C71000E1C45 /* FirebaseMessaging.framework in Frameworks */,
 				18BD2CD98A43436BBDF73248 /* libInAppUtils.a in Frameworks */,
 				1B673BD36DE34F98817DFF3B /* libRNFS.a in Frameworks */,
 				4B5B7018BD4D499A86076E54 /* libRCTImageResizer.a in Frameworks */,
@@ -413,6 +447,7 @@
 				3F05C28F1DE9D31B007314EC /* giggles.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				3F8EF2311DEB9CEE000E1C45 /* Firebase.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				3F818BBB1DBEDD6E007EC141 /* Fonts.xcassets */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -485,6 +520,13 @@
 		3F5FF40F1DBFFA93008A89D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3F8EF2321DEB9D1F000E1C45 /* FirebaseAnalytics.framework */,
+				3F8EF2331DEB9D1F000E1C45 /* FirebaseCore.framework */,
+				3F8EF2341DEB9D1F000E1C45 /* FirebaseInstanceID.framework */,
+				3F8EF2351DEB9D1F000E1C45 /* GoogleInterchangeUtilities.framework */,
+				3F8EF2361DEB9D1F000E1C45 /* GoogleSymbolUtilities.framework */,
+				3F8EF2371DEB9D1F000E1C45 /* GoogleToolboxForMac.framework */,
+				3F8EF22F1DEB9C71000E1C45 /* FirebaseMessaging.framework */,
 				3FFDE93D1DCBB65600AEC607 /* Fabric.framework */,
 				3FFDE93E1DCBB65600AEC607 /* Crashlytics.framework */,
 				3F5FF4101DBFFA93008A89D1 /* StoreKit.framework */,
@@ -1036,6 +1078,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1064,6 +1110,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = gigglesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
