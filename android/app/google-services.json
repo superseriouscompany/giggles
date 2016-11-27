@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "523234517761",
+    "firebase_url": "https://giggles-bd72f.firebaseio.com",
+    "project_id": "giggles-bd72f",
+    "storage_bucket": "giggles-bd72f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523234517761:android:ce8dafadd1529471",
+        "android_client_info": {
+          "package_name": "com.superserious.giggles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523234517761-vrhner52g2m5sedgcniphqqilvhuagi4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superserious.giggles",
+            "certificate_hash": "B62F7D4BC2867E0E04E43D8125D8B2209C715FF1"
+          }
+        },
+        {
+          "client_id": "523234517761-q61r6ua6117do346q62skdhhsjnh4565.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superserious.giggles",
+            "certificate_hash": "A08DF877A920F16C75AE5FD17058343F6D39A60A"
+          }
+        },
+        {
+          "client_id": "523234517761-k0j2mp0dp3ouq7oj71ugi9vp4p06bcgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgSGaqjDQ4cTP8gEiE-7ePn0r2wxfVJSk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523234517761-k0j2mp0dp3ouq7oj71ugi9vp4p06bcgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 
-import { InAppUtils }   from 'NativeModules';
 import Api              from './lib/api';
 import CaptionScene     from './components/captionScene';
 import CaptionsScene    from './components/captionsScene';
@@ -18,6 +17,7 @@ import SubmissionScene  from './components/submissionScene';
 import NoScene          from './components/noScene';
 import KilledScene      from './components/killedScene';
 import TermsScene       from './components/termsScene';
+import Scratch          from './components/scratch';
 import CurrentUser      from './lib/currentUser';
 
 const PushNotification = require('react-native-push-notification');
@@ -71,8 +71,7 @@ class RootNav extends Component {
   }
 
   render() {
-    // const Poop = require('./components/poop');
-    // return <Poop />;
+    // return <Scratch />
 
     return (
       <View style={{flex: 1}}>

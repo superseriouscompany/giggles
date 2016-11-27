@@ -20,6 +20,8 @@ import TermsScene       from './components/termsScene';
 import CurrentUser      from './lib/currentUser';
 import Scratch          from './components/scratch';
 
+import FCM from 'react-native-fcm';
+
 class RootNav extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,10 @@ class RootNav extends Component {
   }
 
   componentDidMount() {
+    FCM.getFCMToken().then(token => {
+      Api.pushTokens.registerAndroid(token);
+    });
+
     Api.killSwitch().then(kill => {
       if( !kill ) return;
       this.setState({
@@ -58,7 +64,8 @@ class RootNav extends Component {
   }
 
   render() {
-    // return <Scratch />;
+    // return <Scratch />
+
     return (
       <View style={{flex: 1}}>
         { this.state.killed ?
