@@ -76,11 +76,15 @@ class SubmissionsScene extends Component {
         <View style={styles.bg}>
           <ScrollView>
             <View style={styles.uploadBackground}>
-              <View style={styles.notificationsSetting}>
-                <TouchableOpacity>
-                  <Image source={require('../images/NotificationsOn.png')}/>
-                </TouchableOpacity>
-              </View>
+              { false ?
+                <View style={styles.notificationsSetting}>
+                  <TouchableOpacity>
+                    <Image source={require('../images/NotificationsOn.png')}/>
+                  </TouchableOpacity>
+                </View>
+              :
+                null
+              }
 
               { this.state.uploading ?
                 <ActivityIndicator
