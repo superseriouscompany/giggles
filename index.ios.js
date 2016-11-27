@@ -24,7 +24,7 @@ const PushNotification = require('react-native-push-notification');
 
 PushNotification.configure({
   onRegister: function(token) {
-    console.log("Token:", token.token);
+    Api.pushTokens.registerIOS(token.token);
   },
   onNotification: function(notification) {
     console.log('NOTIFICATION:', notification );
