@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		18BD2CD98A43436BBDF73248 /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D112801C7C8A455BBD427187 /* libInAppUtils.a */; };
 		1B673BD36DE34F98817DFF3B /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDE649488054532842CC907 /* libRNFS.a */; };
+		3F1985AB1DEB413600EA294F /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F19859E1DEB411800EA294F /* libRCTPushNotification.a */; };
 		3F5FF40E1DBFFA8C008A89D1 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5FF4011DBFFA7E008A89D1 /* libRCTCameraRoll.a */; };
 		3F5FF4111DBFFA93008A89D1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5FF4101DBFFA93008A89D1 /* StoreKit.framework */; };
 		3F818BBC1DBEDD6E007EC141 /* Fonts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F818BBB1DBEDD6E007EC141 /* Fonts.xcassets */; };
@@ -98,6 +99,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		3F19859D1DEB411800EA294F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F19858D1DEB411800EA294F /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
 		};
 		3F350ABF1DBD9756008FE904 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -236,6 +244,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		21B9EF1DF5324772AFC1A16D /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		3F05C28F1DE9D31B007314EC /* giggles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = giggles.entitlements; path = giggles/giggles.entitlements; sourceTree = "<group>"; };
+		3F19858D1DEB411800EA294F /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		3F5FF3F91DBFFA7E008A89D1 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		3F5FF4101DBFFA93008A89D1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3F818BBB1DBEDD6E007EC141 /* Fonts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Fonts.xcassets; path = giggles/Fonts.xcassets; sourceTree = "<group>"; };
@@ -266,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F1985AB1DEB413600EA294F /* libRCTPushNotification.a in Frameworks */,
 				3F5FF4111DBFFA93008A89D1 /* StoreKit.framework in Frameworks */,
 				3F5FF40E1DBFFA8C008A89D1 /* libRCTCameraRoll.a in Frameworks */,
 				3FFDE9401DCBB65600AEC607 /* Crashlytics.framework in Frameworks */,
@@ -393,6 +403,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3F19858E1DEB411800EA294F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F19859E1DEB411800EA294F /* libRCTPushNotification.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3F350AB71DBD9756008FE904 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +482,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3F19858D1DEB411800EA294F /* RCTPushNotification.xcodeproj */,
 				3F5FF3F91DBFFA7E008A89D1 /* RCTCameraRoll.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -623,6 +642,10 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
+					ProductGroup = 3F19858E1DEB411800EA294F /* Products */;
+					ProjectRef = 3F19858D1DEB411800EA294F /* RCTPushNotification.xcodeproj */;
+				},
+				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
 					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
 				},
@@ -718,6 +741,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3F19859E1DEB411800EA294F /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 3F19859D1DEB411800EA294F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3F350AC01DBD9756008FE904 /* libInAppUtils.a */ = {
@@ -993,6 +1023,7 @@
 					"$(SRCROOT)/../node_modules/react-native-in-app-utils/InAppUtils",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = giggles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1027,6 +1058,7 @@
 					"$(SRCROOT)/../node_modules/react-native-in-app-utils/InAppUtils",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = giggles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

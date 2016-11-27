@@ -20,6 +20,19 @@ import KilledScene      from './components/killedScene';
 import TermsScene       from './components/termsScene';
 import CurrentUser      from './lib/currentUser';
 
+const PushNotification = require('react-native-push-notification');
+
+PushNotification.configure({
+  onRegister: function(token) {
+    console.log("Token:", token.token);
+  },
+  onNotification: function(notification) {
+    console.log('NOTIFICATION:', notification );
+  },
+  popInitialNotification: true,
+  requestPermissions: true,
+})
+
 class RootNav extends Component {
   constructor(props) {
     super(props);
