@@ -20,20 +20,7 @@ import TermsScene       from './components/termsScene';
 import CurrentUser      from './lib/currentUser';
 import Scratch          from './components/scratch';
 
-const PushNotification = require('react-native-push-notification');
-
-PushNotification.configure({
-  onRegister: function(token) {
-    console.log("got token", token);
-    // Api.pushTokens.registerAndroid(token.token);
-  },
-  onNotification: function(notification) {
-    console.log('NOTIFICATION:', notification );
-  },
-  senderID: 'giggles-bd72f',
-  popInitialNotification: true,
-  requestPermissions: true,
-})
+import FCM from 'react-native-fcm';
 
 class RootNav extends Component {
   constructor(props) {
@@ -51,7 +38,10 @@ class RootNav extends Component {
   }
 
   componentDidMount() {
-    console.log("lawng");
+    FCM.getFCMToken().then(token => {
+      Api.pushTokens.registerAndroid(token);
+    });
+
     Api.killSwitch().then(kill => {
       if( !kill ) return;
       this.setState({
