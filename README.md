@@ -19,7 +19,7 @@ https://facebook.github.io/react-native/docs/getting-started.html
     $ cd server
     $ npm run dev
 
-## Managing pushes
+## Managing pushes (from http://docs.aws.amazon.com/sns/latest/dg/mobile-push-apns.html)
 
    1. Export .cer file as .p12 file (already done in `ios/certs`)
    2. Convert binary .p12 file to plaintext .pem file (already done in `ios/certs`)
