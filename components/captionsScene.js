@@ -164,6 +164,7 @@ class CaptionsScene extends Component {
         captions: this.state.captions.map(function(c) {
           if( c.id === caption.id ) {
             c.liked = true;
+            c.score = (c.score || 0) + 1;
           }
 
           return c;
