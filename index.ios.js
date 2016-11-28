@@ -45,7 +45,7 @@ class RootNav extends Component {
     FCM.on('refreshToken', (token) => {
       token && Api.pushTokens.registerIOS(token);
     })
-    FCM.subscribeToTopic('all');
+    FCM.subscribeToTopic('/topics/all');
 
     Api.killSwitch().then(kill => {
       if( !kill ) return;
