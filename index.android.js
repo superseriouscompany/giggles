@@ -39,8 +39,12 @@ class RootNav extends Component {
 
   componentDidMount() {
     FCM.getFCMToken().then(token => {
-      Api.pushTokens.registerAndroid(token);
+      token && Api.pushTokens.registerAndroid(token);
     });
+    FCM.on('refreshToken', (token) => {
+      token && Api.pushTokens.registerAndroid(token);
+    })
+    FCM.subscribeToTopic('all');
 
     Api.killSwitch().then(kill => {
       if( !kill ) return;
