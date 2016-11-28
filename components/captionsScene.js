@@ -136,7 +136,7 @@ class CaptionsScene extends Component {
       if( err.message.match(/Please call play.*before stopping playback/) ) { return; }
       console.warn(err)
     });
-    AudioPlayer.playWithUrl(url);
+    AudioPlayer.playWithUrl(url, {sessionCategory: 'Playback'});
 
     this.setState({
       captions: this.state.captions.map(function(c) {
