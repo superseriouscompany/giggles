@@ -34,7 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
           new FIRMessagingPackage(),
           new RNDeviceInfo(),
-          new ReactNativePushNotificationPackage(),
           new RNFSPackage(),
           new ImageResizerPackage(),
           new ImagePickerPackage(),
