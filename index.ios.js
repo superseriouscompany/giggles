@@ -26,7 +26,6 @@ class RootNav extends Component {
   constructor(props) {
     super(props);
     this.state = { props: {}};
-    this.state.scene = 'CaptionScene';
 
     this.navigator = {
       navigate: (component, props) => {
@@ -38,38 +37,38 @@ class RootNav extends Component {
   }
 
   componentDidMount() {
-    FCM.requestPermissions();
-    FCM.getFCMToken().then(token => {
-      token && Api.pushTokens.registerIOS(token);
-    });
-    FCM.on('refreshToken', (token) => {
-      token && Api.pushTokens.registerIOS(token);
-    })
-    FCM.subscribeToTopic('/topics/all');
-
-    Api.killSwitch().then(kill => {
-      if( !kill ) return;
-      this.setState({
-        killed: true,
-      })
-    }).catch(err => {
-      // swallow error on kill switch
-      console.log(err);
-    })
-
-    CurrentUser.hasAcceptedTerms().then(yes => {
-      if( yes ) return;
-      this.setState({
-        needsTerms: true,
-      })
-    }).catch(err => {
-      // swallow error on accepting terms
-      console.log(err);
-    })
+    // FCM.requestPermissions();
+    // FCM.getFCMToken().then(token => {
+    //   token && Api.pushTokens.registerIOS(token);
+    // });
+    // FCM.on('refreshToken', (token) => {
+    //   token && Api.pushTokens.registerIOS(token);
+    // })
+    // FCM.subscribeToTopic('/topics/all');
+    //
+    // Api.killSwitch().then(kill => {
+    //   if( !kill ) return;
+    //   this.setState({
+    //     killed: true,
+    //   })
+    // }).catch(err => {
+    //   // swallow error on kill switch
+    //   console.log(err);
+    // })
+    //
+    // CurrentUser.hasAcceptedTerms().then(yes => {
+    //   if( yes ) return;
+    //   this.setState({
+    //     needsTerms: true,
+    //   })
+    // }).catch(err => {
+    //   // swallow error on accepting terms
+    //   console.log(err);
+    // })
   }
 
   render() {
-    // return <Scratch />
+    return <Scratch />
 
     return (
       <View style={{flex: 1}}>
